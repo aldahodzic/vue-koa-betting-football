@@ -28,23 +28,23 @@ export default {
 }
 
 menu {
-    margin: 10px 0;
+    margin: 8px 0;
     padding: 0;
-    background: inherit;
+    background: white;
     display: flex;
     list-style: none;
     .justify;
     
     li {
-        margin: 0 1.5px;
+        margin: 4px 2px;
         padding: 5px 10px;
         background: greenyellow;
         flex: 1 1 auto;
         text-align: center;
         font-size: 17px;
         
-        &:first-of-type {margin-left: 0}
-        &:last-of-type {margin-right: 0}
+        &:first-of-type {margin-left: 4px}
+        &:last-of-type {margin-right: 4px}
     }
 }
 </style>
