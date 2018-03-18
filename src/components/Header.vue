@@ -29,6 +29,7 @@ export default {
 <style lang="less">
 header {
     margin: 10px 0;
+    background: white;
     
     h1 {
         font-size: 22px;

@@ -1,14 +1,17 @@
 <template lang="pug">
 div#app
     app-header
+    app-menu
 </template>
 
 <script>
 import AppHeader from "./components/Header.vue";
+import AppMenu from "./components/Menu.vue";
 export default {
     name: 'app',
     components: {
-        AppHeader
+        AppHeader,
+        AppMenu
     },
     data() {
         return {};
@@ -26,7 +29,6 @@ body {
     width: 75%;
     max-width: 1000px;
     margin: 0 auto;
-    background: white;
     
     @media screen and (max-width: 600px) {
         width: 95%;
