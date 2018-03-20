@@ -1,7 +1,7 @@
 <template lang="pug">
 div
-    app-matches-menu
-    app-matches-selector
+    app-matches-menu(:leagues="leagues")
+    app-matches-selector(:leagues="leagues")
 </template>
 
 <script>
@@ -12,6 +12,17 @@ export default {
     components: {
         AppMatchesMenu,
         AppMatchesSelector
+    },
+    data() {
+        return {
+            leagues: [
+                "England",
+                "Italy",
+                "Germany",
+                "Spain",
+                "France"
+            ]
+        }
     }
 }
 </script>

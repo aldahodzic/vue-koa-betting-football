@@ -1,6 +1,7 @@
 <template lang="pug">
 main
     p.row.head
+        span.date Date
         span.teams(title="Teams") Teams
         span.h(title="Home win") 1
         span.hd(title="Home win / Draw") 10
@@ -8,6 +9,7 @@ main
         span.dg(title="Draw / Guest win") 02
         span.g(title="Guest win") 2
     p.row(v-for="(match, index) in matches")
+        span.date {{match.date}}
         span.teams {{match.home}} &mdash; {{match.guest}}
         app-button-select-match(
         v-for="(coefficients, type) in match.coefficients",
@@ -19,12 +21,14 @@ main
 
 <script>
 import _ from "lodash";
+import moment from "moment";
 import AppButtonSelectMatch from "./ButtonSelectMatch.vue";
 export default {
     name: "app-content",
     components: {
         AppButtonSelectMatch
     },
+    props: ["leagues"],
     data() {
         return {
             matches: []
@@ -36,6 +40,8 @@ export default {
             let match = {
                 home: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
                 guest: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
+                league: this.leagues[_.random(this.leagues.length-1)],
+                date: moment().format("DD.MM")
             };
     
             match.coefficients = {};
@@ -82,6 +88,7 @@ main {
         
         
         &.head span {
+            &.date {background:  #ff9999;}
             &.teams {background: #cccccc;}
             &.h {background: #009933;}
             &.hd {background: #ace600;}
@@ -92,13 +99,14 @@ main {
         
         
         span {
-            flex: 1 0 calc((60% - 28px) / 5);
+            flex: 1 0 calc((60% - 32px) / 6);
             text-align: center;
             padding: 10px 0;
             margin: 0 2px;
             cursor: pointer;
     
-            &.teams {flex-basis: 40%; margin-left: 4px; background: #e6e6e6}
+            &.date {margin-left: 4px; background: #ffb3b3}
+            &.teams {flex-basis: 40%; background: #e6e6e6}
             &.h {order: 1}
             &.hd {order: 2}
             &.d {order: 3}

@@ -7,15 +7,10 @@ menu
 <script>
 export default {
     name: "app-menu",
+    props: ["leagues"],
     data() {
         return {
-            leagues: [
-                "England",
-                "Italy",
-                "Germany",
-                "Spain",
-                "France"
-            ]
+        
         }
     }
 }
