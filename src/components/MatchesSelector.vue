@@ -3,20 +3,20 @@ main
     p#none-matches(v-if="emptySelectedMatches") None matches
     template(v-else)
         p.row.head
-            span.date Date
-            span.teams(title="Teams") Teams
-            span.h(title="Home win") 1
-            span.hd(title="Home win / Draw") 10
-            span.d(title="Draw") 0
-            span.dg(title="Draw / Guest win") 02
-            span.g(title="Guest win") 2
+            span(
+            v-for="button in sort.buttons",
+            :key="button.type",
+            :title="'Click to sort by: '+button.title",
+            :class="button.type",
+            @click="sortMatches(button)"
+            ) {{button.name}}
         
         p.row(v-for="(match, index) in matchesFromSelectedLeagues")
             span.date {{match.date}}
             span.teams [{{match.league}}] {{match.home}} &mdash; {{match.guest}}
-            app-button-select-match(
-            v-for="(coefficients, type) in match.coefficients",
-            :key="type",
+            app-select-match(
+            v-for="(coefficients, type, index) in match.coefficients",
+            :key="type+index",
             :type="type",
             :coefficients="coefficients"
             )
@@ -25,11 +25,11 @@ main
 <script>
 import _ from "lodash";
 import moment from "moment";
-import AppButtonSelectMatch from "./ButtonSelectMatch.vue";
+import AppSelectMatch from "./MatchesButtonSelect.vue";
 export default {
     name: "app-content",
     components: {
-        AppButtonSelectMatch
+        AppSelectMatch
     },
     props: {
         leaguesForCreated: Array,
@@ -37,16 +37,83 @@ export default {
     },
     data() {
         return {
-            matches: []
+            matches: [],
+            sort: {
+                buttons: [
+                    {
+                        title: "Date",
+                        name: "Date",
+                        direction: 1,
+                        type: "date"
+                    },
+                    {
+                        title: "Teams",
+                        name: "Teams",
+                        direction: 1,
+                        type: "teams"
+                    },
+                    {
+                        title: "Home win",
+                        name: "1",
+                        direction: 1,
+                        type: "h"
+                    },
+                    {
+                        title: "Home win / Draw",
+                        name: "10",
+                        direction: 1,
+                        type: "hd"
+                    },
+                    {
+                        title: "Draw",
+                        name: "0",
+                        direction: 1,
+                        type: "d"
+                    },
+                    {
+                        title: "Draw / Guest win",
+                        name: "02",
+                        direction: 1,
+                        type: "dg"
+                    },
+                    {
+                        title: "Guest win",
+                        name: "2",
+                        direction: 1,
+                        type: "g"
+                    },
+                ],
+                type: "Teams",
+                direction: 1
+            }
         }
     },
     computed: {
         matchesFromSelectedLeagues() {
-            if(this.leagues === false) return this.matches;
-            return _.filter(this.matches, match => this.leagues.includes(match.league));
+            console.log("comp");
+            let matches;
+            if(this.leagues === false) matches = this.matches;
+            else matches = _.filter(this.matches, match => this.leagues.includes(match.league));
+            
+            if(["1", "10", "0", "02", "2"].includes(this.sort.type)) {
+                matches = _.sortBy(matches, match => _.maxBy(match.coefficients[this.sort.type], "coefficient").coefficient);
+            }
+            if(this.sort.type === "Date") matches = _.sortBy(matches, match => moment(match.date, "DD.MM").valueOf());
+            if(this.sort.type === "Teams") matches = _.sortBy(matches, "home");
+            
+            if(this.sort.direction > 0) matches = matches.reverse();
+            
+            return matches;
         },
         emptySelectedMatches() {
             return this.matchesFromSelectedLeagues.length < 1;
+        }
+    },
+    methods: {
+        sortMatches(button) {
+            this.sort.type = button.name;
+            this.sort.direction = button.direction;
+            button.direction = -button.direction;
         }
     },
     created() {
@@ -128,8 +195,8 @@ main {
             margin: 0 2px;
             cursor: pointer;
     
-            &.date {margin-left: 4px; background: #ffb3b3}
-            &.teams {flex-basis: 40%; background: #e6e6e6}
+            &.date {margin-left: 4px; background: #ffb3b3; cursor: default}
+            &.teams {flex-basis: 40%; background: #e6e6e6; cursor: default}
             &.h {order: 1}
             &.hd {order: 2}
             &.d {order: 3}
