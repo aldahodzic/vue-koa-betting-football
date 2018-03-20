@@ -1,22 +1,25 @@
 <template lang="pug">
 main
-    p.row.head
-        span.date Date
-        span.teams(title="Teams") Teams
-        span.h(title="Home win") 1
-        span.hd(title="Home win / Draw") 10
-        span.d(title="Draw") 0
-        span.dg(title="Draw / Guest win") 02
-        span.g(title="Guest win") 2
-    p.row(v-for="(match, index) in matches")
-        span.date {{match.date}}
-        span.teams {{match.home}} &mdash; {{match.guest}}
-        app-button-select-match(
-        v-for="(coefficients, type) in match.coefficients",
-        :key="type",
-        :type="type",
-        :coefficients="coefficients"
-        )
+    p#none-matches(v-if="emptySelectedMatches") None matches
+    template(v-else)
+        p.row.head
+            span.date Date
+            span.teams(title="Teams") Teams
+            span.h(title="Home win") 1
+            span.hd(title="Home win / Draw") 10
+            span.d(title="Draw") 0
+            span.dg(title="Draw / Guest win") 02
+            span.g(title="Guest win") 2
+        
+        p.row(v-for="(match, index) in matchesFromSelectedLeagues")
+            span.date {{match.date}}
+            span.teams [{{match.league}}] {{match.home}} &mdash; {{match.guest}}
+            app-button-select-match(
+            v-for="(coefficients, type) in match.coefficients",
+            :key="type",
+            :type="type",
+            :coefficients="coefficients"
+            )
 </template>
 
 <script>
@@ -28,10 +31,22 @@ export default {
     components: {
         AppButtonSelectMatch
     },
-    props: ["leagues"],
+    props: {
+        leaguesForCreated: Array,
+        leagues: [Array, Boolean]
+    },
     data() {
         return {
             matches: []
+        }
+    },
+    computed: {
+        matchesFromSelectedLeagues() {
+            if(this.leagues === false) return this.matches;
+            return _.filter(this.matches, match => this.leagues.includes(match.league));
+        },
+        emptySelectedMatches() {
+            return this.matchesFromSelectedLeagues.length < 1;
         }
     },
     created() {
@@ -40,7 +55,7 @@ export default {
             let match = {
                 home: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
                 guest: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
-                league: this.leagues[_.random(this.leagues.length-1)],
+                league: this.leaguesForCreated[_.random(this.leaguesForCreated.length-1)],
                 date: moment().format("DD.MM")
             };
     
@@ -80,6 +95,14 @@ main {
     margin: 8px 0;
     padding: 1px 0;
     background: white;
+    
+    #none-matches {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+        font-size: 20px;
+        margin: 10px;
+    }
     
     .row {
         display: flex;

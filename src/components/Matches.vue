@@ -1,7 +1,13 @@
 <template lang="pug">
 div
-    app-matches-menu(:leagues="leagues")
-    app-matches-selector(:leagues="leagues")
+    app-matches-menu(
+    :leaguesForCreated="leagues",
+    @new-select-leagues="selectedLeagues=$event"
+    )
+    app-matches-selector(
+    :leaguesForCreated="leagues",
+    :leagues="selectedLeagues"
+    )
 </template>
 
 <script>
@@ -21,7 +27,8 @@ export default {
                 "Germany",
                 "Spain",
                 "France"
-            ]
+            ],
+            selectedLeagues: false
         }
     }
 }
