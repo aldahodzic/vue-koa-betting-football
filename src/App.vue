@@ -1,20 +1,15 @@
 <template lang="pug">
 div#app
     app-header
-    app-menu
-    app-content
+    router-view
 </template>
 
 <script>
 import AppHeader from "./components/Header.vue";
-import AppMenu from "./components/Menu.vue";
-import AppContent from "./components/Content.vue";
 export default {
     name: 'app',
     components: {
-        AppHeader,
-        AppMenu,
-        AppContent
+        AppHeader
     },
     data() {
         return {};
