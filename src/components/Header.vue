@@ -26,7 +26,11 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
+.justify {
+    justify-content: space-around;
+    justify-content: space-evenly;
+}
 header {
     margin: 8px 0;
     background: white;
@@ -53,6 +57,13 @@ header {
         
         nav {
             flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            .justify;
+            
+            p {
+                margin: 0
+            }
         }
     }
 }

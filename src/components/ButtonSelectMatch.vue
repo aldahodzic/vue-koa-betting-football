@@ -24,6 +24,10 @@ export default {
 }
 </script>
 
-<style lang="less">
-
+<style lang="less" scoped>
+.h {background: #00ff00;}
+.hd {background: #ccff33;}
+.d {background: #ffff00;}
+.dg {background: #66ccff;}
+.g {background: #3399ff;}
 </style>

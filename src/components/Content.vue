@@ -80,9 +80,16 @@ main {
         flex-flow: row nowrap;
         margin: 5px 0;
         
+        
         &.head span {
-            cursor: pointer;
+            &.teams {background: #cccccc;}
+            &.h {background: #009933;}
+            &.hd {background: #ace600;}
+            &.d {background: #ffcc00;}
+            &.dg {background: #66b3ff;}
+            &.g {background: #0066ff;}
         }
+        
         
         span {
             flex: 1 0 calc((60% - 28px) / 5);
@@ -90,19 +97,16 @@ main {
             padding: 10px 0;
             margin: 0 2px;
             cursor: pointer;
-            
-            &.teams {
-                flex-basis: 40%;
-                background: lightblue;
-                margin-left: 4px;
-            }
-            &.h {background: #00ff00; order: 1}
-            &.hd {background: #ccff33; order: 2}
-            &.d {background: #ffff00; order: 3}
-            &.dg {background: #66ccff; order: 4}
-            &.g {background: #3399ff; ; order: 5; margin-right: 4px;}
-            
+    
+            &.teams {flex-basis: 40%; margin-left: 4px; background: #e6e6e6}
+            &.h {order: 1}
+            &.hd {order: 2}
+            &.d {order: 3}
+            &.dg {order: 4}
+            &.g {order: 5; margin-right: 4px;}
         }
+        
+        
         
     }
 }
