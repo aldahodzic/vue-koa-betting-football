@@ -22,6 +22,8 @@ export default {
     data() {
         return {
             leagues: [
+                "Champions league",
+                "Europa league",
                 "England",
                 "Italy",
                 "Germany",

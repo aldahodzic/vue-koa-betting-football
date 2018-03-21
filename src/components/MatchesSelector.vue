@@ -43,7 +43,7 @@ export default {
                     {
                         title: "Date",
                         name: "Date",
-                        direction: 1,
+                        direction: -1,
                         type: "date"
                     },
                     {
@@ -83,14 +83,13 @@ export default {
                         type: "g"
                     },
                 ],
-                type: "Teams",
-                direction: 1
+                type: "Date",
+                direction: -1
             }
         }
     },
     computed: {
         matchesFromSelectedLeagues() {
-            console.log("comp");
             let matches;
             if(this.leagues === false) matches = this.matches;
             else matches = _.filter(this.matches, match => this.leagues.includes(match.league));
@@ -117,13 +116,13 @@ export default {
         }
     },
     created() {
-        for(let i = 0; i < 10; i++) {
+        for(let i = 0; i < 20; i++) {
             
             let match = {
                 home: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
                 guest: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
                 league: this.leaguesForCreated[_.random(this.leaguesForCreated.length-1)],
-                date: moment().format("DD.MM")
+                date: moment().add(_.random(5), "days").format("DD.MM")
             };
     
             match.coefficients = {};
@@ -176,8 +175,9 @@ main {
         flex-flow: row nowrap;
         margin: 5px 0;
         
-        
         &.head span {
+            cursor: pointer !important;
+            
             &.date {background:  #ff9999;}
             &.teams {background: #cccccc;}
             &.h {background: #009933;}
@@ -186,7 +186,6 @@ main {
             &.dg {background: #66b3ff;}
             &.g {background: #0066ff;}
         }
-        
         
         span {
             flex: 1 0 calc((60% - 32px) / 6);
@@ -203,8 +202,6 @@ main {
             &.dg {order: 4}
             &.g {order: 5; margin-right: 4px;}
         }
-        
-        
         
     }
 }

@@ -11,7 +11,6 @@ export default {
     props: ["type", "coefficients"],
     computed: {
         bestBookmark() {
-            console.log("comp2");
             return _.maxBy(this.coefficients, "coefficient");
         },
         className() {
