@@ -2,7 +2,7 @@
 header
     h1 Welcome to best fake bookmaker
     div
-        p#logo: img(src="../images/logo.png")
+        router-link#logo(to="/"): img(src="../images/logo.png")
         nav#auth(v-if="auth")
             p About
             p Language: English / Russian
@@ -11,7 +11,7 @@ header
         nav#not-auth(v-else)
             p About
             p Language: English / Russian
-            p Authorization
+            p: router-link(to="/auth"): a Authorization
             p Registration
 </template>
 
@@ -49,6 +49,7 @@ header {
             flex: 1 1 auto;
             align-self: center;
             text-align: center;
+            margin: 5px 0;
             
             img {
                 width: 90%;
