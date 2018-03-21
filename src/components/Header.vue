@@ -4,15 +4,14 @@ header
     div
         router-link#logo(to="/"): img(src="../images/logo.png")
         nav#auth(v-if="auth")
-            p About
+            p: router-link(to="/about"): a About
             p Language: English / Russian
             p Statistic
             p Logout
         nav#not-auth(v-else)
-            p About
+            p: router-link(to="/about"): a About
             p Language: English / Russian
-            p: router-link(to="/auth"): a Authorization
-            p Registration
+            p: router-link(to="/auth"): a Authentication
 </template>
 
 <script>

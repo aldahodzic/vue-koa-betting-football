@@ -1,9 +1,17 @@
 <template lang="pug">
 div#auth
-    h2 Authorization
+    
+    div#head
+        h2(
+        v-for="auth in authTypes",
+        :class="auth.className",
+        @click="changeMode(auth.mode)"
+        ) {{auth.title}}
+    
     app-validating-input(
     v-for="field in fields",
     :key="field.title",
+    :mode="currentMode",
     :type="'row'",
     :title="field.title",
     :pattern="field.pattern",
@@ -13,7 +21,7 @@ div#auth
     )
     input#login(
     type="button",
-    value="Login",
+    :value="buttonValue",
     @click="login",
     :disabled="!dataValid || !dataFilled",
     :title="buttonTitle"
@@ -42,6 +50,18 @@ export default {
                     pattern: /^[a-zA-Z0-9]+$/,
                     failMessage: "Only latin characters and numbers"
                 }
+            ],
+            authTypes: [
+                {
+                    title: "Authorization",
+                    mode: "auth",
+                    className: "active"
+                },
+                {
+                    title: "Registration",
+                    mode: "reg",
+                    className: ""
+                }
             ]
         }
     },
@@ -56,24 +76,48 @@ export default {
             if(!this.dataFilled) return "Fill in the data";
             if(!this.dataValid) return "Move mouse over the sign ✖";
             return false;
+        },
+        currentMode() {
+            return _.find(this.authTypes, {className: "active"}).mode;
+        },
+        buttonValue() {
+            return this.currentMode === "auth" ? "Sign In" : "Sign Up";
         }
     },
     methods: {
         login() {
             console.log("send");
+        },
+        changeMode(mode) {
+            _.each(this.authTypes, type => type.className = type.mode === mode ? "active" : "");
         }
     }
 }
 </script>
 
 <style lang="less">
+.justify {
+    justify-content: space-around;
+    justify-content: space-evenly;
+}
 #auth {
     background: white;
     padding: 5px 0;
     
-    h2 {
-        margin: 0;
-        text-align: center;
+    #head {
+        display: flex;
+        flex-flow: row nowrap;
+        .justify;
+    
+        h2 {
+            margin: 5px 10px;
+            padding: 3px 0;
+            text-align: center;
+            flex: 0 1 30%;
+            cursor: pointer;
+            
+            &.active {border-bottom: 1px solid #333;}
+        }
     }
     
     #login {

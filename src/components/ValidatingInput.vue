@@ -20,7 +20,8 @@ export default {
         title: String,
         value: String,
         pattern: RegExp,
-        failMessage: String
+        failMessage: String,
+        mode: String
     },
     data() {
         return {
@@ -52,6 +53,12 @@ export default {
             this.activated = true;
             this.$emit("new-value", value);
         }
+    },
+    watch: {
+        mode() {
+            this.$emit("new-value", "");
+            this.activated = false;
+        }
     }
 }
 </script>
@@ -62,7 +69,7 @@ label {
     justify-content: center;
     align-items: center;
     font-size: 18px;
-    margin: 10px 0;
+    margin: 20px 0;
     
     & > * {
         flex: 0 0 150px
