@@ -17,6 +17,7 @@
     "pug": "^2.0.1",
     "pug-loader": "^2.3.0",
     "vue": "^2.5.11",
+    "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1"
   },
   "browserslist": [

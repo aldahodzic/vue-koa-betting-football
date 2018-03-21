@@ -6,7 +6,7 @@ label
     :class="icon.className",
     :title="icon.title"
     )
-    span Enter {{title}}
+    span {{$t('Enter')}} {{$t(title)}}
     input(
     :value="value",
     @input="onInput($event.target.value)"

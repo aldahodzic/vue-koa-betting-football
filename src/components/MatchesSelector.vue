@@ -1,15 +1,15 @@
 <template lang="pug">
 main
-    p#none-matches(v-if="emptySelectedMatches") None matches
+    p#none-matches(v-if="emptySelectedMatches") {{$t('not.found.matches')}}
     template(v-else)
         p.row.head
             span(
             v-for="button in sort.buttons",
             :key="button.type",
-            :title="'Click to sort by: '+button.title",
+            :title="$t('click.for.sort', {title: $t(button.title)})",
             :class="button.type",
             @click="sortMatches(button)"
-            ) {{button.name}}
+            ) {{$t(button.name)}}
         
         p.row(v-for="(match, index) in matchesFromSelectedLeagues")
             span.date {{match.date}}
@@ -53,13 +53,13 @@ export default {
                         type: "teams"
                     },
                     {
-                        title: "Home win",
+                        title: "win.home",
                         name: "1",
                         direction: 1,
                         type: "h"
                     },
                     {
-                        title: "Home win / Draw",
+                        title: "phrases.winHome_Draw",
                         name: "10",
                         direction: 1,
                         type: "hd"
@@ -71,13 +71,13 @@ export default {
                         type: "d"
                     },
                     {
-                        title: "Draw / Guest win",
+                        title: "phrases.winGuest_Draw",
                         name: "02",
                         direction: 1,
                         type: "dg"
                     },
                     {
-                        title: "Guest win",
+                        title: "win.guest",
                         name: "2",
                         direction: 1,
                         type: "g"
@@ -116,7 +116,7 @@ export default {
         }
     },
     created() {
-        for(let i = 0; i < 20; i++) {
+        for(let i = 0; i < 10; i++) {
             
             let match = {
                 home: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),

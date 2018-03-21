@@ -4,7 +4,7 @@ menu
     v-for="league in leagues",
     @click="selectLeague(league)",
     :class="league.selected"
-    ) {{league.name}}
+    ) {{$t(league.name)}}
 </template>
 
 <script>

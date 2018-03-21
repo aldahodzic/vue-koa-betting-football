@@ -1,17 +1,23 @@
 <template lang="pug">
 header
-    h1 Welcome to best fake bookmaker
+    h1 {{$t('site.welcome')}}
     div
-        router-link#logo(to="/"): img(src="../images/logo.png")
+        router-link#logo(to="/"): img(src="../images/logo.png", :title="$t('site.goToMain')")
         nav#auth(v-if="auth")
-            p: router-link(to="/about"): a About
-            p Language: English / Russian
-            p Statistic
-            p Logout
+            p: router-link(to="/about"): a {{$t('About')}}
+            p Language:
+                span.cl(@click="setLanguage('en')") {{$t('English')}}
+                span /
+                span.cl(@click="setLanguage('ru')") {{$t('Russian')}}
+            p {{$t('Statistic')}}
+            p {{$t('Logout')}}
         nav#not-auth(v-else)
-            p: router-link(to="/about"): a About
-            p Language: English / Russian
-            p: router-link(to="/auth"): a Authentication
+            p: router-link(to="/about"): a {{$t('About')}}
+            p {{$t('Language')}}:
+                span.cl(@click="setLanguage('en')") {{$t('English')}}
+                span /
+                span.cl(@click="setLanguage('ru')") {{$t('Russian')}}
+            p: router-link(to="/auth"): a {{$t('Authentication')}}
 </template>
 
 <script>
@@ -20,6 +26,12 @@ export default {
     data() {
         return {
             auth: false
+        }
+    },
+    methods: {
+        setLanguage(language) {
+            document.documentElement.lang = language;
+            this.$set(this.$i18n, "locale", language);
         }
     }
 }
@@ -62,7 +74,14 @@ header {
             .justify;
             
             p {
-                margin: 0
+                margin: 0;
+                
+                .cl {
+                    cursor: pointer;
+                    margin: 0 5px;
+                    
+                    &:hover {text-decoration: underline;}
+                }
             }
         }
     }

@@ -6,13 +6,12 @@ div#auth
         v-for="auth in authTypes",
         :class="auth.className",
         @click="changeMode(auth.mode)"
-        ) {{auth.title}}
+        ) {{$t(auth.title)}}
     
     app-validating-input(
     v-for="field in fields",
     :key="field.title",
     :mode="currentMode",
-    :type="'row'",
     :title="field.title",
     :pattern="field.pattern",
     :value="field.value",
@@ -42,13 +41,13 @@ export default {
                     title: "login",
                     value: "",
                     pattern: /^[a-zA-Z _]+$/,
-                    failMessage: "Only latin characters, space or underscore"
+                    failMessage: this.$t("phrases.only.characters_numbers")
                 },
                 {
                     title: "password",
                     value: "",
                     pattern: /^[a-zA-Z0-9]+$/,
-                    failMessage: "Only latin characters and numbers"
+                    failMessage: this.$t("phrases.only.characters_symbols")
                 }
             ],
             authTypes: [
@@ -73,15 +72,15 @@ export default {
             return this.fields.every(field => field.value !== "");
         },
         buttonTitle() {
-            if(!this.dataFilled) return "Fill in the data";
-            if(!this.dataValid) return "Move mouse over the sign ✖";
+            if(!this.dataFilled) return this.$t("fill.data");
+            if(!this.dataValid) return this.$t("move.mouse.sign");
             return false;
         },
         currentMode() {
             return _.find(this.authTypes, {className: "active"}).mode;
         },
         buttonValue() {
-            return this.currentMode === "auth" ? "Sign In" : "Sign Up";
+            return this.currentMode === "auth" ? this.$t("SignIn") : this.$t("SignUp");
         }
     },
     methods: {

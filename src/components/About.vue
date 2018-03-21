@@ -1,5 +1,6 @@
 <template lang="pug">
-div#about Site with fake bets on football
+div#about
+    p {{$t('site.description')}}
 
 </template>
 
