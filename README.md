@@ -11,7 +11,9 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
+# run server
+npm i -g nodemon
 npm run build
+npm run node
 ```
 
