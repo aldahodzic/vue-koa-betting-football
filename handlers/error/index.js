@@ -1,7 +1,5 @@
-if(process.env.NODE_ENV !== "production") {
-    require("trace");
-    require("clarify");
-}
+require("trace");
+require("clarify");
 
 const _ = require("lodash");
 

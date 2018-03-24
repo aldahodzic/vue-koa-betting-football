@@ -127,7 +127,7 @@ export default {
     
             match.coefficients = {};
             
-            _.each(["1", "10", "0", "02", "2"], type => {
+            _.each(["1", "0", "2"], type => {
                 let all = [];
                 _.each(["bet1", "bet2", "bet3"], bet => all.push({
                     name: bet,
@@ -142,12 +142,19 @@ export default {
             /*
             * Match schema
             * {
+            *   league: League
+            *   date: DD.MM HH.mm
             *   home: Team
             *   guest: Team
-            *   coefficients: [{
-            *       name: Bookmaker.name,
-            *       coefficient: Bookmaker.coefficient
-            *   }]
+            *   coefficients: {
+            *       [coefficientType(1|0|2)]: [
+            *           {
+            *               name: Bookmaker.name,
+            *               coefficient: Bookmaker.coefficient
+            *           },
+            *           ...
+            *       ]
+            *   }
             * }
             * */
             
