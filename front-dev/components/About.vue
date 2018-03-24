@@ -1,7 +1,6 @@
 <template lang="pug">
 div#about
     p {{$t('site.description')}}
-
 </template>
 
 <script>

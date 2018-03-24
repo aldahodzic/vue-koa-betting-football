@@ -10,9 +10,10 @@ import AppAbout from "./components/About.vue";
 export const router = new VueRouter ({
     mode: "history",
     routes: [
-        {path: "", component: AppMatches},
+        {path: "", redirect: "/matches"},
+        {path: "/matches", component: AppMatches},
         {path: "/auth", component: AppAuthentication},
         {path: "/about", component: AppAbout},
-        {path: "*", redirect: ""}
+        {path: "*", redirect: "/matches"}
     ]
 });
