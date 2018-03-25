@@ -8,7 +8,7 @@
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-        "node": "set NODE_PATH=.&& nodemon app.js"
+        "node": "set NODE_PATH=.&& node app.js"
     },
     "dependencies": {
         "axios": "^0.18.0",
@@ -23,6 +23,7 @@
         "less-loader": "^4.1.0",
         "lodash": "^4.17.5",
         "moment": "^2.21.0",
+        "needle": "^2.2.0",
         "pug": "^2.0.1",
         "pug-loader": "^2.3.0",
         "puppeteer": "^1.2.0",
