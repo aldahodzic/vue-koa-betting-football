@@ -1,3 +1,4 @@
 module.exports = {
-    williamhill: require("./williamhill")
+    williamhill: require("./williamhill"),
+    parimatch: require("./parimatch"),
 };

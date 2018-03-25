@@ -1,6 +1,8 @@
 const cheerio = require("cheerio");
 const _ = require("lodash");
 const needle = require("needle");
+const moment = require("moment");
+let fs = require("fs");
 
 exports.create = async (URL, leagueName) => {
 
@@ -21,20 +23,24 @@ exports.create = async (URL, leagueName) => {
     const $ = cheerio.load(innerHTML);
     log("created virtual dom of page");
 
-    let tBody = $("div[id*='tup_mkt_grp'] > table > tbody");
-    let trs = tBody.find(".rowOdd");
+    let table = $("form[name='f1']");
+    let tBodies = table.find("tbody[class*='row']");
     let allTeams = [];
 
-    trs.each((i, element) => {
+
+    tBodies.each((i, _element) => {
+
+        let element = $(_element);
+        if(element.find(".bk").length !== 1) return;
 
         let match = {};
 
         // Teams
         {
-            let span = $(element).find("span[id*='_mkt_namespace']");
-            let text = span.text().trim();
-            text = text.replace(/ v /g, "|-|");
-            let teams = text.split("|-|");
+            let span = element.find("td[class='l'] > a");
+            let text = span.html();
+            text = text.replace(/\((ENG|ESP|DEU|ITA|FRA)\)/g, "");
+            let teams = text.split("<br>");
             match.home = teams[0].trim();
             match.guest = teams[1].trim();
         }
@@ -46,22 +52,21 @@ exports.create = async (URL, leagueName) => {
 
         // Date
         {
-            let span = $(element).find("span[id*='tzTime:br:']");
-            let text = span.attr("id");
-            let idParts = text.split(":br:");
-            match.date = +idParts[1] * 1000;
+            let span = element.find("tr > td:nth-child(2)");
+            let text = span.html();
+            let [date, time] = text.split("<br>");
+            match.date = moment(`${date}/${(new Date()).getFullYear()}-${time}`, "DD/MM/YYYY-HH:mm").valueOf();
         }
 
         // Coefficients
         {
             match.coefficients = {};
-            let divs = $(element).find(".eventprice");
+
             let coefficientTypes = ["1", "0", "2"];
-            divs.each((i, div) => {
-                let [home, guest] = $(div).text().trim().split("/");
-                let coefficient = Math.round((home / guest * 100)) / 100;
-                match.coefficients[coefficientTypes[i]] = [{
-                    name: "Williamhill",
+            _.each(coefficientTypes, (coeff, index) => {
+                let coefficient = +element.find(`tr > td:nth-child(${9 + index}) > u > a`).text();
+                match.coefficients[coeff] = [{
+                    name: "Parimatch",
                     coefficient
                 }];
             })
@@ -70,7 +75,7 @@ exports.create = async (URL, leagueName) => {
         allTeams.push(match);
     });
 
-    log("matches created: Williamhill");
+    log("matches created: Parimatch");
 
     return allTeams;
 
