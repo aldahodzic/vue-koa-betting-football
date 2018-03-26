@@ -13,7 +13,7 @@ main
         
         p.row(v-for="(match, index) in matchesFromSelectedLeagues")
             span.date {{match.date}}
-            span.teams [{{match.league}}] {{match.home}} &mdash; {{match.guest}}
+            span.teams {{match.home}} &mdash; {{match.guest}}
             app-select-match(
             v-for="(coefficients, type, index) in match.coefficients",
             :key="type+index",
@@ -59,22 +59,10 @@ export default {
                         type: "h"
                     },
                     {
-                        title: "phrases.winHome_Draw",
-                        name: "10",
-                        direction: 1,
-                        type: "hd"
-                    },
-                    {
                         title: "Draw",
                         name: "0",
                         direction: 1,
                         type: "d"
-                    },
-                    {
-                        title: "phrases.winGuest_Draw",
-                        name: "02",
-                        direction: 1,
-                        type: "dg"
                     },
                     {
                         title: "win.guest",
@@ -94,7 +82,7 @@ export default {
             if(this.leagues === false) matches = this.matches;
             else matches = _.filter(this.matches, match => this.leagues.includes(match.league));
             
-            if(["1", "10", "0", "02", "2"].includes(this.sort.type)) {
+            if(["1", "0", "2"].includes(this.sort.type)) {
                 matches = _.sortBy(matches, match => _.maxBy(match.coefficients[this.sort.type], "coefficient").coefficient);
             }
             if(this.sort.type === "Date") matches = _.sortBy(matches, match => moment(match.date, "DD.MM").valueOf());
@@ -115,50 +103,10 @@ export default {
             button.direction = -button.direction;
         }
     },
-    created() {
-        for(let i = 0; i < 10; i++) {
-            
-            let match = {
-                home: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
-                guest: _.capitalize(Math.random().toString(27).replace(/\d/g, "").slice(2, 10)),
-                league: this.leaguesForCreated[_.random(this.leaguesForCreated.length-1)],
-                date: moment().add(_.random(5), "days").format("DD.MM")
-            };
-    
-            match.coefficients = {};
-            
-            _.each(["1", "0", "2"], type => {
-                let all = [];
-                _.each(["bet1", "bet2", "bet3"], bet => all.push({
-                    name: bet,
-                    coefficient: _.random(5, true).toFixed(2)
-                }));
-    
-                match.coefficients[type] = all;
-            });
-            
-            this.matches.push(match);
-            
-            /*
-            * Match schema
-            * {
-            *   league: League
-            *   date: DD.MM HH.mm
-            *   home: Team
-            *   guest: Team
-            *   coefficients: {
-            *       [coefficientType(1|0|2)]: [
-            *           {
-            *               name: Bookmaker.name,
-            *               coefficient: Bookmaker.coefficient
-            *           },
-            *           ...
-            *       ]
-            *   }
-            * }
-            * */
-            
-        }
+    async created() {
+        let {data} = await this.$http.get("/matches");
+        _.each(data, match => match.date = moment(match.date).format("DD.MM HH:mm"));
+        this.matches = data;
     }
 }
 </script>
@@ -188,14 +136,12 @@ main {
             &.date {background:  #ff9999;}
             &.teams {background: #cccccc;}
             &.h {background: #009933;}
-            &.hd {background: #ace600;}
             &.d {background: #ffcc00;}
-            &.dg {background: #66b3ff;}
             &.g {background: #0066ff;}
         }
         
         span {
-            flex: 1 0 calc((60% - 32px) / 6);
+            flex: 1 0 calc((60% - 32px) / 4);
             text-align: center;
             padding: 10px 0;
             margin: 0 2px;

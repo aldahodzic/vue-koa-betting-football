@@ -59,7 +59,7 @@ exports.create = async (URL, leagueName) => {
             let coefficientTypes = ["1", "0", "2"];
             divs.each((i, div) => {
                 let [home, guest] = $(div).text().trim().split("/");
-                let coefficient = Math.round((home / guest * 100)) / 100;
+                let coefficient = (home / guest) + 1;
                 match.coefficients[coefficientTypes[i]] = [{
                     name: "Williamhill",
                     coefficient

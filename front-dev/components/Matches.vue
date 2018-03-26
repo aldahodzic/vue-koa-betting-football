@@ -14,7 +14,6 @@ div
 import AppMatchesMenu from "./MatchesMenu.vue";
 import AppMatchesSelector from "./MatchesSelector.vue";
 export default {
-    name: "",
     components: {
         AppMatchesMenu,
         AppMatchesSelector
