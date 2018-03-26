@@ -17,8 +17,15 @@ exports.create = async (URL, leagueName) => {
         cnt += 1;
     };
 
-    let innerHTML = await new Promise((resolve, reject) => needle.get(URL, (err, res) => err ? reject(err) : resolve(res.body)));
-    log("got page content");
+    let innerHTML;
+    try {
+        innerHTML = await new Promise((resolve, reject) => needle.get(URL, (err, res) => err ? reject(err) : resolve(res.body)));
+        log("got page content");
+    }
+    catch(e) {
+        log("page content parsing failed");
+        return [];
+    }
 
     const $ = cheerio.load(innerHTML);
     log("created virtual dom of page");
@@ -60,12 +67,18 @@ exports.create = async (URL, leagueName) => {
             let divs = $(element).find(".eventprice");
             let coefficientTypes = ["1", "0", "2"];
             divs.each((i, div) => {
-                let [home, guest] = $(div).text().trim().split("/");
-                let coefficient = (home / guest) + 1;
-                match.coefficients[coefficientTypes[i]] = [{
+                let coefficient, text = $(div).text().trim();
+                if(text === "EVS") coefficient = 2;
+                else {
+                    let [home, guest] = text.split("/");
+                    coefficient = (home / guest) + 1;
+                }
+
+                if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
                     name: "Williamhill",
                     coefficient
                 }];
+                else match.coefficients[coefficientTypes[i]] = [];
             })
         }
 

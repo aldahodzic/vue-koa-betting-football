@@ -19,8 +19,16 @@ exports.create = async (URL, leagueName) => {
         cnt += 1;
     };
 
-    let innerHTML = await new Promise((resolve, reject) => needle.get(URL, (err, res) => err ? reject(err) : resolve(res.body)));
-    log("got page content");
+
+    let innerHTML;
+    try {
+        innerHTML = await new Promise((resolve, reject) => needle.get(URL, (err, res) => err ? reject(err) : resolve(res.body)));
+        log("got page content");
+    }
+    catch(e) {
+        log("page content parsing failed");
+        return [];
+    }
 
     const $ = cheerio.load(innerHTML);
     log("created virtual dom of page");
@@ -41,7 +49,7 @@ exports.create = async (URL, leagueName) => {
         {
             let span = element.find("td[class='l'] > a");
             let text = span.html();
-            text = text.replace(/\((ENG|ESP|DEU|ITA|FRA)\)/g, "");
+            text = text.replace(/\((\w+)\)/g, "");
             let teams = text.split("<br>");
             match.home = fixTeamName(teams[0].trim());
             match.guest = fixTeamName(teams[1].trim());
@@ -67,10 +75,11 @@ exports.create = async (URL, leagueName) => {
             let coefficientTypes = ["1", "0", "2"];
             _.each(coefficientTypes, (coeff, index) => {
                 let coefficient = +element.find(`tr > td:nth-child(${9 + index}) > u > a`).text();
-                match.coefficients[coeff] = [{
+                if(!isNaN(coefficient)) match.coefficients[coeff] = [{
                     name: "Parimatch",
                     coefficient
                 }];
+                else match.coefficients[coefficientTypes[coeff]] = [];
             })
         }
 

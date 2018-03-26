@@ -105,7 +105,7 @@ export default {
     },
     async created() {
         let {data} = await this.$http.get("/matches");
-        _.each(data, match => match.date = moment(match.date).format("DD.MM HH:mm"));
+        _.each(data, match => match.date = moment(match.date).format("DD.MM"));
         this.matches = data;
     }
 }
