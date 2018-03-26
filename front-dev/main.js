@@ -6,6 +6,9 @@ import VueAxios from 'vue-axios';
 const axios = Axios.create({baseURL: 'http://localhost:3000'});
 Vue.use(VueAxios, axios);
 
+import Vuex from "vuex";
+Vue.use(Vuex);
+
 import {router} from "./router";
 import {i18n} from "./i18n/";
 

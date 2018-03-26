@@ -1,5 +1,4 @@
 const cheerio = require("cheerio");
-const _ = require("lodash");
 const needle = require("needle");
 const moment = require("moment");
 

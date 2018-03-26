@@ -19,7 +19,6 @@ exports.create = async (URL, leagueName) => {
         cnt += 1;
     };
 
-
     let innerHTML;
     try {
         innerHTML = await new Promise((resolve, reject) => needle.get(URL, (err, res) => err ? reject(err) : resolve(res.body)));
