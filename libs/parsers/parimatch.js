@@ -4,6 +4,8 @@ const needle = require("needle");
 const moment = require("moment");
 let fs = require("fs");
 
+const fixTeamName = require("./fixTeamName");
+
 exports.create = async (URL, leagueName) => {
 
     let cnt = 1;
@@ -41,8 +43,8 @@ exports.create = async (URL, leagueName) => {
             let text = span.html();
             text = text.replace(/\((ENG|ESP|DEU|ITA|FRA)\)/g, "");
             let teams = text.split("<br>");
-            match.home = teams[0].trim();
-            match.guest = teams[1].trim();
+            match.home = fixTeamName(teams[0].trim());
+            match.guest = fixTeamName(teams[1].trim());
         }
 
         // League

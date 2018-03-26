@@ -2,6 +2,8 @@ const cheerio = require("cheerio");
 const _ = require("lodash");
 const needle = require("needle");
 
+const fixTeamName = require("./fixTeamName");
+
 exports.create = async (URL, leagueName) => {
 
     let cnt = 1;
@@ -35,8 +37,8 @@ exports.create = async (URL, leagueName) => {
             let text = span.text().trim();
             text = text.replace(/ v /g, "|-|");
             let teams = text.split("|-|");
-            match.home = teams[0].trim();
-            match.guest = teams[1].trim();
+            match.home = fixTeamName(teams[0].trim());
+            match.guest = fixTeamName(teams[1].trim());
         }
 
         // League

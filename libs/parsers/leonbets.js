@@ -3,6 +3,8 @@ const _ = require("lodash");
 const needle = require("needle");
 const moment = require("moment");
 
+const fixTeamName = require("./fixTeamName");
+
 exports.create = async (URL, leagueName) => {
 
     let cnt = 1;
@@ -36,8 +38,8 @@ exports.create = async (URL, leagueName) => {
             let span = element.find("a.nou2");
             let text = span.text().trim();
             let teams = text.split(" - ");
-            match.home = teams[0].trim();
-            match.guest = teams[1].trim();
+            match.home = fixTeamName(teams[0].trim());
+            match.guest = fixTeamName(teams[1].trim());
         }
 
         // League
