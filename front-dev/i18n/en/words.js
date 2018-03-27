@@ -48,6 +48,9 @@ export default {
         home: "Home team winning",
         guest: "Guest team winning",
     },
+    loading: {
+        matches: "Loading matches"
+    },
 
     // structured phrases with not
     not: {

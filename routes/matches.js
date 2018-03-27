@@ -11,10 +11,9 @@ exports.checkDB = async (ctx, next) => {
 
     let matches = await Match.find({});
 
-    let data = [];
-    _.each(matches, match => data.push(match.getData()));
+    let data = matches.map(match => match.getData());
 
-    if(matches.length > 0) return ctx.end(data);
+    if(data.length > 0) return ctx.end(data);
 
     await next();
 
@@ -24,10 +23,11 @@ exports.checkDB = async (ctx, next) => {
 
 exports.parser = async (ctx, next) => {
 
+    // Launch parser for every url in bookie's urls
     let allData = [];
     _.each(bookies, (urls, bookieName) => {
         _.each(urls, ({url, league, selected}) => {
-                                                                                        selected = true;
+                selected = true;
             if(selected) allData.push(parsers[bookieName].create(url, league));
         });
     });
@@ -43,8 +43,8 @@ exports.writeDB = async ctx => {
 
     let matchesAll = _.flattenDeep(matches);
 
+    // Combine the coefficients of the same matches from different bookies
     let matchesConcatenated = {};
-
     _.each(matchesAll, match =>{
         let key = `${match.league}-${match.home}--${match.guest}`;
         if(key in matchesConcatenated) _.each(["1", "0", "2"], cType => {
@@ -53,13 +53,14 @@ exports.writeDB = async ctx => {
         else matchesConcatenated[key] = match;
     });
 
-
+    // Select, after, if match exist update, otherwise insert match to db
     let promiseMatches = [];
     _.each(matchesConcatenated, (matchData, key) => {
         let match = Match.findOneAndUpdate({key}, {key, ...matchData}, {upsert: true, new: true});
         promiseMatches.push(match);
     });
 
+    // Pick the data of matches
     let matchesAfterActionsDB = await Promise.all(promiseMatches);
     matchesAfterActionsDB = matchesAfterActionsDB.map(match => match.getData());
 

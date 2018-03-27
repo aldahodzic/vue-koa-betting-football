@@ -2,43 +2,26 @@
 menu
     li(
     v-for="league in leagues",
-    @click="selectLeague(league)",
-    :class="league.selected"
+    @click="selectLeague(league.name)",
+    :class="league.selectedClass"
     ) {{$t(league.name)}}
 </template>
 
 <script>
-import _ from "lodash";
+import {mapGetters, mapActions} from "vuex";
 export default {
     name: "app-menu",
-    props: {
-        leaguesForCreated: Array
-    },
-    data() {
-        return {
-            leagues: []
-        }
-    },
-    created() {
-        _.each(this.leaguesForCreated, league => {
-            this.leagues.push({
-                name: league,
-                selected: ""
-            });
-        });
+    computed: {
+        ...mapGetters(["leagues"])
     },
     methods: {
-        selectLeague(league) {
-            league.selected = league.selected === "" ? "selected" : "";
-            
-            let selectedLeagues = _.filter(this.leagues, "selected");
-            
-            let leagues = [];
-            if(selectedLeagues.length > 0) _.each(selectedLeagues, league => leagues.push(league.name));
-            else leagues = this.leaguesForCreated;
-            
-            this.$emit("new-select-leagues", leagues);
-        }
+        ...mapActions([
+            "selectLeague",
+            "createSelectableLeagues"
+        ])
+    },
+    created() {
+        this.createSelectableLeagues();
     }
 }
 </script>

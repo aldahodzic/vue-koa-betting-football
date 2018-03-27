@@ -50,6 +50,9 @@ export default {
         home: "Победа хозяев",
         guest: "Победа гостей",
     },
+    loading: {
+        matches: "Загрузка матчей"
+    },
 
     // structured phrases with not
     not: {

@@ -1,6 +1,7 @@
 <template lang="pug">
 main
-    p#none-matches(v-if="emptySelectedMatches") {{$t('not.found.matches')}}
+    p#loading-matches(v-if="loadingMatches") {{$t('loading.matches')}}
+    p#none-matches(v-else-if="emptySelectedMatches") {{$t('not.found.matches')}}
     template(v-else)
         p.row.head
             span(
@@ -24,20 +25,15 @@ main
 
 <script>
 import _ from "lodash";
-import moment from "moment";
+import {mapGetters, mapActions} from "vuex";
 import AppSelectMatch from "./MatchesButtonSelect.vue";
 export default {
     name: "app-content",
     components: {
         AppSelectMatch
     },
-    props: {
-        leaguesForCreated: Array,
-        leagues: [Array, Boolean]
-    },
     data() {
         return {
-            matches: [],
             sort: {
                 buttons: [
                     {
@@ -73,19 +69,23 @@ export default {
                 ],
                 type: "Date",
                 direction: -1
-            }
+            },
+            loadingMatches: true
         }
     },
     computed: {
+        ...mapGetters([
+            "leagues",
+            "matches"
+        ]),
         matchesFromSelectedLeagues() {
-            let matches;
-            if(this.leagues === false) matches = this.matches;
-            else matches = _.filter(this.matches, match => this.leagues.includes(match.league));
+            let matches = this.matches;
             
             if(["1", "0", "2"].includes(this.sort.type)) {
-                matches = _.sortBy(matches, match => _.maxBy(match.coefficients[this.sort.type], "coefficient").coefficient);
+                let bestBookieCoefficient = match => _.maxBy(match.coefficients[this.sort.type], "coefficient").coefficient;
+                matches = _.sortBy(matches, match => +bestBookieCoefficient(match));
             }
-            if(this.sort.type === "Date") matches = _.sortBy(matches, match => moment(match.date, "DD.MM").valueOf());
+            if(this.sort.type === "Date") matches = _.sortBy(matches, "dateNum");
             if(this.sort.type === "Teams") matches = _.sortBy(matches, "home");
             
             if(this.sort.direction > 0) matches = matches.reverse();
@@ -97,16 +97,17 @@ export default {
         }
     },
     methods: {
+        ...mapActions([
+            "loadMatches"
+        ]),
         sortMatches(button) {
             this.sort.type = button.name;
             this.sort.direction = button.direction;
             button.direction = -button.direction;
         }
     },
-    async created() {
-        let {data} = await this.$http.get("/matches");
-        _.each(data, match => match.date = moment(match.date).format("DD.MM"));
-        this.matches = data;
+    created() {
+        this.loadMatches(() => this.loadingMatches = false);
     }
 }
 </script>
@@ -119,6 +120,14 @@ main {
     
     #none-matches {
         color: red;
+        font-weight: bold;
+        text-align: center;
+        font-size: 20px;
+        margin: 10px;
+    }
+    
+    #loading-matches {
+        color: blue;
         font-weight: bold;
         text-align: center;
         font-size: 20px;
@@ -141,14 +150,14 @@ main {
         }
         
         span {
-            flex: 1 0 calc((60% - 32px) / 4);
+            flex: 1 0 calc((50% - 32px) / 4);
             text-align: center;
             padding: 10px 0;
             margin: 0 2px;
             cursor: pointer;
     
             &.date {margin-left: 4px; background: #ffb3b3; cursor: default}
-            &.teams {flex-basis: 40%; background: #e6e6e6; cursor: default}
+            &.teams {flex-basis: 50%; background: #e6e6e6; cursor: default}
             &.h {order: 1}
             &.hd {order: 2}
             &.d {order: 3}
