@@ -5,15 +5,23 @@ const _ = require("lodash");
 const Match = require("libs/mongo/schemas/match");
 const bookies = require("libs/parsers/bookies");
 
-
+const moment = require("moment");
 
 exports.checkDB = async (ctx, next) => {
 
-    let matches = await Match.find({});
 
-    let data = matches.map(match => match.getData());
+    // let selectedLeagues = ctx.params.query;
 
-    if(data.length > 0) return ctx.end(data);
+    return ctx.end(ctx.request.body);
+
+    let matches = await Match.find();
+
+    if(matches.length > 0) {
+        let data = matches.map(match => match.getData());
+        return ctx.end(data);
+    }
+
+
 
     await next();
 

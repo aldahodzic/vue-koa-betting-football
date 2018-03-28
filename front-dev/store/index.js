@@ -17,7 +17,8 @@ export const store = new Vuex.Store({
         },
         selectedLeagues(state, getters) {
             let leagues = getters.leagues.map(league => league.selectedClass === "selected" ? league.name : null);
-            return leagues.every(league => league === null) ? state.leaguesList : leagues;
+            _.remove(leagues, leagues => leagues === null);
+            return leagues.length === 0 ? state.leaguesList : leagues;
         },
         matches(state, getters) {
             return state.matches.filter(match => getters.selectedLeagues.includes(match.league));
@@ -31,12 +32,17 @@ export const store = new Vuex.Store({
             let league = state.selectableLeagues.find(league => league.name === leagueName);
             league.selectedClass = league.selectedClass !== "selected" ? "selected" : "";
         },
-        pushMatch(state, match) {
-            state.matches.push({
+        cleanMatches(state, selectedLeagues) {
+            _.remove(state.matches, match => selectedLeagues.includes(match.league));
+            // after deleting, matches are not reactive, splice doesn't work
+            state.matches = [...state.matches];
+        },
+        pushMatches(state, data) {
+            _.each(data, match => state.matches.push({
                 ...match,
                 dateNum: match.date,
                 date: moment(match.date).format("DD.MM")
-            });
+            }));
         }
     },
     actions: {
@@ -46,12 +52,19 @@ export const store = new Vuex.Store({
         selectLeague({commit}, leagueName) {
             commit("selectLeague", leagueName);
         },
-        async loadMatches({commit, state}, callback) {
-            if(state.matches.length === 0) {
-                let {data} = await Vue.axios.get("/matches");
-                _.each(data, match => commit("pushMatch", match));
-                callback();
-            }
+        async loadMatches({commit, getters}, callback) {
+            commit("cleanMatches", getters.selectedLeagues);
+
+            let selectedLeagues = getters.selectedLeagues.join("|");
+
+            // let {data} = await Vue.axios.get(`/matches/${selectedLeagues}`);
+            let {data} = await Vue.axios.post(`/matches`, {data: "dwadawd"});
+
+            console.log(data);
+
+            commit("pushMatches", data);
+
+            callback();
         }
     }
 });

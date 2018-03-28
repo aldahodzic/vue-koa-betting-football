@@ -28,6 +28,7 @@ module.exports = name => {
     if(name === "Hellas Verona") return "Verona";
     if(name === "AS Monaco") return "Monaco";
     if(name === "Sporting Lisbon") return "Sporting";
+    if(name === "Sporting CP") return "Sporting";
     if(name === "RB Salzburg") return "Salzburg";
     if(name === "Hannover 96") return "Hannover";
     if(name === "Swansea City") return "Swansea";

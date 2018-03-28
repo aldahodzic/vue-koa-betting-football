@@ -1,7 +1,6 @@
 <template lang="pug">
 main
-    p#loading-matches(v-if="loadingMatches") {{$t('loading.matches')}}
-    p#none-matches(v-else-if="emptySelectedMatches") {{$t('not.found.matches')}}
+    p#none-matches(v-if="emptySelectedMatches") {{$t('not.found.matches')}}
     template(v-else)
         p.row.head
             span(
@@ -70,7 +69,6 @@ export default {
                 type: "Date",
                 direction: -1
             },
-            loadingMatches: true
         }
     },
     computed: {
@@ -93,21 +91,15 @@ export default {
             return matches;
         },
         emptySelectedMatches() {
-            return this.matchesFromSelectedLeagues.length < 1;
+            return this.matchesFromSelectedLeagues.length === 0;
         }
     },
     methods: {
-        ...mapActions([
-            "loadMatches"
-        ]),
         sortMatches(button) {
             this.sort.type = button.name;
             this.sort.direction = button.direction;
             button.direction = -button.direction;
         }
-    },
-    created() {
-        this.loadMatches(() => this.loadingMatches = false);
     }
 }
 </script>
@@ -120,14 +112,6 @@ main {
     
     #none-matches {
         color: red;
-        font-weight: bold;
-        text-align: center;
-        font-size: 20px;
-        margin: 10px;
-    }
-    
-    #loading-matches {
-        color: blue;
         font-weight: bold;
         text-align: center;
         font-size: 20px;

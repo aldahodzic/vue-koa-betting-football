@@ -22,7 +22,7 @@ const MatchSchema = new mongoose.Schema({
         }],
     }
 }, {
-    timestamp: false,
+    timestamps: true,
     versionKey: false,
     strict: false
 });
@@ -32,14 +32,7 @@ MatchSchema.virtual("teams", function() {
 });
 
 MatchSchema.methods.getData = function() {
-    let {teams, home, guest, league, date, coefficients} = this;
-    _.each(coefficients, (coefficientTypeData, coefficientType) => {
-        _.each(coefficientTypeData, (bookie, index) => {
-            let {name, coefficient} = coefficients[coefficientType][index];
-            coefficients[coefficientType][index] = {name, coefficient};
-        });
-    });
-    return {teams, home, guest, league, date, coefficients};
+    return _.pick(this, ["key", "teams", "home", "guest", "league", "date", "coefficients"]);
 };
 
 module.exports = mongoose.model("Match", MatchSchema);
