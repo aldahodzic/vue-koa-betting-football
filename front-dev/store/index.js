@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
         },
         cleanMatches(state, selectedLeagues) {
             _.remove(state.matches, match => selectedLeagues.includes(match.league));
-            // after deleting, matches are not reactive, splice doesn't work
+            // after removing, matches are not reactive, splice doesn't work
             state.matches = [...state.matches];
         },
         pushMatches(state, data) {
@@ -55,12 +55,9 @@ export const store = new Vuex.Store({
         async loadMatches({commit, getters}, callback) {
             commit("cleanMatches", getters.selectedLeagues);
 
-            let selectedLeagues = getters.selectedLeagues.join("|");
-
-            // let {data} = await Vue.axios.get(`/matches/${selectedLeagues}`);
-            let {data} = await Vue.axios.post(`/matches`, {data: "dwadawd"});
-
-            console.log(data);
+            // POST not working due CORS
+            // let {data} = await Vue.axios.post(`/matches`, {leagues: getters.selectedLeagues});
+            let {data} = await Vue.axios.get(`/matches/${getters.selectedLeagues.join("|")}`);
 
             commit("pushMatches", data);
 

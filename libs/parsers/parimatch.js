@@ -52,6 +52,8 @@ exports.create = async (URL, leagueName) => {
             let teams = text.split("<br>");
             match.home = fixTeamName(teams[0].trim());
             match.guest = fixTeamName(teams[1].trim());
+
+            if(match.home.includes("Home") && match.guest.includes("Away Teams")) return;
         }
 
         // League

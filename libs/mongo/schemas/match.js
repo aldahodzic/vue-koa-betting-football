@@ -5,7 +5,7 @@ const MatchSchema = new mongoose.Schema({
     key: {type: String, unique: "not unique", index: 1},
     home: String,
     guest: String,
-    league: String,
+    league: {type: String, index: 1},
     date: Number,
     coefficients: {
         "0": [{

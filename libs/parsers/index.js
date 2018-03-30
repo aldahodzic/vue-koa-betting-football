@@ -1,5 +1,8 @@
 module.exports = {
-    williamhill: require("./williamhill"),
-    parimatch: require("./parimatch"),
-    leonbets: require("./leonbets"),
+    parsers: {
+        williamhill: require("./williamhill"),
+        parimatch: require("./parimatch"),
+        leonbets: require("./leonbets"),
+    },
+    bookies: require("./bookies")
 };

@@ -30,7 +30,7 @@ exports.create = async (URL, leagueName) => {
     const $ = cheerio.load(innerHTML);
     log("created virtual dom of page");
 
-    let tBody = $("div[id*='tup_mkt_grp'] > table > tbody");
+    let tBody = $("div[id*='tup_mkt_grp']:nth-of-type(1) > table > tbody");
     let trs = tBody.find(".rowOdd");
     let allTeams = [];
 

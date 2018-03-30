@@ -38,6 +38,9 @@ module.exports = name => {
     if(name === "Eintracht Frankfurt") return "Eintracht";
     if(name === "Sociedad") return "Real Sociedad";
     if(name === "Real Betis") return "Betis";
+    if(name === "Paris St-G") return "PSG";
+    if(name === "TSG Hoffenheim") return "Hoffenheim";
+    if(name === "SC Freiburg") return "Freiburg";
 
     return name;
 };
