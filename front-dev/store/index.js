@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     state: {
         leaguesList: ["ChampionsLeague", "EuropaLeague", "England", "Italy", "Germany", "Spain", "France"],
         selectableLeagues: [],
-        matches: []
+        matches: [],
+        currentBets: []
     },
     getters: {
         leagues(state) {
@@ -22,11 +23,15 @@ export const store = new Vuex.Store({
         },
         matches(state, getters) {
             return state.matches.filter(match => getters.selectedLeagues.includes(match.league));
+        },
+        currentBets(state) {
+            return state.currentBets
         }
     },
     mutations: {
         createSelectableLeagues(state) {
-            state.selectableLeagues = state.leaguesList.map(name => ({name, selectedClass: ""}));
+            // state.selectableLeagues = state.leaguesList.map(name => ({name, selectedClass: ""}));
+            state.selectableLeagues = state.leaguesList.map(name => ({name, selectedClass: name === "ChampionsLeague" ? "selected" : ""}));
         },
         selectLeague(state, leagueName) {
             let league = state.selectableLeagues.find(league => league.name === leagueName);
@@ -43,25 +48,42 @@ export const store = new Vuex.Store({
                 dateNum: match.date,
                 date: moment(match.date).format("DD.MM")
             }));
+        },
+        changeCurrentBetSlip(state, {key, bookie, type, callback}) {
+            let {home, guest, dateNum, league} = state.matches.find(match => match.key === key);
+            let selectedBet = state.currentBets.find(bet => bet.key === key);
+
+            if(!selectedBet) {
+                state.currentBets.push({home, guest, dateNum, league, bookie, key, type});
+                return callback(true);
+            }
+
+            if(selectedBet.type === type) {
+                let index = state.currentBets.findIndex(bet => bet.type === type && bet.key === key);
+                state.currentBets.splice(index, 1);
+                return callback(true);
+            }
+
+            callback(false);
         }
     },
     actions: {
         createSelectableLeagues({commit, state}) {
             if(state.selectableLeagues.length === 0) commit("createSelectableLeagues");
         },
-        selectLeague({commit}, leagueName) {
-            commit("selectLeague", leagueName);
-        },
         async loadMatches({commit, getters}, callback) {
             commit("cleanMatches", getters.selectedLeagues);
-
             // POST not working due CORS
             // let {data} = await Vue.axios.post(`/matches`, {leagues: getters.selectedLeagues});
             let {data} = await Vue.axios.get(`/matches/${getters.selectedLeagues.join("|")}`);
-
             commit("pushMatches", data);
-
             callback();
+        },
+        selectLeague({commit}, leagueName) {
+            commit("selectLeague", leagueName);
+        },
+        changeCurrentBetSlip({commit}, betData) {
+            commit("changeCurrentBetSlip", betData)
         }
     }
 });

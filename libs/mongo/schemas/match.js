@@ -32,6 +32,7 @@ MatchSchema.virtual("teams", function() {
 });
 
 MatchSchema.methods.getData = function() {
+    // todo del _id from coefs
     return _.pick(this, ["key", "teams", "home", "guest", "league", "date", "coefficients"]);
 };
 
