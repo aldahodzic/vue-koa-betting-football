@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
         leaguesList: ["ChampionsLeague", "EuropaLeague", "England", "Italy", "Germany", "Spain", "France"],
         selectableLeagues: [],
         matches: [],
-        currentBets: []
+        currentBets: [],
+        selectButtonMode: "bet"
     },
     getters: {
         leagues(state) {
@@ -26,6 +27,9 @@ export const store = new Vuex.Store({
         },
         currentBets(state) {
             return state.currentBets
+        },
+        selectButtonMode(state) {
+            return state.selectButtonMode
         }
     },
     mutations: {
@@ -65,6 +69,9 @@ export const store = new Vuex.Store({
             }
 
             callback(false);
+        },
+        changeSelectButtonMode(state) {
+            state.selectButtonMode = state.selectButtonMode === "bet" ? "info" : "bet";
         }
     },
     actions: {
@@ -84,6 +91,10 @@ export const store = new Vuex.Store({
         },
         changeCurrentBetSlip({commit}, betData) {
             commit("changeCurrentBetSlip", betData)
-        }
+        },
+        changeSelectButtonMode({commit}) {
+            commit("changeSelectButtonMode")
+        },
+
     }
 });

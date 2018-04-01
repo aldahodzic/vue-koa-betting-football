@@ -113,18 +113,6 @@ main {
     padding: 1px 0;
     background: white;
     
-    #modal {
-        .header {
-            color: red
-        }
-        .content {
-            color:blue
-        }
-        .footer {
-            color: green;
-        }
-    }
-    
     #none-matches {
         color: red;
         font-weight: bold;
@@ -149,19 +137,20 @@ main {
         }
         
         span {
-            flex: 1 0 calc((50% - 32px) / 4);
+            flex: 1 0 calc((50% - 62px) / 4);
             text-align: center;
-            padding: 10px 0;
+            padding: 10px 3px;
             margin: 0 2px;
             cursor: pointer;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
     
             &.date {margin-left: 4px; background: #ffb3b3; cursor: default}
             &.teams {flex-basis: 50%; background: #e6e6e6; cursor: default}
             &.h {order: 1}
-            &.hd {order: 2}
-            &.d {order: 3}
-            &.dg {order: 4}
-            &.g {order: 5; margin-right: 4px;}
+            &.d {order: 2}
+            &.g {order: 3; margin-right: 4px;}
         }
         
     }

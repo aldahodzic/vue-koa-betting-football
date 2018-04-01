@@ -1,8 +1,8 @@
 <template lang="pug">
 div#actions
-    div#buttons
+    div#buttons(v-if="loading!='processing'")
         span(@click="loadMatches") {{$t(textAction)}}
-        span(v-if="showInfo") {{$t('show.info')}}
+        span(v-if="showInfo", @click="changeSelectButtonMode") {{$t(buttonInfoText)}}
         span(v-if="currentBets.length!=0") {{$t('confirm.betSlip')}}
     div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}
     app-matches-selector(v-if="loading=='end'")
@@ -16,6 +16,7 @@ export default {
     data() {
         return {
             loading: "wait",
+            buttonInfoText: "show.info"
         }
     },
     computed: {
@@ -27,16 +28,21 @@ export default {
         },
         showInfo() {
             return this.currentBets.length === 0 && this.matches.length !== 0;
-        }
+        },
     },
     methods: {
         ...mapActions({
             _loadMatches: "loadMatches",
+            _changeSelectButtonMode: "changeSelectButtonMode"
         }),
         loadMatches() {
             this.loading = "processing";
             this._loadMatches(() => this.loading = "end");
-        }
+        },
+        changeSelectButtonMode() {
+            this.buttonInfoText = this.buttonInfoText === "show.info" ? "hide.info" : "show.info";
+            this._changeSelectButtonMode();
+        },
     },
 }
 </script>

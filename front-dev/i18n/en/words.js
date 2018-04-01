@@ -61,6 +61,9 @@ export default {
     show: {
         info: "Show info of bets",
     },
+    hide: {
+        info: "Hide info of bets",
+    },
     confirm: {
         betSlip: "Confirm current bet slip"
     },
