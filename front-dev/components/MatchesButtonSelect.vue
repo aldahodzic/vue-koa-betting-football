@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-span {font-weight: bold}
+span {font-weight: bold;}
 .h {background: #00ff00;}
 .d {background: #ffff00;}
 .g {background: #3399ff;}

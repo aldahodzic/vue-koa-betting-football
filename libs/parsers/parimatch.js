@@ -38,53 +38,62 @@ exports.create = async (URL, leagueName) => {
 
 
     tBodies.each((i, _element) => {
+        try {
+            let element = $(_element);
+            if(element.find(".bk").length !== 1) return;
 
-        let element = $(_element);
-        if(element.find(".bk").length !== 1) return;
+            let match = {};
 
-        let match = {};
+            // Teams
+            {
+                let span = element.find("td[class='l'] > a");
+                let text = span.html();
+                text = text.replace(/\((\w+)\)/g, "");
+                let teams = text.split("<br>");
+                match.home = fixTeamName(teams[0].trim());
+                match.guest = fixTeamName(teams[1].trim());
 
-        // Teams
-        {
-            let span = element.find("td[class='l'] > a");
-            let text = span.html();
-            text = text.replace(/\((\w+)\)/g, "");
-            let teams = text.split("<br>");
-            match.home = fixTeamName(teams[0].trim());
-            match.guest = fixTeamName(teams[1].trim());
+                if(match.home.includes("Home") && match.guest.includes("Away Teams")) return;
+            }
 
-            if(match.home.includes("Home") && match.guest.includes("Away Teams")) return;
+            // League
+            {
+                match.league = leagueName;
+            }
+
+            // Date
+            {
+                let span = element.find("tr > td:nth-child(2)");
+                let text = span.html();
+                let [date, time] = text.split("<br>");
+                match.date = moment(`${date}/${(new Date()).getFullYear()}-${time}`, "DD/MM/YYYY-HH:mm").valueOf();
+            }
+
+            // Coefficients
+            {
+                match.coefficients = {};
+
+                let coefficientTypes = ["1", "0", "2"];
+                _.each(coefficientTypes, (coeff, index) => {
+                    let coefficient = +element.find(`tr > td:nth-child(${9 + index}) > u > a`).text();
+                    if(!isNaN(coefficient)) match.coefficients[coeff] = [{
+                        name: "Parimatch",
+                        coefficient
+                    }];
+                    else match.coefficients[coefficientTypes[coeff]] = [];
+                })
+            }
+
+            allTeams.push(match);
         }
-
-        // League
-        {
-            match.league = leagueName;
+        catch({message, stack}) {
+            console.log("Error >>", {
+                path: `williamhill[${leagueName}]`,
+                message,
+                stack: stack.split(" at ").splice(1, 3),
+                elementText: $(_element).text() ? $(_element).text().replace(/(\t|\n)+/g, " | ") : "no element text"
+            });
         }
-
-        // Date
-        {
-            let span = element.find("tr > td:nth-child(2)");
-            let text = span.html();
-            let [date, time] = text.split("<br>");
-            match.date = moment(`${date}/${(new Date()).getFullYear()}-${time}`, "DD/MM/YYYY-HH:mm").valueOf();
-        }
-
-        // Coefficients
-        {
-            match.coefficients = {};
-
-            let coefficientTypes = ["1", "0", "2"];
-            _.each(coefficientTypes, (coeff, index) => {
-                let coefficient = +element.find(`tr > td:nth-child(${9 + index}) > u > a`).text();
-                if(!isNaN(coefficient)) match.coefficients[coeff] = [{
-                    name: "Parimatch",
-                    coefficient
-                }];
-                else match.coefficients[coefficientTypes[coeff]] = [];
-            })
-        }
-
-        allTeams.push(match);
     });
 
     log("matches created: Parimatch");

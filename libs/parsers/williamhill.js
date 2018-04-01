@@ -36,53 +36,65 @@ exports.create = async (URL, leagueName) => {
 
     trs.each((i, element) => {
 
-        let match = {};
+        try {
+            let match = {};
 
-        // Teams
-        {
-            let span = $(element).find("span[id*='_mkt_namespace']");
-            let text = span.text().trim();
-            text = text.replace(/ v /g, "|-|");
-            let teams = text.split("|-|");
-            match.home = fixTeamName(teams[0].trim());
-            match.guest = fixTeamName(teams[1].trim());
+            // Teams
+            {
+                let span = $(element).find("span[id*='_mkt_namespace']");
+                let text = span.text().trim();
+                text = text.replace(/ v /g, "|-|");
+                let teams = text.split("|-|");
+                match.home = fixTeamName(teams[0].trim());
+                match.guest = fixTeamName(teams[1].trim());
+            }
+
+            // League
+            {
+                match.league = leagueName;
+            }
+
+            // Date
+            {
+                let span = $(element).find("span[id*='tzTime:br:']");
+                let text = span.attr("id");
+                let idParts = text.split(":br:");
+                match.date = +idParts[1] * 1000;
+            }
+
+            // Coefficients
+            {
+                match.coefficients = {};
+                let divs = $(element).find(".eventprice");
+                let coefficientTypes = ["1", "0", "2"];
+                divs.each((i, div) => {
+                    let coefficient, text = $(div).text().trim();
+                    if(text === "EVS") coefficient = 2;
+                    else {
+                        let [home, guest] = text.split("/");
+                        coefficient = (home / guest) + 1;
+                    }
+
+                    if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
+                        name: "Williamhill",
+                        coefficient
+                    }];
+                    else match.coefficients[coefficientTypes[i]] = [];
+                })
+            }
+
+            allTeams.push(match);
+        }
+        catch({message, stack}) {
+            console.log("Error >>", {
+                path: `williamhill[${leagueName}]`,
+                message,
+                stack: stack.split(" at ").splice(1, 3),
+                elementText: $(element).text() ? $(element).text().replace(/(\t|\n)+/g, " | ") : "no element text"
+            });
         }
 
-        // League
-        {
-            match.league = leagueName;
-        }
 
-        // Date
-        {
-            let span = $(element).find("span[id*='tzTime:br:']");
-            let text = span.attr("id");
-            let idParts = text.split(":br:");
-            match.date = +idParts[1] * 1000;
-        }
-
-        // Coefficients
-        {
-            match.coefficients = {};
-            let divs = $(element).find(".eventprice");
-            let coefficientTypes = ["1", "0", "2"];
-            divs.each((i, div) => {
-                let coefficient, text = $(div).text().trim();
-                if(text === "EVS") coefficient = 2;
-                else {
-                    let [home, guest] = text.split("/");
-                    coefficient = (home / guest) + 1;
-                }
-
-                if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
-                    name: "Williamhill",
-                    coefficient
-                }];
-                else match.coefficients[coefficientTypes[i]] = [];
-            })
-        }
-
-        allTeams.push(match);
     });
 
     log("matches created: Williamhill");

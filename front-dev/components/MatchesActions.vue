@@ -65,6 +65,7 @@ export default {
             margin: 4px 0;
             background: lightskyblue;
             font-size: 16px;
+            cursor: pointer;
         }
     }
     
