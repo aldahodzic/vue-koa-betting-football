@@ -73,7 +73,7 @@ span {font-weight: bold;}
 .h {background: #00ff00;}
 .d {background: #ffff00;}
 .g {background: #3399ff;}
-.selected {background: black; color: red}
+.selected {background: black; color: white}
 </style>
 <style lang="less">
 hr {

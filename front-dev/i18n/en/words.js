@@ -5,7 +5,7 @@ export default {
     Language: "Language",
     English: "English",
     Russian: "Russian",
-    Statistic: "Statistic",
+    Bets: "Bets",
     Logout: "Logout",
     Authentication: "Authentication",
     Enter: "Enter",

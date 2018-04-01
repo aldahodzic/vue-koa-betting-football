@@ -68,7 +68,6 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         background: white;
-        cursor: pointer;
         .justify;
     
         span {

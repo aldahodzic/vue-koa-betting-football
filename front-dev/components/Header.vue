@@ -9,7 +9,7 @@ header
                 span.cl(@click="setLanguage('en')") {{$t('English')}}
                 span /
                 span.cl(@click="setLanguage('ru')") {{$t('Russian')}}
-            p {{$t('Statistic')}}
+            p: router-link(to="/bets"): a {{$t('Bets')}}
             p {{$t('Logout')}}
         nav#not-auth(v-else)
             p: router-link(to="/about"): a {{$t('About')}}
@@ -25,7 +25,7 @@ export default {
     name: "app-header",
     data() {
         return {
-            auth: false
+            auth: true
         }
     },
     methods: {
