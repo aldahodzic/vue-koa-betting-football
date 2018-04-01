@@ -28,7 +28,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["selectButtonMode"]),
+        ...mapGetters(["selectButtonMode", "trigger_updateMatchButtonsSelectClass"]),
         bestBookie() {
             let bestBookie = _.maxBy(this.coefficients, "coefficient");
             bestBookie.coefficient = parseFloat(bestBookie.coefficient).toFixed(2);
@@ -51,9 +51,11 @@ export default {
         },
     },
     methods: {
-        ...mapActions(["changeCurrentBetSlip"]),
+        ...mapActions({
+            _changeCurrentBetSlip: "changeCurrentBetSlip"
+        }),
         makeBet() {
-            this.changeCurrentBetSlip({
+            this._changeCurrentBetSlip({
                 key: this.matchKey,
                 bookie: this.bestBookie,
                 type: this.type,
@@ -63,6 +65,11 @@ export default {
         _changeStatus(permission) {
             if(permission) this.classes.selected = !this.classes.selected;
             else console.log("denied");
+        }
+    },
+    watch: {
+        trigger_updateMatchButtonsSelectClass() {
+            this.classes.selected = false;
         }
     }
 }

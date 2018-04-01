@@ -3,7 +3,7 @@ div#actions
     div#buttons(v-if="loading!='processing'")
         span(@click="loadMatches") {{$t(textAction)}}
         span(v-if="showInfo", @click="changeSelectButtonMode") {{$t(buttonInfoText)}}
-        span(v-if="currentBets.length!=0") {{$t('confirm.betSlip')}}
+        span(v-if="currentBets.length!=0", @click="sendToWaitingBets") {{$t('confirm.betSlip')}}
     div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}
     app-matches-selector(v-if="loading=='end'")
 </template>
@@ -33,7 +33,8 @@ export default {
     methods: {
         ...mapActions({
             _loadMatches: "loadMatches",
-            _changeSelectButtonMode: "changeSelectButtonMode"
+            _changeSelectButtonMode: "changeSelectButtonMode",
+            _pushToWaiting: "pushToWaiting",
         }),
         loadMatches() {
             this.loading = "processing";
@@ -42,6 +43,9 @@ export default {
         changeSelectButtonMode() {
             this.buttonInfoText = this.buttonInfoText === "show.info" ? "hide.info" : "show.info";
             this._changeSelectButtonMode();
+        },
+        sendToWaitingBets() {
+            this._pushToWaiting();
         },
     },
 }

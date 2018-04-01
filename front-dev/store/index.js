@@ -5,13 +5,22 @@ import moment from "moment";
 
 Vue.use(Vuex);
 
+import vm from "../main";
+
 export const store = new Vuex.Store({
     state: {
         leaguesList: ["ChampionsLeague", "EuropaLeague", "England", "Italy", "Germany", "Spain", "France"],
         selectableLeagues: [],
         matches: [],
-        currentBets: [],
-        selectButtonMode: "bet"
+        selectButtonMode: "bet", // [bet, info],
+        bets: {
+            current: [],
+            waiting: [],
+            confirmed: [],
+            results: []
+        },
+        // triggers
+        trigger_updateMatchButtonsSelectClass: false
     },
     getters: {
         leagues(state) {
@@ -26,11 +35,17 @@ export const store = new Vuex.Store({
             return state.matches.filter(match => getters.selectedLeagues.includes(match.league));
         },
         currentBets(state) {
-            return state.currentBets
+            return state.bets.current
         },
         selectButtonMode(state) {
             return state.selectButtonMode
-        }
+        },
+        waitingBets(state) {
+            return state.bets.waiting
+        },
+        trigger_updateMatchButtonsSelectClass(state) {
+            return state.trigger_updateMatchButtonsSelectClass
+        },
     },
     mutations: {
         createSelectableLeagues(state) {
@@ -55,16 +70,18 @@ export const store = new Vuex.Store({
         },
         changeCurrentBetSlip(state, {key, bookie, type, callback}) {
             let {home, guest, dateNum, league} = state.matches.find(match => match.key === key);
-            let selectedBet = state.currentBets.find(bet => bet.key === key);
+            let selectedBet = state.bets.current.find(bet => bet.key === key);
+
+            console.log(">>", selectedBet);
 
             if(!selectedBet) {
-                state.currentBets.push({home, guest, dateNum, league, bookie, key, type});
+                state.bets.current.push({home, guest, dateNum, league, bookie, key, type});
                 return callback(true);
             }
 
             if(selectedBet.type === type) {
-                let index = state.currentBets.findIndex(bet => bet.type === type && bet.key === key);
-                state.currentBets.splice(index, 1);
+                let index = state.bets.current.findIndex(bet => bet.type === type && bet.key === key);
+                state.bets.current.splice(index, 1);
                 return callback(true);
             }
 
@@ -72,6 +89,13 @@ export const store = new Vuex.Store({
         },
         changeSelectButtonMode(state) {
             state.selectButtonMode = state.selectButtonMode === "bet" ? "info" : "bet";
+        },
+        pushToWaiting(state) {
+            state.bets.waiting = state.bets.waiting.concat(state.bets.current);
+            state.bets.current = [];
+        },
+        updateMatchButtonsSelectClass(state) {
+            state.trigger_updateMatchButtonsSelectClass = !state.trigger_updateMatchButtonsSelectClass;
         }
     },
     actions: {
@@ -95,6 +119,9 @@ export const store = new Vuex.Store({
         changeSelectButtonMode({commit}) {
             commit("changeSelectButtonMode")
         },
-
+        pushToWaiting({commit}) {
+            commit("pushToWaiting");
+            commit("updateMatchButtonsSelectClass");
+        },
     }
 });

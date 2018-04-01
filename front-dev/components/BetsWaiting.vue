@@ -1,11 +1,17 @@
 <template lang="pug">
 div#bets-waiting
     h2 Bets waiting
+    div(v-for="bet in waitingBets")
+        pre {{bet}}
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 export default {
-    name: "app-bets-waiting"
+    name: "app-bets-waiting",
+    computed: {
+        ...mapGetters(["waitingBets"])
+    }
 }
 </script>
 

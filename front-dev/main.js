@@ -10,7 +10,7 @@ import {router} from "./router";
 import {i18n} from "./i18n/";
 import {store} from "./store/";
 
-new Vue({
+export default new Vue({
     el: '#app',
     router,
     i18n,
