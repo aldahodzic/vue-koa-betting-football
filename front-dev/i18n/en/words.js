@@ -23,6 +23,8 @@ export default {
     Date: "Date",
     Teams: "Teams",
     Draw: "Draw",
+    Load: "Load",
+    Update: "Update",
 
 
     // lower case
@@ -30,18 +32,19 @@ export default {
     password: "password",
 
 
+
     // structured phrases
     fill: {
-        data: "Fill in the data"
+        data: "Fill in the data",
     },
     move: {
         mouse: {
-            sign: "Move mouse over the sign ✖"
+            sign: "Move mouse over the sign ✖",
         }
     },
     click: {
         for: {
-            sort: "Click to sort by: {title}"
+            sort: "Click to sort by: {title}",
         }
     },
     win: {
@@ -49,13 +52,23 @@ export default {
         guest: "Guest team winning",
     },
     loading: {
-        matches: "Loading matches"
+        matches: "Matches are loading",
+    },
+    leagues: {
+        all: "all leagues",
+        selected: "selected leagues",
+    },
+    show: {
+        info: "Show info of bets",
+    },
+    confirm: {
+        betSlip: "Confirm current bet slip"
     },
 
     // structured phrases with not
     not: {
         found: {
-            matches: "No matches found"
+            matches: "No matches found",
         }
-    }
+    },
 };

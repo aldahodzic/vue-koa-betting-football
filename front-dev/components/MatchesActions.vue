@@ -1,8 +1,9 @@
 <template lang="pug">
 div#actions
     div#buttons
-        span(@click="startLoadingMatches") {{textAction}}
-        span(v-if="matches.length!=0") select
+        span(@click="loadMatches") {{$t(textAction)}}
+        span(v-if="showInfo") {{$t('show.info')}}
+        span(v-if="currentBets.length!=0") {{$t('confirm.betSlip')}}
     div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}
     app-matches-selector(v-if="loading=='end'")
 </template>
@@ -18,20 +19,23 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(["matches", "selectedLeagues", "leagues"]),
+        ...mapGetters(["matches", "selectedLeagues", "leagues", "currentBets"]),
         textAction() {
             let action = this.matches.length === 0 ? "load" : "update";
-            let count = this.selectedLeagues.length === this.leagues.length ? "all leagues" : "selected leagues";
-            return `${action} ${count}`;
+            let count = this.selectedLeagues.length === this.leagues.length ? "leagues_all" : "leagues_selected";
+            return `phrases.${action}.${count}`;
+        },
+        showInfo() {
+            return this.currentBets.length === 0 && this.matches.length !== 0;
         }
     },
     methods: {
-        ...mapActions([
-            "loadMatches"
-        ]),
-        startLoadingMatches() {
+        ...mapActions({
+            _loadMatches: "loadMatches",
+        }),
+        loadMatches() {
             this.loading = "processing";
-            this.loadMatches(() => this.loading = "end");
+            this._loadMatches(() => this.loading = "end");
         }
     },
 }
@@ -58,10 +62,11 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         background: white;
+        cursor: pointer;
         .justify;
     
         span {
-            padding: 3px 35px;
+            padding: 3px 25px;
             margin: 4px 0;
             background: lightskyblue;
             font-size: 16px;

@@ -15,11 +15,14 @@ main
             span.date {{match.date}}
             span.teams {{match.home}} &mdash; {{match.guest}}
             app-select-match(
-            v-for="(coefficients, type, index) in match.coefficients",
+            v-for="(coefficients, type) in match.coefficients",
             :key="type+index",
             :type="type",
-            :coefficients="coefficients"
+            :coefficients="coefficients",
+            :matchKey="match.key",
             )
+            
+        
 </template>
 
 <script>
@@ -99,7 +102,7 @@ export default {
             this.sort.type = button.name;
             this.sort.direction = button.direction;
             button.direction = -button.direction;
-        }
+        },
     }
 }
 </script>
@@ -109,6 +112,18 @@ main {
     margin: 8px 0;
     padding: 1px 0;
     background: white;
+    
+    #modal {
+        .header {
+            color: red
+        }
+        .content {
+            color:blue
+        }
+        .footer {
+            color: green;
+        }
+    }
     
     #none-matches {
         color: red;

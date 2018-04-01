@@ -10,11 +10,7 @@ import AppMatchesActions from "./MatchesActions.vue";
 export default {
     components: {
         AppMatchesMenu,
-        AppMatchesActions
+        AppMatchesActions,
     }
 }
 </script>
-
-<style lang="less">
-
-</style>
