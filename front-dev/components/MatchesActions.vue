@@ -5,7 +5,7 @@ div#actions
         span(v-if="showInfo", @click="changeSelectButtonMode") {{$t(buttonInfoText)}}
         span(v-if="currentBets.length!=0", @click="sendToWaitingBets") {{$t('confirm.betSlip')}}
     div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}
-    app-matches-selector(v-if="loading=='end'")
+    app-matches-selector(v-if="showSelector")
 </template>
 
 <script>
@@ -28,6 +28,9 @@ export default {
         },
         showInfo() {
             return this.currentBets.length === 0 && this.matches.length !== 0;
+        },
+        showSelector() {
+            return this.loading === "end" || this.matches.length !== 0;
         },
     },
     methods: {
