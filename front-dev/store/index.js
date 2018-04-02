@@ -91,7 +91,7 @@ export const store = new Vuex.Store({
             state.selectButtonMode = state.selectButtonMode === "bet" ? "info" : "bet";
         },
         pushToWaiting(state) {
-            state.bets.waiting = state.bets.waiting.concat(state.bets.current);
+            state.bets.waiting.push(state.bets.current);
             state.bets.current = [];
         },
         updateMatchButtonsSelectClass(state) {

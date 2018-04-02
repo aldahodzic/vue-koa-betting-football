@@ -1,27 +1,31 @@
 <template lang="pug">
 div#bets-waiting
-    h2 Bets waiting
-    div(v-for="bet in waitingBets")
-        pre {{bet}}
+    app-bets-block(
+    v-for="(bets, index) in waitingBets",
+    :key="index",
+    :bets="bets",
+    :mode="'waiting'"
+    )
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import appBetsBlock from "./BetsBlock.vue";
 export default {
     name: "app-bets-waiting",
+    components: {
+        appBetsBlock
+    },
     computed: {
         ...mapGetters(["waitingBets"])
-    }
+    },
 }
 </script>
 
 <style lang="less">
 #bets-waiting {
     background: white;
-    
-    h2 {
-        text-align: center;
-        margin: 0;
-    }
+    padding: 1px 5px;
+
 }
 </style>
