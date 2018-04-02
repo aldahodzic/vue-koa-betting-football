@@ -8,12 +8,12 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload: vue at localhost:8080, node at localhost:3000 (need nodemon)
 npm run dev
-
-# run server
-npm i -g nodemon
-npm run build
 npm run node
+
+# production
+npm run build
+npm run node-clear
 ```
 
