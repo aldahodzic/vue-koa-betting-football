@@ -25,7 +25,7 @@ export default {
     name: "app-header",
     data() {
         return {
-            auth: true
+            auth: false
         }
     },
     methods: {
