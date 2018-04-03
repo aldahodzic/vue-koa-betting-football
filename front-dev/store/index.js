@@ -104,9 +104,7 @@ export const store = new Vuex.Store({
         },
         async loadMatches({commit, getters}, callback) {
             commit("cleanMatches", getters.selectedLeagues);
-            // POST not working due CORS
-            // let {data} = await Vue.axios.post(`/matches`, {leagues: getters.selectedLeagues});
-            let {data} = await Vue.axios.get(`/matches/${getters.selectedLeagues.join("|")}`);
+            let {data} = await Vue.axios.post(`/matches`, {leagues: getters.selectedLeagues});
             commit("pushMatches", data);
             callback();
         },

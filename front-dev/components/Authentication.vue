@@ -87,12 +87,12 @@ export default {
         send() {
             let login = this.fields.find(field => field.title === "login").value;
             let password = this.fields.find(field => field.title === "password").value;
-            let data = JSON.stringify({login, password});
             
             let url;
             if(this.currentMode === "auth") url = "login";
             if(this.currentMode === "reg") url = "registration";
-            this.$http.get(`/auth/${url}/${data}`);
+            
+            this.$http.post(`/auth/${url}`, {login, password});
         },
         changeMode(mode) {
             _.each(this.authTypes, type => type.className = type.mode === mode ? "active" : "");

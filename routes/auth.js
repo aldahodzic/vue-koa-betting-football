@@ -3,8 +3,7 @@ const User = require("libs/mongo/schemas/user");
 
 exports.login = async ctx => {
 
-    // let {login, password} = ctx.request.body;
-    let {login, password} = JSON.parse(ctx.params.data);
+    let {login, password} = ctx.request.body;
 
     if(!login || !/^[a-zA-Z _]+$/.test(login)) ctx.error("login not valid");
     if(!password || ! /^[a-zA-Z0-9]+$/.test(password)) ctx.error("password not valid");
@@ -25,8 +24,7 @@ exports.login = async ctx => {
 
 exports.registration = async ctx => {
 
-    // let {login, password} = ctx.request.body;
-    let {login, password} = JSON.parse(ctx.params.data);
+    let {login, password} = ctx.request.body;
 
     if(!login || !/^[a-zA-Z _]+$/.test(login)) ctx.error("login not valid");
     if(!password || ! /^[a-zA-Z0-9]+$/.test(password)) ctx.error("password not valid");

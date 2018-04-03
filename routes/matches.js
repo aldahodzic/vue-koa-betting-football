@@ -4,9 +4,12 @@ const Match = require("libs/mongo/schemas/match");
 const {parsers, bookies} = require("libs/parsers");
 
 exports.checkDB = async (ctx, next) => {
-    // POST doesn't working due CORS
-    // let {leagues} = ctx.request.body;
-    let leagues = ctx.params.query.split("|");
+
+    // todo empty request.body
+    //TypeError: Cannot read property 'includes' of undefined
+    // at _.each (D:\vue\fakebet\routes\matches.js:56:40)
+
+    let {leagues} = ctx.request.body;
 
     ctx.state.readyMatches = [];
     ctx.state.leagues = {
@@ -39,7 +42,7 @@ exports.checkDB = async (ctx, next) => {
         return await next();
     }
 
-    // Else, if none matches to update or parsing, return them
+    // else, if none matches to update or parsing, return them
     let data = matches.map(match => match.getData());
     return ctx.end(data);
 };
@@ -67,7 +70,7 @@ exports.writeDB = async ctx => {
 
     let matchesAll = _.flattenDeep(matches);
 
-    // Combine the coefficients of the same matches from different bookies
+    // combine the coefficients of the same matches from different bookies
     let matchesConcatenated = {};
     _.each(matchesAll, match =>{
         let key = `${match.league}:${match.home}-${match.guest}`;
@@ -77,7 +80,7 @@ exports.writeDB = async ctx => {
         else matchesConcatenated[key] = match;
     });
 
-    // Select, after, if match is exist update, otherwise insert match to db
+    // select, after, if match is exist update, otherwise insert match to db
     let promiseMatches = [];
     _.each(matchesConcatenated, (matchData, key) => {
         matchData.key = key;
@@ -85,7 +88,7 @@ exports.writeDB = async ctx => {
         promiseMatches.push(match);
     });
 
-    // Concatenation ready matches and parsed/updated, after pick the data of matches
+    // concatenation ready matches and parsed/updated, after pick data of matches
     let matchesAfterActionsDB = await Promise.all(promiseMatches);
     let matchesToFront = [].concat(ctx.state.readyMatches, matchesAfterActionsDB);
     matchesToFront = matchesToFront.map(match => match.getData());

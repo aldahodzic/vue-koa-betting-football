@@ -3,9 +3,7 @@ import App from './App.vue';
 
 import Axios from 'axios';
 import VueAxios from 'vue-axios';
-const axios = Axios.create({baseURL: 'http://localhost:3000'});
-
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, Axios);
 
 import {router} from "./router";
 import {i18n} from "./i18n/";

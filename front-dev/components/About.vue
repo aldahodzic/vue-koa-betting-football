@@ -9,7 +9,7 @@ export default {
     methods: {
         async getM () {
             
-            let matches = await this.$http.get("/matches");
+            let matches = await this.$http.post("http://localhost:3000/matches");
             
             console.log(matches.data);
         }
