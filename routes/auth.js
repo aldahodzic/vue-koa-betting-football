@@ -15,7 +15,7 @@ exports.login = async ctx => {
     let token = crypto.randomBytes(10).toString("base64");
     user.token = token;
     await user.save();
-    ctx.cookies.set("auth", `${user._id}::${token}`);
+    ctx.cookies.set("auth", `${user._id}::${token}`, {httpOnly: false});
 
     ctx.end("login successful");
 
@@ -33,7 +33,7 @@ exports.registration = async ctx => {
     try {
         // issue in library: don't use try catch
         let user = await User.create({login, password, token});
-        ctx.cookies.set("auth", `${user._id}::${token}`);
+        ctx.cookies.set("auth", `${user._id}::${token}`, {httpOnly: false});
         ctx.end("registration successful");
     }
     catch(e) {

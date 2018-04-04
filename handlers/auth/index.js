@@ -2,26 +2,25 @@ const User = require("libs/mongo/schemas/user");
 
 module.exports = async (ctx, next) => {
 
-    let authToken = ctx.cookies.get("auth");
-
     const setGuest = () => {
-        ctx.cookies.set("auth", "guest");
+        ctx.cookies.set("auth", "guest", {httpOnly: false});
         return next();
     };
 
-    if(ctx.path !== "/auth/login" && (!authToken || authToken === "guest")) return await setGuest();
-
-    let user, [userId, token] = authToken.split("::");
     try {
-        user = await User.findById(userId);
-        if(user === null) return await setGuest();
+        let authToken = ctx.cookies.get("auth");
+
+        if(authToken === "guest") return await next();
+        if(!authToken) return await setGuest();
+
+        let [userId, token] = authToken.split("::");
+        let user = await User.findById(userId);
+        if(!user) return await setGuest();
+        if(user.token !== token) return await setGuest();
     }
     catch(e) {
         return await setGuest()
     }
-
-
-    if(user.token !== token) return await setGuest();
 
     await next();
 
