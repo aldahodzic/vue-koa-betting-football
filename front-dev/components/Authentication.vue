@@ -54,12 +54,12 @@ export default {
             authTypes: [
                 {
                     title: "Authorization",
-                    mode: "auth",
+                    mode: "authorization",
                     className: "active"
                 },
                 {
                     title: "Registration",
-                    mode: "reg",
+                    mode: "registration",
                     className: ""
                 }
             ]
@@ -82,20 +82,17 @@ export default {
             return _.find(this.authTypes, {className: "active"}).mode;
         },
         buttonValue() {
-            return this.currentMode === "auth" ? this.$t("SignIn") : this.$t("SignUp");
+            return this.currentMode === "authorization" ? this.$t("SignIn") : this.$t("SignUp");
         }
     },
     methods: {
-        ...mapActions(["userSignIn"]),
+        ...mapActions(["userAuthAction"]),
         send() {
             let login = this.fields.find(field => field.title === "login").value;
             let password = this.fields.find(field => field.title === "password").value;
             
-            let functionName;
-            if(this.currentMode === "auth") functionName = "userSignIn";
-//            if(this.currentMode === "reg") url = "registration";
-            
-            this[functionName]({
+            this.userAuthAction({
+                url: this.currentMode,
                 userData: {login, password},
                 callback: ({data, status}) => status ? this.authActionSuccessful() : this.authActionFailed(data),
             });

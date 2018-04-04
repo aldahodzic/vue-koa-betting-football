@@ -37,7 +37,7 @@ exports.registration = async ctx => {
         ctx.end("registration successful");
     }
     catch(e) {
-        if(e.message === "not unique") ctx.error(400, "login is not unique");
+        ctx.error(400, "login is occupied");
     }
 
 

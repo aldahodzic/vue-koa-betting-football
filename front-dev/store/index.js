@@ -106,7 +106,7 @@ export const store = new Vuex.Store({
         updateMatchButtonsSelectClass(state) {
             state.trigger_updateMatchButtonsSelectClass = !state.trigger_updateMatchButtonsSelectClass;
         },
-        setUserAuth(state, status) {
+        setUserAuthStatus(state, status) {
             state.user.auth = status;
         },
     },
@@ -133,10 +133,9 @@ export const store = new Vuex.Store({
             commit("pushToWaiting");
             commit("updateMatchButtonsSelectClass");
         },
-        async userSignIn({commit, getters}, {userData, callback}) {
-            if(getters.user.auth) return false;
-            let {data, status} = await Vue.axios.post("/auth/authorization", userData);
-            commit("setUserAuth", status);
+        async userAuthAction({commit}, {url, userData, callback}) {
+            let {data, status} = await Vue.axios.post(`/auth/${url}`, userData);
+            commit("setUserAuthStatus", status);
             callback({data, status});
         },
     }
