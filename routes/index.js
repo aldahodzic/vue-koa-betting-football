@@ -7,7 +7,7 @@ let auth = require("./auth");
 
 publicRoute.post("/matches", matches.checkDB, matches.parser, matches.writeDB);
 
-publicRoute.post("/auth/login", auth.login);
+publicRoute.post("/auth/authorization", auth.authorization);
 
 publicRoute.post("/auth/registration", auth.registration);
 

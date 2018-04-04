@@ -29,6 +29,7 @@ div#auth
 
 <script>
 import AppValidatingInput from "./ValidatingInput.vue";
+import {mapGetters, mapActions} from "vuex";
 export default {
     name: "app-authorization",
     components: {
@@ -65,6 +66,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters(["user"]),
         dataValid() {
             return this.fields.every(field => field.pattern.test(field.value));
         },
@@ -84,20 +86,33 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["userSignIn"]),
         send() {
             let login = this.fields.find(field => field.title === "login").value;
             let password = this.fields.find(field => field.title === "password").value;
             
-            let url;
-            if(this.currentMode === "auth") url = "login";
-            if(this.currentMode === "reg") url = "registration";
+            let functionName;
+            if(this.currentMode === "auth") functionName = "userSignIn";
+//            if(this.currentMode === "reg") url = "registration";
             
-            this.$http.post(`/auth/${url}`, {login, password});
+            this[functionName]({
+                userData: {login, password},
+                callback: ({data, status}) => status ? this.authActionSuccessful() : this.authActionFailed(data),
+            });
         },
         changeMode(mode) {
             _.each(this.authTypes, type => type.className = type.mode === mode ? "active" : "");
-        }
-    }
+        },
+        authActionSuccessful() {
+            this.$router.replace("matches");
+        },
+        authActionFailed(message) {
+            alert(message);
+        },
+    },
+    created() {
+        if(this.user.auth) this.$router.replace("matches");
+    },
 }
 </script>
 

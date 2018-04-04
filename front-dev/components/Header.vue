@@ -3,7 +3,7 @@ header
     h1 {{$t('site.welcome')}}
     div
         router-link#logo(to="/"): img(src="../images/logo.png", :title="$t('site.goToMain')")
-        nav#auth(v-if="auth")
+        nav#auth(v-if="user.auth")
             p: router-link(to="/about"): a {{$t('About')}}
             p Language:
                 span.cl(@click="setLanguage('en')") {{$t('English')}}
@@ -21,12 +21,16 @@ header
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 export default {
     name: "app-header",
     data() {
         return {
             auth: false
         }
+    },
+    computed: {
+        ...mapGetters(["user"]),
     },
     methods: {
         setLanguage(language) {

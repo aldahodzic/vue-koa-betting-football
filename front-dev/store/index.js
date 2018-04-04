@@ -19,6 +19,9 @@ export const store = new Vuex.Store({
             confirmed: [],
             results: []
         },
+        user: {
+            auth: false
+        },
         // triggers
         trigger_updateMatchButtonsSelectClass: false
     },
@@ -43,6 +46,14 @@ export const store = new Vuex.Store({
         waitingBets(state) {
             return state.bets.waiting
         },
+
+        user(state) {
+            let authToken = Vue.cookie.get("auth");
+            let auth = !!authToken && authToken !== "guest";
+            console.log(auth);
+            return {...state.user, auth};
+        },
+        // triggers
         trigger_updateMatchButtonsSelectClass(state) {
             return state.trigger_updateMatchButtonsSelectClass
         },
@@ -72,8 +83,6 @@ export const store = new Vuex.Store({
             let {home, guest, dateNum, league} = state.matches.find(match => match.key === key);
             let selectedBet = state.bets.current.find(bet => bet.key === key);
 
-            console.log(">>", selectedBet);
-
             if(!selectedBet) {
                 state.bets.current.push({home, guest, dateNum, league, bookie, key, type});
                 return callback(true);
@@ -96,7 +105,10 @@ export const store = new Vuex.Store({
         },
         updateMatchButtonsSelectClass(state) {
             state.trigger_updateMatchButtonsSelectClass = !state.trigger_updateMatchButtonsSelectClass;
-        }
+        },
+        setUserAuth(state, status) {
+            state.user.auth = status;
+        },
     },
     actions: {
         createSelectableLeagues({commit, state}) {
@@ -120,6 +132,12 @@ export const store = new Vuex.Store({
         pushToWaiting({commit}) {
             commit("pushToWaiting");
             commit("updateMatchButtonsSelectClass");
+        },
+        async userSignIn({commit, getters}, {userData, callback}) {
+            if(getters.user.auth) return false;
+            let {data, status} = await Vue.axios.post("/auth/authorization", userData);
+            commit("setUserAuth", status);
+            callback({data, status});
         },
     }
 });

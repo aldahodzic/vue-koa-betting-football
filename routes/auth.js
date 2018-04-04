@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const User = require("libs/mongo/schemas/user");
 
-exports.login = async ctx => {
+exports.authorization = async ctx => {
 
     let {login, password} = ctx.request.body;
 
@@ -9,7 +9,7 @@ exports.login = async ctx => {
     if(!password || ! /^[a-zA-Z0-9]+$/.test(password)) ctx.error("password not valid");
 
     let user = await User.findOne({login});
-    if(user === null) ctx.error(404, "not found user");
+    if(!user) ctx.error(404, "not found user");
     if(!user.checkPassword(password)) ctx.error(403, "not correct password");
 
     let token = crypto.randomBytes(10).toString("base64");
@@ -17,7 +17,7 @@ exports.login = async ctx => {
     await user.save();
     ctx.cookies.set("auth", `${user._id}::${token}`, {httpOnly: false});
 
-    ctx.end("login successful");
+    ctx.end("authorization successful");
 
 };
 
