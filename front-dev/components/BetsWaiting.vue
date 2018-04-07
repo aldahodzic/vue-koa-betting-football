@@ -1,23 +1,29 @@
 <template lang="pug">
 div#bets-waiting
-    app-bets-block(
+    app-bet-slip(
     v-for="(bets, index) in waitingBets",
     :key="index",
     :bets="bets",
-    :mode="'waiting'"
+    :mode="'waiting'",
+    :index="index"
     )
 </template>
 
 <script>
 import {mapGetters} from "vuex";
-import appBetsBlock from "./BetsBlock.vue";
+import appBetSlip from "./BetsBetSlip.vue";
 export default {
     name: "app-bets-waiting",
     components: {
-        appBetsBlock
+        appBetSlip
     },
     computed: {
-        ...mapGetters(["waitingBets"])
+        ...mapGetters({
+            _bets: "bets"
+        }),
+        waitingBets() {
+            return this._bets.waiting;
+        },
     },
 }
 </script>

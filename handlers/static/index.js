@@ -9,7 +9,7 @@ module.exports = async (ctx, next) => {
     if(ext) return await send(ctx, ctx.path, { root: './front' });
 
     let [route] = ctx.path.slice(1).split("/");
-    let urlsFromFront = ["matches", "auth", "about"];
+    let urlsFromFront = ["matches", "auth", "about", "bets"];
     if(ctx.method === "GET" && urlsFromFront.includes(route)) return await send(ctx, 'front/index.html');
 
     await next();

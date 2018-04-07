@@ -1,8 +1,8 @@
 <template lang="pug">
 div.bets-block
     div.info
-        div.row(v-for="bet in bets")
-            span.close &#10006;
+        div.row(v-for="(bet, indexOfBet) in bets")
+            span.close(@click="deleteBet(indexOfBet)") &#10006;
             span.date {{date(bet.dateNum)}}
             span.league {{$t(bet.league)}}
             span.teams {{bet.home}} &mdash; {{bet.guest}}
@@ -10,7 +10,7 @@ div.bets-block
             span.coefficient {{bet.bookie.coefficient}}
             span.score(v-if="show.score") 1 : 2
     div.actions(v-if="show.actions")
-        p.remove &#10006;
+        p.remove(@click="deleteBetSlip") &#10006;
         p.input
             span Bet amount:
             input(type="number", v-model="rate")
@@ -20,11 +20,13 @@ div.bets-block
 
 <script>
 import moment from "moment";
+import {mapActions} from "vuex";
 export default {
     name: "app-bets-block",
     props: {
         bets: Array,
-        mode: String
+        mode: String,
+        index: Number
     },
     data() {
         return {
@@ -47,8 +49,18 @@ export default {
         }
     },
     methods: {
+        ...mapActions({
+            _deleteBet: "deleteBet",
+            _deleteBetSlip: "deleteBetSlip",
+        }),
         date(date) {
             return moment(date).format("DD.MM");
+        },
+        deleteBet(indexOfBet) {
+            this._deleteBet({indexOfBet, indexOfBetSlip: this.index});
+        },
+        deleteBetSlip() {
+            this._deleteBetSlip({index: this.index, force: true});
         },
     },
 }

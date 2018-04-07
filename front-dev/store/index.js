@@ -43,8 +43,8 @@ export const store = new Vuex.Store({
         selectButtonMode(state) {
             return state.selectButtonMode
         },
-        waitingBets(state) {
-            return state.bets.waiting
+        bets(state) {
+            return state.bets;
         },
 
         user(state) {
@@ -109,6 +109,13 @@ export const store = new Vuex.Store({
         setUserAuthStatus(state, status) {
             state.user.auth = status;
         },
+        deleteBet(state, {indexOfBet, indexOfBetSlip}) {
+            state.bets.waiting[indexOfBetSlip].splice(indexOfBet, 1);
+        },
+        deleteBetSlip(state, {index, force}) {
+            if(!force && state.bets.waiting[index].length !== 0) return;
+            state.bets.waiting.splice(index, 1);
+        },
     },
     actions: {
         createSelectableLeagues({commit, state}) {
@@ -137,6 +144,13 @@ export const store = new Vuex.Store({
             let {data, status} = await Vue.axios.post(`/auth/${url}`, userData);
             commit("setUserAuthStatus", status);
             callback({data, status});
+        },
+        deleteBet({commit}, data) {
+            commit("deleteBet", data);
+            commit("deleteBetSlip", {index: data.indexOfBetSlip});
+        },
+        deleteBetSlip({commit}, data) {
+            commit("deleteBetSlip", data);
         },
     }
 });
