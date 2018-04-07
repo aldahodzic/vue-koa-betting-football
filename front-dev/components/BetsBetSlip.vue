@@ -15,7 +15,7 @@ div.bets-block
             span Bet amount:
             input(type="number", v-model="rate")
             span * {{totalCoefficient}} = {{totalSum}}
-        p.confirm(:class="disabled") &#10004;
+        p.confirm(:class="disabled", @click="confirmBetSlip") &#10004;
 </template>
 
 <script>
@@ -52,12 +52,17 @@ export default {
         ...mapActions({
             _deleteBet: "deleteBet",
             _deleteBetSlip: "deleteBetSlip",
+            _confirmBetSlip: "confirmBetSlip",
         }),
         deleteBet(indexOfBet) {
             this._deleteBet({indexOfBet, indexOfBetSlip: this.index});
         },
         deleteBetSlip() {
             this._deleteBetSlip({index: this.index, force: true});
+        },
+        confirmBetSlip() {
+            let {index, rate, totalCoefficient} = this;
+            this._confirmBetSlip({index, rate, totalCoefficient});
         },
     },
 }

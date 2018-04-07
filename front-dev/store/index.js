@@ -5,13 +5,11 @@ import moment from "moment";
 
 Vue.use(Vuex);
 
-import vm from "../main";
-
 export const store = new Vuex.Store({
     state: {
         leaguesList: ["ChampionsLeague", "EuropaLeague", "England", "Italy", "Germany", "Spain", "France"],
         selectableLeagues: [],
-        matches: [],
+        matches: JSON.parse(localStorage.getItem("matches")) || [],
         selectButtonMode: "bet", // [bet, info],
         bets: {
             current: [],
@@ -77,6 +75,7 @@ export const store = new Vuex.Store({
                 dateNum: match.date,
                 date: moment(match.date).format("DD.MM")
             }));
+            localStorage.setItem("matches", JSON.stringify(state.matches));
         },
         changeCurrentBetSlip(state, {key, bookie, type, callback}) {
             let {home, guest, dateNum, date, league} = state.matches.find(match => match.key === key);
@@ -117,8 +116,8 @@ export const store = new Vuex.Store({
         },
     },
     actions: {
-        createSelectableLeagues({commit, state}) {
-            if(state.selectableLeagues.length === 0) commit("createSelectableLeagues");
+        createSelectableLeagues({commit, getters}) {
+            if(getters.leagues.length === 0) commit("createSelectableLeagues");
         },
         async loadMatches({commit, getters}, callback) {
             commit("cleanMatches", getters.selectedLeagues);
@@ -150,6 +149,13 @@ export const store = new Vuex.Store({
         },
         deleteBetSlip({commit}, data) {
             commit("deleteBetSlip", data);
+        },
+        async confirmBetSlip({getters}, data) {
+            let betSlip = getters.bets.waiting[data.index];
+            console.log([
+                ...betSlip,
+                ...data
+            ]);
         },
     }
 });
