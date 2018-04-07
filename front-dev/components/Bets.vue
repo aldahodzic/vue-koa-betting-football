@@ -6,22 +6,26 @@ div#bet-slip
         @click="changeMenu(item)",
         :class="item.classes"
         ) {{item.title}}
-    app-bets-waiting(v-if="type=='waiting'")
-    app-bets-confirmed(v-if="type=='confirmed'")
-    app-bets-results(v-if="type=='results'")
+        
+    div.bets-type
+        app-bet-slip(
+        v-for="(bets, index) in betsType",
+        :key="index",
+        :bets="bets",
+        :type="type",
+        :index="index"
+)
+
 </template>
 
 <script>
 import _ from "lodash";
-import appBetsWaiting from "./BetsWaiting.vue";
-import appBetsConfirmed from "./BetsConfirmed.vue";
-import appBetsResults from "./BetsResults.vue";
+import {mapGetters} from "vuex";
+import appBetSlip from "./BetsBetSlip.vue";
 export default {
-    name: "app-bet-slip",
+    name: "app-bets",
     components: {
-        appBetsWaiting,
-        appBetsConfirmed,
-        appBetsResults,
+        appBetSlip,
     },
     data() {
         return {
@@ -46,10 +50,11 @@ export default {
         }
     },
     computed: {
-        classes() {
-            return {
-            
-            }
+        ...mapGetters({
+            _bets: "bets"
+        }),
+        betsType() {
+            return this._bets[this.type];
         },
     },
     methods: {
@@ -85,5 +90,9 @@ export default {
         &:last-of-type {margin-right: 4px}
         &.selected {background: #009933; color: white;}
     }
+}
+.bets-type {
+    background: white;
+    padding: 1px 5px;
 }
 </style>

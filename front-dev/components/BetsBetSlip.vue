@@ -3,7 +3,7 @@ div.bets-block
     div.info
         div.row(v-for="(bet, indexOfBet) in bets")
             span.close(@click="deleteBet(indexOfBet)") &#10006;
-            span.date {{date(bet.dateNum)}}
+            span.date {{bet.date}}
             span.league {{$t(bet.league)}}
             span.teams {{bet.home}} &mdash; {{bet.guest}}
             span.type {{bet.type}}
@@ -22,24 +22,24 @@ div.bets-block
 import moment from "moment";
 import {mapActions} from "vuex";
 export default {
-    name: "app-bets-block",
+    name: "app-bet-slip",
     props: {
         bets: Array,
-        mode: String,
+        type: String,
         index: Number
     },
     data() {
         return {
             rate: 0,
             show: {
-                score: ["result"].includes(this.mode),
-                actions: ["waiting"].includes(this.mode)
+                score: ["result"].includes(this.type),
+                actions: ["waiting"].includes(this.type)
             }
         }
     },
     computed: {
         totalCoefficient() {
-            return (this.bets.reduce((r, {bookie}) => r * parseFloat(bookie.coefficient), 1)).toFixed(3);
+            return (this.bets.reduce((r, {bookie}) => r * Number(bookie.coefficient), 1)).toFixed(3);
         },
         totalSum() {
             return (Number(this.totalCoefficient) * Number(this.rate)).toFixed(2);
@@ -53,9 +53,6 @@ export default {
             _deleteBet: "deleteBet",
             _deleteBetSlip: "deleteBetSlip",
         }),
-        date(date) {
-            return moment(date).format("DD.MM");
-        },
         deleteBet(indexOfBet) {
             this._deleteBet({indexOfBet, indexOfBetSlip: this.index});
         },

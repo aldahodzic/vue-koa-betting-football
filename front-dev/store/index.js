@@ -60,7 +60,6 @@ export const store = new Vuex.Store({
     },
     mutations: {
         createSelectableLeagues(state) {
-            // state.selectableLeagues = state.leaguesList.map(name => ({name, selectedClass: ""}));
             state.selectableLeagues = state.leaguesList.map(name => ({name, selectedClass: name === "ChampionsLeague" ? "selected" : ""}));
         },
         selectLeague(state, leagueName) {
@@ -80,11 +79,11 @@ export const store = new Vuex.Store({
             }));
         },
         changeCurrentBetSlip(state, {key, bookie, type, callback}) {
-            let {home, guest, dateNum, league} = state.matches.find(match => match.key === key);
+            let {home, guest, dateNum, date, league} = state.matches.find(match => match.key === key);
             let selectedBet = state.bets.current.find(bet => bet.key === key);
 
             if(!selectedBet) {
-                state.bets.current.push({home, guest, dateNum, league, bookie, key, type});
+                state.bets.current.push({home, guest, dateNum, date, league, bookie, key, type});
                 return callback(true);
             }
 
