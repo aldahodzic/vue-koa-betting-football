@@ -43,7 +43,10 @@ export default {
         state.selectButtonMode = state.selectButtonMode === "bet" ? "info" : "bet";
     },
     pushToWaiting(state) {
-        state.bets.waiting.push(state.bets.current);
+        state.bets.waiting.push({
+            rate: 0,
+            bets: state.bets.current
+        });
         state.bets.current = [];
     },
     updateMatchButtonsSelectClass(state) {
@@ -58,5 +61,8 @@ export default {
     deleteBetSlip(state, {index, force}) {
         if(!force && state.bets.waiting[index].length !== 0) return;
         state.bets.waiting.splice(index, 1);
+    },
+    pushToConfirmed(state, data) {
+        state.bets.confirmed.push(data);
     },
 }

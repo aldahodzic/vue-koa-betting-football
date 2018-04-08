@@ -9,11 +9,13 @@ div#bet-slip
         
     div.bets-type
         app-bet-slip(
-        v-for="(bets, index) in betsType",
+        v-for="(betSlip, index) in betSlipType",
         :key="index",
-        :bets="bets",
+        :bets="betSlip.bets",
         :type="type",
-        :index="index"
+        :index="index",
+        :rate="betSlip.rate",
+        @new-rate="onNewRate"
 )
 
 </template>
@@ -53,7 +55,7 @@ export default {
         ...mapGetters({
             _bets: "bets"
         }),
-        betsType() {
+        betSlipType() {
             return this._bets[this.type];
         },
     },
@@ -61,6 +63,9 @@ export default {
         changeMenu(selectedItem) {
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.type = selectedItem.type;
+        },
+        onNewRate({value, index}) {
+            this.betSlipType[index].rate = value;
         },
     }
 }

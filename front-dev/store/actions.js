@@ -35,12 +35,12 @@ export default {
     deleteBetSlip({commit}, data) {
         commit("deleteBetSlip", data);
     },
-    async confirmBetSlip({getters}, data) {
-        let betSlip = getters.bets.waiting[data.index];
-        delete data.index;
-        console.log({
-            ...data,
-            betSlip: [...betSlip],
-        });
+    async confirmBetSlip({commit, getters}, index) {
+        let bets = getters.bets.waiting[index];
+        let {data, status} = await Vue.axios.post("/bets/confirm", bets);
+        if(!status) return alert(data);
+        commit("deleteBetSlip", {index, force: true});
+        commit("pushToConfirmed", data);
     },
+
 }

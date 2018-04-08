@@ -2,7 +2,7 @@
 div.bets-block
     div.info
         div.row(v-for="(bet, indexOfBet) in bets")
-            span.close(@click="deleteBet(indexOfBet)") &#10006;
+            span.close(v-if="show.deleteBet", @click="deleteBet(indexOfBet)") &#10006;
             span.date {{bet.date}}
             span.league {{$t(bet.league)}}
             span.teams {{bet.home}} &mdash; {{bet.guest}}
@@ -13,9 +13,15 @@ div.bets-block
         p.remove(@click="deleteBetSlip") &#10006;
         p.input
             span Bet amount:
-            input(type="number", v-model="rate")
+            input(type="number", @input="newRate", :value="rate")
             span * {{totalCoefficient}} = {{totalSum}}
         p.confirm(:class="disabled", @click="confirmBetSlip") &#10004;
+    div.confirmed-info(v-if="show.confirmedInfo")
+        p Total coefficient: {{totalCoefficient}}
+        p Rate: {{rate}}
+        p Possible win sum: {{totalSum}}
+        p &telrec;
+    
 </template>
 
 <script>
@@ -26,14 +32,16 @@ export default {
     props: {
         bets: Array,
         type: String,
-        index: Number
+        index: Number,
+        rate: Number,
     },
     data() {
         return {
-            rate: 0,
             show: {
                 score: ["result"].includes(this.type),
-                actions: ["waiting"].includes(this.type)
+                actions: ["waiting"].includes(this.type),
+                deleteBet: ["waiting"].includes(this.type),
+                confirmedInfo: ["confirmed"].includes(this.type),
             }
         }
     },
@@ -46,7 +54,10 @@ export default {
         },
         disabled() {
             return Number(this.rate) <= 0 ? "confirm-disabled" : "";
-        }
+        },
+        fixedTotalSum() {
+            return Number(this.fixedRate) * Number(this.fixedTotalCoefficient);
+        },
     },
     methods: {
         ...mapActions({
@@ -54,6 +65,12 @@ export default {
             _deleteBetSlip: "deleteBetSlip",
             _confirmBetSlip: "confirmBetSlip",
         }),
+        newRate(e) {
+            this.$emit("new-rate", {
+                index: this.index,
+                value: Number(e.target.value) || 0
+            });
+        },
         deleteBet(indexOfBet) {
             this._deleteBet({indexOfBet, indexOfBetSlip: this.index});
         },
@@ -61,8 +78,7 @@ export default {
             this._deleteBetSlip({index: this.index, force: true});
         },
         confirmBetSlip() {
-            let {index, rate, totalCoefficient} = this;
-            this._confirmBetSlip({index, rate, totalCoefficient});
+            this._confirmBetSlip(this.index);
         },
     },
 }
