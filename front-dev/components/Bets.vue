@@ -22,7 +22,7 @@ div#bet-slip
 
 <script>
 import _ from "lodash";
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 import appBetSlip from "./BetsBetSlip.vue";
 export default {
     name: "app-bets",
@@ -60,6 +60,9 @@ export default {
         },
     },
     methods: {
+        ...mapActions({
+            _getConfirmedBets: "getConfirmedBets"
+        }),
         changeMenu(selectedItem) {
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.type = selectedItem.type;
@@ -67,7 +70,10 @@ export default {
         onNewRate({value, index}) {
             this.betSlipType[index].rate = value;
         },
-    }
+    },
+    created() {
+        this._getConfirmedBets();
+    },
 }
 </script>
 

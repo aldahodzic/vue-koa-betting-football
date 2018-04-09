@@ -40,7 +40,11 @@ export default {
         let {data, status} = await Vue.axios.post("/bets/confirm", bets);
         if(!status) return alert(data);
         commit("deleteBetSlip", {index, force: true});
+        commit("pushToConfirmed", [data]);
+    },
+    async getConfirmedBets({commit}) {
+        commit("clearConfirmedBets");
+        let {data, status} = await Vue.axios.get("/bets/get/confirmed");
         commit("pushToConfirmed", data);
     },
-
 }

@@ -63,6 +63,9 @@ export default {
         state.bets.waiting.splice(index, 1);
     },
     pushToConfirmed(state, data) {
-        state.bets.confirmed.push(data);
+        state.bets.confirmed.push(...data);
+    },
+    clearConfirmedBets(state) {
+        state.bets.confirmed = [];
     },
 }

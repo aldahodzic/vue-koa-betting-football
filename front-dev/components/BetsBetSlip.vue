@@ -35,17 +35,15 @@ export default {
         index: Number,
         rate: Number,
     },
-    data() {
-        return {
-            show: {
-                score: ["result"].includes(this.type),
-                actions: ["waiting"].includes(this.type),
-                deleteBet: ["waiting"].includes(this.type),
-                confirmedInfo: ["confirmed"].includes(this.type),
-            }
-        }
-    },
     computed: {
+        show() {
+            return {
+                score: this.type === "result",
+                actions: this.type === "waiting",
+                deleteBet: this.type === "waiting",
+                confirmedInfo: this.type === "confirmed",
+            }
+        },
         totalCoefficient() {
             return (this.bets.reduce((r, {bookie}) => r * Number(bookie.coefficient), 1)).toFixed(3);
         },
