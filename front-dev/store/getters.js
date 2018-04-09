@@ -33,4 +33,7 @@ export default {
     trigger_updateMatchButtonsSelectClass(state) {
         return state.trigger_updateMatchButtonsSelectClass
     },
+    trigger_updateConfirmedBets(state) {
+        return state.trigger_updateConfirmedBets;
+    },
 }

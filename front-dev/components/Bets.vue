@@ -9,7 +9,7 @@ div#bet-slip
         
     div.bets-type
         app-bet-slip(
-        v-for="(betSlip, index) in betSlipType",
+        v-for="(betSlip, index) in betsType",
         :key="index",
         :bets="betSlip.bets",
         :type="type",
@@ -53,9 +53,10 @@ export default {
     },
     computed: {
         ...mapGetters({
-            _bets: "bets"
+            _bets: "bets",
+            _trigger_updateConfirmedBets: "trigger_updateConfirmedBets"
         }),
-        betSlipType() {
+        betsType() {
             return this._bets[this.type];
         },
     },
@@ -72,7 +73,7 @@ export default {
         },
     },
     created() {
-        this._getConfirmedBets();
+        if(this._trigger_updateConfirmedBets) this._getConfirmedBets();
     },
 }
 </script>

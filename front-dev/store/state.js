@@ -13,5 +13,6 @@ export default {
         auth: false
     },
     // triggers
-    trigger_updateMatchButtonsSelectClass: false
+    trigger_updateMatchButtonsSelectClass: false,
+    trigger_updateConfirmedBets: true,
 }

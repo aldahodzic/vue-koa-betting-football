@@ -53,9 +53,6 @@ export default {
         disabled() {
             return Number(this.rate) <= 0 ? "confirm-disabled" : "";
         },
-        fixedTotalSum() {
-            return Number(this.fixedRate) * Number(this.fixedTotalCoefficient);
-        },
     },
     methods: {
         ...mapActions({

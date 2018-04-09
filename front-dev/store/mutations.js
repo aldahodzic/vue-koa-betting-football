@@ -68,4 +68,7 @@ export default {
     clearConfirmedBets(state) {
         state.bets.confirmed = [];
     },
+    updateConfirmedBets(state) {
+        state.trigger_updateConfirmedBets = !state.trigger_updateConfirmedBets;
+    },
 }
