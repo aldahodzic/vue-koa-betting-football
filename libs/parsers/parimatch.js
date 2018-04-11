@@ -53,7 +53,7 @@ exports.create = async (URL, leagueName) => {
                 match.home = fixTeamName(teams[0].trim());
                 match.guest = fixTeamName(teams[1].trim());
 
-                if(match.home.includes("Home") && match.guest.includes("Away Teams")) return;
+                if(match.home.includes("Home") && match.guest.includes("Away")) return;
             }
 
             // League

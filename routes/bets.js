@@ -15,13 +15,19 @@ exports.confirm = async ctx => {
 exports.getResults = async (ctx, next) => {
     let allBets = await Bet.find({userId: ctx.user._id});
 
+    // if after parsing, immediately return bets
+    if(ctx.state.allBetsUpdated) return ctx.end(allBets);
+
+    // get keys of all matches in all bet slips of user
     let keys = [];
+    let allBetsReady = true;
     _.each(allBets , ({bets}) => _.each(bets, bet => {
         let key = `${bet.league}:${bet.home}-${bet.guest}`;
-        if(!bet.score && !keys.includes(key)) keys.push(key);
+        if(!keys.includes(key)) keys.push(key);
+        if(!bet.score) allBetsReady = false;
     }));
 
-    if(keys.length === 0) return ctx.end(allBets);
+    if(allBetsReady) return ctx.end(allBets);
 
     ctx.state.allBetsOfUser = allBets;
     ctx.state.keysOfMatchesForUpdate = keys;
@@ -32,27 +38,29 @@ exports.getResults = async (ctx, next) => {
 exports.setScoreOfMatches = async (ctx, next) => {
     let matches = await Match.find({key: {$in: ctx.state.keysOfMatchesForUpdate}});
 
-    // get all day, in with was games, but matches in db don't have result
+    // divide matches, for group which have score -> they push to ready, all else -> push their date to parse
     let daysForUpdate = [];
     let matchResultsExist = [];
     _.each(matches, ({key, score, date}) => {
         if(score) matchResultsExist.push({key, score});
         else daysForUpdate.push(date);
     });
-
-    _.remove(daysForUpdate, forDel => forDel === null);
     daysForUpdate = _.uniqBy(daysForUpdate, dateNum => moment(dateNum).format("DD.MM"));
 
-    // get results of all matches in selected days
+    // console.log("days for update", daysForUpdate.map(date => moment(date).format("DD.MM")));
+    // console.log("match result exist", matchResultsExist);
+
+    // parse results of all matches in selected days
     let matchResultsPromises = daysForUpdate.map(dateNum => parsers.results(dateNum));
     let matchResults = await Promise.all(matchResultsPromises);
     matchResults = _.flattenDeep(matchResults);
 
-    // set result for selected matches
+    // set result for selected matches in db
     let matchUpdatedPromises = matchResults.map(({key, score}) => Match.findOneAndUpdate({key}, {score}, {new: true}));
     let updatedMatches = await Promise.all(matchUpdatedPromises);
     _.remove(updatedMatches, match => match === null);
 
+    // concatenate existing scores with parsed
     ctx.state.matchResults = matchResultsExist.concat(updatedMatches.map(({key, score}) => ({key, score})));
 
     await next();
@@ -65,17 +73,23 @@ exports.updateBets = async (ctx, next) => {
     let bets = ctx.state.allBetsOfUser;
     let matches = ctx.state.matchResults;
 
+    // console.log("all match results", matches);
+
+    // set result of all matches or 'none', in all bets, in all betSlips of user
     let betPromises = [];
     _.each(bets, betSlip => _.each(betSlip.bets, bet => {
         let match = matches.find(match => match.key === `${bet.league}:${bet.home}-${bet.guest}`);
-        betPromises.push(Bet.findOneAndUpdate(
+        console.log(">>>..", bet.score);
+        if(!bet.score || bet.score === "none") betPromises.push(Bet.findOneAndUpdate(
             {_id: betSlip._id, bets: {$elemMatch: {_id: bet._id}}},
-            {$set: {"bets.$.score": match.score}},
+            {$set: {"bets.$.score": match ? match.score : "none"}},
             {new: true}
         ));
     }));
 
     await Promise.all(betPromises);
+
+    ctx.state.allBetsUpdated = true;
 
     await next();
 };

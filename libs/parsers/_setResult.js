@@ -1,4 +1,5 @@
 const Match = require("libs/mongo/schemas/match");
+const Bet = require("libs/mongo/schemas/bet");
 
 
 
@@ -65,14 +66,58 @@ let matches = [
                 coefficient: 1.1
             }],
         }
+    },
+    {
+        key: "ChampionsLeague:Manchester City-Liverpool",
+        home: "Manchester City",
+        guest: "Liverpool",
+        league: "ChampionsLeague",
+        date: 1523389500000,
+        coefficients: {
+            "0": [{
+                name: "bet1",
+                coefficient: 5.8
+            }],
+            "1": [{
+                name: "bet2",
+                coefficient: 3.6
+            }],
+            "2": [{
+                name: "bet3",
+                coefficient: 1.1
+            }],
+        }
+    },
+    {
+        key: "ChampionsLeague:Roma-Barcelona",
+        home: "Roma",
+        guest: "Barcelona",
+        league: "ChampionsLeague",
+        date: 1523389500000,
+        coefficients: {
+            "0": [{
+                name: "bet1",
+                coefficient: 5.8
+            }],
+            "1": [{
+                name: "bet2",
+                coefficient: 3.6
+            }],
+            "2": [{
+                name: "bet3",
+                coefficient: 1.1
+            }],
+        }
     }
 ];
+
 
 
 (async () => {
     let arr = [];
 
     await Match.remove({});
+    await Bet.remove({});
 
     for(let match of matches) {
         arr.push(Match.create(match));
