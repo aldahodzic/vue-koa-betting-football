@@ -39,14 +39,15 @@ export default {
                     title: "Waiting to confirm"
                 },
                 {
-                    type: "confirmed",
-                    classes: "",
-                    title: "Confirmed bets"
-                },
-                {
                     type: "results",
                     classes: "",
                     title: "Results"
+                },
+                {
+                    type: "check",
+                    classes: "",
+                    title: "⌕",
+                    tagTitle: "Check all bets"
                 }
             ]
         }
@@ -62,18 +63,20 @@ export default {
     },
     methods: {
         ...mapActions({
-            _getConfirmedBets: "getConfirmedBets"
+            _getConfirmedBets: "getConfirmedBets",
+            _getResults: "getResults"
         }),
         changeMenu(selectedItem) {
+            if(selectedItem.type === "check") return this._getResults();
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.type = selectedItem.type;
         },
         onNewRate({value, index}) {
-            this.betSlipType[index].rate = value;
+            this.betsType[index].rate = value;
         },
     },
     created() {
-        if(this._trigger_updateConfirmedBets) this._getConfirmedBets();
+        this._getResults();
     },
 }
 </script>
@@ -101,6 +104,17 @@ export default {
         &:first-of-type {margin-left: 4px}
         &:last-of-type {margin-right: 4px}
         &.selected {background: #009933; color: white;}
+        &:nth-child(3) {
+            margin-left: -2px;
+            background: blue;
+            flex-basis: 40px;
+            padding: 0;
+            flex-grow: 0;
+            font-size: 25px;
+            color: white;
+            font-weight: bold;
+            transform: rotateY(180deg);
+        }
     }
 }
 .bets-type {

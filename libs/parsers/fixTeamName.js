@@ -4,6 +4,7 @@ module.exports = name => {
     if(name === "Man City") return "Manchester City";
     if(name === "Stoke") return "Stoke City";
     if(name === "West Brom") return "West Bromwich";
+    if(name === "West Ham United") return "West Ham";
     if(name === "Leicester") return "Leicester City";
     if(name === "Celta") return "Celta Vigo";
     if(name === "VfB Stuttgart") return "Stuttgart";
@@ -40,7 +41,11 @@ module.exports = name => {
     if(name === "Real Betis") return "Betis";
     if(name === "Paris St-G") return "PSG";
     if(name === "TSG Hoffenheim") return "Hoffenheim";
+    if(name === "1899 Hoffenheim") return "Hoffenheim";
     if(name === "SC Freiburg") return "Freiburg";
+
+    if(name === "Atlético Madrid") return "Atletico Madrid";
+
 
     return name;
 };

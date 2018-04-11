@@ -11,7 +11,7 @@ publicRoute.post("/matches", matches.checkDB, matches.parser, matches.writeDB);
 publicRoute.post("/auth/authorization", auth.authorization);
 publicRoute.post("/auth/registration", auth.registration);
 
-publicRoute.get("/bets/get/confirmed", bets.getConfirmed);
+publicRoute.get("/bets/results", bets.getResults, bets.setScoreOfMatches, bets.updateBets, bets.getResults);
 publicRoute.post("/bets/confirm", bets.confirm);
 
 

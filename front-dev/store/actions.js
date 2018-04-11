@@ -35,18 +35,20 @@ export default {
     deleteBetSlip({commit}, data) {
         commit("deleteBetSlip", data);
     },
+
+
     async confirmBetSlip({commit, getters}, index) {
-        let bets = getters.bets.waiting[index];
-        let {data, status} = await Vue.axios.post("/bets/confirm", bets);
+        let betSlip = getters.bets.waiting[index];
+        let {data, status} = await Vue.axios.post("/bets/confirm", betSlip);
         if(!status) return alert(data);
         commit("deleteBetSlip", {index, force: true});
-        commit("pushToConfirmed", [data]);
-        commit("updateConfirmedBets");
+        commit("setResultsUpdatedStatus", false);
     },
-    async getConfirmedBets({commit}) {
-        commit("clearConfirmedBets");
-        let {data, status} = await Vue.axios.get("/bets/get/confirmed");
-        commit("pushToConfirmed", data);
-        commit("updateConfirmedBets");
+    async getResults({commit, getters}) {
+        if(getters.trigger_resultsUpdated) return;
+        commit("clearResults");
+        let {data} = await Vue.axios.get("/bets/results");
+        commit("pushToResults", data);
+        commit("setResultsUpdatedStatus", true);
     },
 }

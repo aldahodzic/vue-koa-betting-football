@@ -14,6 +14,7 @@ const BetSlipSchema = new mongoose.Schema({
 
 const BetSchema = new mongoose.Schema({
     rate: Number,
+    userId: mongoose.Schema.Types.ObjectId,
     bets: [BetSlipSchema]
 }, {
     timestamps: true,

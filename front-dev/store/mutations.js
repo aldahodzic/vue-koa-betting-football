@@ -62,13 +62,15 @@ export default {
         if(!force && state.bets.waiting[index].length !== 0) return;
         state.bets.waiting.splice(index, 1);
     },
-    pushToConfirmed(state, data) {
-        state.bets.confirmed.push(...data);
+
+    clearResults(state) {
+        state.bets.results = [];
     },
-    clearConfirmedBets(state) {
-        state.bets.confirmed = [];
+    setResultsUpdatedStatus(state, status) {
+        state.trigger_resultsUpdated = status;
     },
-    updateConfirmedBets(state) {
-        state.trigger_updateConfirmedBets = !state.trigger_updateConfirmedBets;
+    pushToResults(state, data) {
+        console.log("push to results", data);
+        _.each(data, ({rate, bets}) => state.bets.results.push({rate, bets}));
     },
 }

@@ -9,7 +9,8 @@
         "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
         "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
         "node": "set NODE_PATH=.&& nodemon app.js --ignore front-dev/",
-        "node-clear": "set NODE_PATH=.&& node app.js"
+        "node-clear": "set NODE_PATH=.&& node app.js",
+        "sm": "set NODE_PATH=.&& node libs/parsers/_setResult"
     },
     "dependencies": {
         "axios": "^0.18.0",

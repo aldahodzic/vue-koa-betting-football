@@ -8,7 +8,7 @@ div.bets-block
             span.teams {{bet.home}} &mdash; {{bet.guest}}
             span.type {{bet.type}}
             span.coefficient {{bet.bookie.coefficient}}
-            span.score(v-if="show.score") 1 : 2
+            span.score(v-if="bet.score") {{bet.score}}
     div.actions(v-if="show.actions")
         p.remove(@click="deleteBetSlip") &#10006;
         p.input
@@ -16,11 +16,10 @@ div.bets-block
             input(type="number", @input="newRate", :value="rate")
             span * {{totalCoefficient}} = {{totalSum}}
         p.confirm(:class="disabled", @click="confirmBetSlip") &#10004;
-    div.confirmed-info(v-if="show.confirmedInfo")
+    div.result(v-if="show.result")
         p Total coefficient: {{totalCoefficient}}
         p Rate: {{rate}}
-        p Possible win sum: {{totalSum}}
-        p &telrec;
+        p Win sum: {{totalSum}}
     
 </template>
 
@@ -38,10 +37,9 @@ export default {
     computed: {
         show() {
             return {
-                score: this.type === "result",
                 actions: this.type === "waiting",
                 deleteBet: this.type === "waiting",
-                confirmedInfo: this.type === "confirmed",
+                result: this.type === "results",
             }
         },
         totalCoefficient() {
