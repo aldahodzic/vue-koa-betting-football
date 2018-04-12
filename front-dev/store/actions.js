@@ -44,8 +44,8 @@ export default {
         commit("deleteBetSlip", {index, force: true});
         commit("setResultsUpdatedStatus", false);
     },
-    async getResults({commit, getters}) {
-        if(getters.trigger_resultsUpdated) return;
+    async getResults({commit, getters}, force = false) {
+        if(!force && getters.trigger_resultsUpdated) return;
         commit("clearResults");
         let {data} = await Vue.axios.get("/bets/results");
         commit("pushToResults", data);

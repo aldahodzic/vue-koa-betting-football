@@ -30,7 +30,7 @@ module.exports = async date => {
                 let homeScore = matchInfo.homeTeam.scores.score;
                 let guestScore = matchInfo.awayTeam.scores.score;
 
-                if(homeScore && guestScore) matches.push({
+                if(homeScore !== null && guestScore !== null) matches.push({
                     key: `${league}:${home}-${guest}`,
                     score: `${homeScore} : ${guestScore}`,
                 });

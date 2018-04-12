@@ -5,10 +5,6 @@ const {parsers, bookies} = require("libs/parsers");
 
 exports.checkDB = async (ctx, next) => {
 
-    // todo empty request.body
-    //TypeError: Cannot read property 'includes' of undefined
-    // at _.each (D:\vue\fakebet\routes\matches.js:56:40)
-
     let {leagues} = ctx.request.body;
 
     ctx.state.readyMatches = [];
@@ -17,7 +13,7 @@ exports.checkDB = async (ctx, next) => {
         write: [],
     };
 
-    let matches = await Match.find({league: {$in: ctx.state.leagues.read}});
+    let matches = await Match.find({league: {$in: ctx.state.leagues.read}, date: {$lt: Date.now()}});
 
     // if not found matches, going to parsing
     if(matches.length === 0) {

@@ -88,7 +88,7 @@ exports.create = async (URL, leagueName) => {
         }
         catch({message, stack}) {
             console.log("Error >>", {
-                path: `williamhill[${leagueName}]`,
+                path: `parimatch[${leagueName}]`,
                 message,
                 stack: stack.split(" at ").splice(1, 3),
                 elementText: $(_element).text() ? $(_element).text().replace(/(\t|\n)+/g, " | ") : "no element text"

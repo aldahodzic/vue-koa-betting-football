@@ -23,8 +23,10 @@ exports.getResults = async (ctx, next) => {
     let allBetsReady = true;
     _.each(allBets , ({bets}) => _.each(bets, bet => {
         let key = `${bet.league}:${bet.home}-${bet.guest}`;
-        if(!keys.includes(key)) keys.push(key);
-        if(!bet.score) allBetsReady = false;
+        if((!bet.score || bet.score === "none") && !keys.includes(key) && bet.dateNum < Date.now()) {
+            keys.push(key);
+            allBetsReady = false;
+        }
     }));
 
     if(allBetsReady) return ctx.end(allBets);
@@ -79,8 +81,7 @@ exports.updateBets = async (ctx, next) => {
     let betPromises = [];
     _.each(bets, betSlip => _.each(betSlip.bets, bet => {
         let match = matches.find(match => match.key === `${bet.league}:${bet.home}-${bet.guest}`);
-        console.log(">>>..", bet.score);
-        if(!bet.score || bet.score === "none") betPromises.push(Bet.findOneAndUpdate(
+        if(!bet.score || (bet.score === "none" && match && match.score)) betPromises.push(Bet.findOneAndUpdate(
             {_id: betSlip._id, bets: {$elemMatch: {_id: bet._id}}},
             {$set: {"bets.$.score": match ? match.score : "none"}},
             {new: true}

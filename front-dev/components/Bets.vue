@@ -67,7 +67,7 @@ export default {
             _getResults: "getResults"
         }),
         changeMenu(selectedItem) {
-            if(selectedItem.type === "check") return this._getResults();
+            if(selectedItem.type === "check") return this._getResults(true);
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.type = selectedItem.type;
         },
