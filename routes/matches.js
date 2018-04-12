@@ -13,7 +13,7 @@ exports.checkDB = async (ctx, next) => {
         write: [],
     };
 
-    let matches = await Match.find({league: {$in: ctx.state.leagues.read}, date: {$lt: Date.now()}});
+    let matches = await Match.find({league: {$in: ctx.state.leagues.read}, date: {$gt: Date.now()}});
 
     // if not found matches, going to parsing
     if(matches.length === 0) {

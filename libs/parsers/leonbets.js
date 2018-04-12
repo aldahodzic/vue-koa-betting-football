@@ -89,7 +89,8 @@ exports.create = async (URL, leagueName) => {
         }
     });
 
-    log("matches created: Leonbets");
+    if(allTeams.length > 0) log("matches created: Leonbets");
+    else log("none matches found: Leonbets");
 
     return allTeams;
 

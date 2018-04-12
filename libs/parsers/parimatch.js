@@ -36,7 +36,6 @@ exports.create = async (URL, leagueName) => {
     let tBodies = table.find("tbody[class*='row']");
     let allTeams = [];
 
-
     tBodies.each((i, _element) => {
         try {
             let element = $(_element);
@@ -96,7 +95,8 @@ exports.create = async (URL, leagueName) => {
         }
     });
 
-    log("matches created: Parimatch");
+    if(allTeams.length > 0) log("matches created: Parimatch");
+    else log("none matches found: Parimatch");
 
     return allTeams;
 

@@ -97,7 +97,8 @@ exports.create = async (URL, leagueName) => {
 
     });
 
-    log("matches created: Williamhill");
+    if(allTeams.length > 0) log("matches created: Williamhill");
+    else log("none matches found: Williamhill");
 
     return allTeams;
 

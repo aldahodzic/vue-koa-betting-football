@@ -7,6 +7,9 @@ const parsers = require("libs/parsers");
 
 exports.confirm = async ctx => {
     let data = ctx.request.body;
+
+    _.each(data.bets , bet => {if(bet.dateNum < Date.now()) ctx.error(403, "Disallowed: Update matches")});
+
     data.userId = ctx.user._id;
     let bet = await Bet.create(data);
     ctx.end(bet.getData());
