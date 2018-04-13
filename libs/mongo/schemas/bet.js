@@ -23,9 +23,9 @@ const BetSchema = new mongoose.Schema({
 });
 
 BetSchema.methods.getData = function() {
-    let {rate, bets} = this;
+    let {rate, bets, _id, createdAt} = this;
     // todo del _id from bets
-    return {rate, bets};
+    return {rate, bets, _id, createdAt};
 };
 
 module.exports = mongoose.model("Bet", BetSchema);

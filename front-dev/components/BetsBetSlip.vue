@@ -17,9 +17,10 @@ div.bet-slip(:class="betSlipClass")
             span * {{totalCoefficient}} = {{totalSum}}
         p.confirm(:class="disabledClass", @click="confirmBetSlip") &#10004;
     div.result(v-if="show.result")
-        p Rate: {{rate}}
-        p Total coefficient: {{totalCoefficient}}
-        p {{betSlipResultText}}: {{betSlipResultSum}}
+        p.date Date: <b>{{createdDate}}</b>
+        p.rate Rate: <b>{{rate}}</b>
+        p.coefficient Total coefficient: <b>{{totalCoefficient}}</b>
+        p.sum {{betSlipResultText}}: <b>{{betSlipResultSum}}</b>
     
 </template>
 
@@ -33,6 +34,8 @@ export default {
         type: String,
         index: Number,
         rate: Number,
+        id: String,
+        createdAt: String
     },
     computed: {
         show() {
@@ -65,8 +68,7 @@ export default {
             else return "lose";
         },
         betSlipOld() {
-            let old = moment().subtract(1, "days").valueOf();
-            return this.bets.some(bet => bet.dateNum < old);
+            return moment(this.createdAt).valueOf() < moment().subtract(1, "days").valueOf();
         },
         betSlipResultText() {
             switch(this.betSlipStatus) {
@@ -77,6 +79,9 @@ export default {
         },
         betSlipResultSum() {
             return this.betSlipStatus === "lose" ? this.rate : this.totalSum;
+        },
+        createdDate() {
+            return moment(this.createdAt).format("DD.MM HH:mm");
         },
     },
     methods: {
@@ -194,7 +199,12 @@ export default {
     .result {
         display: flex;
         .justify;
-        font-weight: bold;
+        text-align: center;
+    
+        .date {flex-basis: 18%}
+        .rate {flex-basis: 10%}
+        .coefficient {flex-basis: 25%}
+        .sum {flex-basis: 30%}
     }
     
 }

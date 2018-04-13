@@ -32,7 +32,7 @@ exports.getResults = async (ctx, next) => {
         }
     }));
 
-    if(allBetsReady) return ctx.end(allBets);
+    if(allBetsReady) return ctx.end(allBets.map(bet => bet.getData()));
 
     ctx.state.allBetsOfUser = allBets;
     ctx.state.keysOfMatchesForUpdate = keys;

@@ -70,7 +70,6 @@ export default {
         state.trigger_resultsUpdated = status;
     },
     pushToResults(state, data) {
-        console.log("push to results", data);
-        _.each(data, ({rate, bets}) => state.bets.results.push({rate, bets}));
+        state.bets.results = _.sortBy(data, bet => -1 * new Date(bet.createdAt).getTime());
     },
 }
