@@ -1,6 +1,6 @@
 <template lang="pug">
-div.bets-block
-    div.info
+div.bet-slip(:class="betSlipClass")
+    div.info(v-if="show.info")
         div.row(v-for="(bet, indexOfBet) in bets")
             span.close(v-if="show.deleteBet", @click="deleteBet(indexOfBet)") &#10006;
             span.date {{bet.date}}
@@ -15,11 +15,11 @@ div.bets-block
             span Bet amount:
             input(type="number", @input="newRate", :value="rate")
             span * {{totalCoefficient}} = {{totalSum}}
-        p.confirm(:class="disabled", @click="confirmBetSlip") &#10004;
+        p.confirm(:class="disabledClass", @click="confirmBetSlip") &#10004;
     div.result(v-if="show.result")
-        p Total coefficient: {{totalCoefficient}}
         p Rate: {{rate}}
-        p Win sum: {{totalSum}}
+        p Total coefficient: {{totalCoefficient}}
+        p {{betSlipResultText}}: {{betSlipResultSum}}
     
 </template>
 
@@ -40,6 +40,7 @@ export default {
                 actions: this.type === "waiting",
                 deleteBet: this.type === "waiting",
                 result: this.type === "results",
+                info: (this.type === "results" && !this.betSlipOld) || this.type === "waiting"
             }
         },
         totalCoefficient() {
@@ -49,7 +50,33 @@ export default {
             return (Number(this.totalCoefficient) * Number(this.rate)).toFixed(2);
         },
         disabled() {
-            return Number(this.rate) <= 0 ? "confirm-disabled" : "";
+            return Number(this.rate) <= 0;
+        },
+        disabledClass() {
+            return this.disabled ? "confirm-disabled" : "";
+        },
+        betSlipClass() {
+            return `bet-slip-${this.betSlipStatus}`;
+        },
+        betSlipStatus() {
+            let matchResults = this.bets.map(this.betStatus);
+            if(matchResults.some(bet => bet === "waiting")) return "waiting";
+            if(matchResults.every(bet => bet === true)) return "win";
+            else return "lose";
+        },
+        betSlipOld() {
+            let old = moment().subtract(1, "days").valueOf();
+            return this.bets.some(bet => bet.dateNum < old);
+        },
+        betSlipResultText() {
+            switch(this.betSlipStatus) {
+                case "waiting":  return "Potential win sum";
+                case "win":  return "Won sum";
+                case "lose":  return "Lost sum";
+            }
+        },
+        betSlipResultSum() {
+            return this.betSlipStatus === "lose" ? this.rate : this.totalSum;
         },
     },
     methods: {
@@ -71,8 +98,17 @@ export default {
             this._deleteBetSlip({index: this.index, force: true});
         },
         confirmBetSlip() {
-            this._confirmBetSlip(this.index);
+            if(!this.disabled) this._confirmBetSlip(this.index);
         },
+        betStatus({type, score}) {
+            if(!score || score === "none") return "waiting";
+            let [home, guest] = score.split(" : ");
+            let result;
+            if(home > guest) result = "1";
+            if(home === guest) result = "0";
+            if(home < guest) result = "2";
+            return result === type;
+        }
     },
 }
 </script>
@@ -82,9 +118,14 @@ export default {
     justify-content: space-around;
     justify-content: space-evenly;
 }
-.bets-block {
-    background: #ffff80;
+.bet-slip {
     margin: 10px 0;
+    
+    &.bet-slip-win {background: lightgreen;}
+    &.bet-slip-lose {background: lightcoral;}
+    &.bet-slip-waiting {background: #ffff80;}
+    
+    p {margin: 8px 0;}
     
     .info {
         padding: 2px 0;
@@ -136,7 +177,7 @@ export default {
             }
             &.remove {background: red; margin-left: 30px;}
             &.confirm {background: green; margin-right: 30px;}
-            &.confirm-disabled {background: grey; cursor: default;}
+            &.confirm-disabled {background: grey; cursor: not-allowed;}
             &.input {
                 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance: none;}
                 input {
@@ -148,6 +189,12 @@ export default {
                 }
             }
         }
+    }
+    
+    .result {
+        display: flex;
+        .justify;
+        font-weight: bold;
     }
     
 }

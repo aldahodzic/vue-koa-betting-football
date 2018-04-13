@@ -7,7 +7,13 @@ div#bet-slip
         :class="item.classes"
         ) {{item.title}}
         
-    div.bets-type
+    p.p-info#get-previous(
+    v-if="type=='results'"
+    ) Get previous bets
+    
+    p.p-info#none-bets(v-if="betsType.length==0") You didn't made any bets.
+    
+    div.bets-type(v-if="betsType.length>0")
         app-bet-slip(
         v-for="(betSlip, index) in betsType",
         :key="index",
@@ -120,5 +126,22 @@ export default {
 .bets-type {
     background: white;
     padding: 1px 5px;
+}
+.p-info {
+    background: darkorange;
+    padding: 5px 0;
+    text-align: center;
+    width: 60%;
+    color: white;
+    margin: 10px auto;
+    
+    &#get-previous {
+        background: darkorange;
+        width: 60%;
+    }
+    &#none-bets {
+        background: red;
+        width: 100%;
+    }
 }
 </style>
