@@ -1,5 +1,5 @@
 <template lang="pug">
-div.bet-slip(:class="betSlipClass")
+div.bet-slip(v-if="show.filter", :class="betSlipClass")
     div.info(v-if="show.info")
         div.row(v-for="(bet, indexOfBet) in bets")
             span.close(v-if="show.deleteBet", @click="deleteBet(indexOfBet)") &#10006;
@@ -8,7 +8,7 @@ div.bet-slip(:class="betSlipClass")
             span.teams {{bet.home}} &mdash; {{bet.guest}}
             span.type {{bet.type}}
             span.coefficient {{bet.bookie.coefficient}}
-            span.score(v-if="bet.score") {{bet.score}}
+            span.score(v-if="bet.score", :class="betStatusClass(bet)") {{bet.score}}
     div.actions(v-if="show.actions")
         p.remove(@click="deleteBetSlip") &#10006;
         p.input
@@ -16,7 +16,7 @@ div.bet-slip(:class="betSlipClass")
             input(type="number", @input="newRate", :value="rate")
             span * {{totalCoefficient}} = {{totalSum}}
         p.confirm(:class="disabledClass", @click="confirmBetSlip") &#10004;
-    div.result(v-if="show.result")
+    div.result(v-if="show.result", @click="showInfo=!showInfo")
         p.date Date: <b>{{createdDate}}</b>
         p.rate Rate: <b>{{rate}}</b>
         p.coefficient Total coefficient: <b>{{totalCoefficient}}</b>
@@ -35,7 +35,14 @@ export default {
         index: Number,
         rate: Number,
         id: String,
-        createdAt: String
+        createdAt: String,
+        hideInfo: Boolean,
+        showFiltered: String,
+    },
+    data() {
+        return {
+            showInfo: false,
+        }
     },
     computed: {
         show() {
@@ -43,7 +50,8 @@ export default {
                 actions: this.type === "waiting",
                 deleteBet: this.type === "waiting",
                 result: this.type === "results",
-                info: (this.type === "results" && !this.betSlipOld) || this.type === "waiting"
+                info: this.showInfo || (this.type === "results" && !this.betSlipOld) || this.type === "waiting",
+                filter: this.showFiltered === "all" || this.showFiltered === this.betSlipStatus
             }
         },
         totalCoefficient() {
@@ -73,12 +81,18 @@ export default {
         betSlipResultText() {
             switch(this.betSlipStatus) {
                 case "waiting":  return "Potential win sum";
-                case "win":  return "Won sum";
+                case "win":  return "Profit";
                 case "lose":  return "Lost sum";
             }
         },
         betSlipResultSum() {
-            return this.betSlipStatus === "lose" ? this.rate : this.totalSum;
+            let sum;
+            switch(this.betSlipStatus) {
+                case "waiting":  sum = Number(this.totalSum); break;
+                case "win":  sum = Number(this.totalSum) - this.rate; break;
+                case "lose":  sum = this.rate; break;
+            }
+            return sum.toFixed(2);
         },
         createdDate() {
             return moment(this.createdAt).format("DD.MM HH:mm");
@@ -113,8 +127,18 @@ export default {
             if(home === guest) result = "0";
             if(home < guest) result = "2";
             return result === type;
-        }
+        },
+        betStatusClass(bet) {
+            let result = this.betStatus(bet);
+            if(result === true) return "bet-match-won";
+            if(result === false) return "bet-match-lose";
+        },
     },
+    watch: {
+        hideInfo() {
+            this.showInfo = false;
+        }
+    }
 }
 </script>
 
@@ -160,6 +184,9 @@ export default {
                 
                 &:first-of-type {margin-left: 4px}
                 &:last-of-type {margin-right: 4px}
+                
+                &.bet-match-won {background: green}
+                &.bet-match-lose {background: red}
             }
         }
     }
@@ -200,6 +227,7 @@ export default {
         display: flex;
         .justify;
         text-align: center;
+        cursor: pointer;
     
         .date {flex-basis: 18%}
         .rate {flex-basis: 10%}

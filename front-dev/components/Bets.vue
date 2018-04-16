@@ -10,14 +10,24 @@ div#bet-slip
     p#none-bets(v-if="betsType.length==0") You didn't made any bets.
     
     div#bets-actions(v-else)
-        p
+        p.selector
             span Sort
-            select(@change="changeSort($event.target.value)")
-                option(value="createdAt") Date
-                option(value="rate") Rate
-                option(value="totalSum") Result sum
-                option(value="totalCoefficient") Coefficient
-                
+                select(@change="changeSort($event.target.value)", v-model="sort")
+                    option(value="createdAt") Date
+                    option(value="rate") Rate
+                    option(value="totalCoefficient") Coefficient
+                    option(value="betSlipResultSum", v-if="filter!='all'") Result sum
+        p.buttons(v-if="sortSelected")
+            span#arrows(@click="direction*=-1") &UpArrowDownArrow;
+        p.selector
+            span Filter
+                select(@change="changeFilter($event.target.value)", v-model="filter")
+                    option(value="all") All
+                    option(value="win") Wins
+                    option(value="waiting") Waiting
+                    option(value="lose") Loses
+        p.buttons(@click="trigger_hideInfoOfAllBetSlips=!trigger_hideInfoOfAllBetSlips")
+            span(title="Hide info of all bet slips") &emptyset;
     
     div.bets-type(v-if="betsType.length>0")
         app-bet-slip(
@@ -29,7 +39,9 @@ div#bet-slip
         :id="betSlip._id",
         :createdAt="betSlip.createdAt",
         :rate="betSlip.rate",
-        @new-rate="onNewRate"
+        @new-rate="onNewRate",
+        :hideInfo="trigger_hideInfoOfAllBetSlips",
+        :showFiltered="filter"
         )
         
     p#get-previous(
@@ -71,7 +83,9 @@ export default {
                     title: "⌕",
                     tagTitle: "Check all bets"
                 }
-            ]
+            ],
+            trigger_hideInfoOfAllBetSlips: false,
+            filter: "all",
         }
     },
     computed: {
@@ -87,7 +101,7 @@ export default {
             
             let sortFunction;
             if(this.sort === "createdAt") sortFunction = bet => new Date(bet["sortParam"]).getTime() * this.direction;
-            else sortFunction = bet => Number(bet["sortParam"]);
+            else sortFunction = bet => Number(bet["sortParam"]) * this.direction;
 
             arr = _.sortBy(arr, sortFunction);
 
@@ -117,6 +131,10 @@ export default {
         },
         clearSort() {
             this.sortSelected = false;
+        },
+        changeFilter(value) {
+            this.filter = value;
+            if(value === "all") this.sort = "createdAt";
         },
     },
     created() {
@@ -168,6 +186,46 @@ export default {
 
 #bets-actions {
     display: flex;
+    .justify;
+    align-items: center;
+    background: white;
+    margin: 10px 0;
+    padding: 5px 0;
+    
+    p {
+        margin: 0;
+        display: flex;
+        align-items: center;
+    
+        &.buttons > span {
+            padding: 5px 12px 2px 11px;
+            cursor: pointer;
+        }
+        
+        span {
+            background: #595959;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            padding: 5px 12px;
+        }
+        
+        select {
+            font-size: 14px;
+            padding: 2px 6px;
+            margin-left: 6px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+    }
+    
+    
+    
+    
+    
 }
 
 #none-bets {
