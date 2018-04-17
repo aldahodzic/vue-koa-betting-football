@@ -66,6 +66,8 @@ exports.create = async (URL, leagueName) => {
                 let text = span.html();
                 let [date, time] = text.split("<br>");
                 match.date = moment(`${date}/${(new Date()).getFullYear()}-${time}`, "DD/MM/YYYY-HH:mm").valueOf();
+
+                if(match.date > moment().add(10, "days").valueOf()) return;
             }
 
             // Coefficients

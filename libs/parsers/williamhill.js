@@ -1,6 +1,7 @@
 const cheerio = require("cheerio");
 const _ = require("lodash");
 const needle = require("needle");
+const moment = require("moment");
 
 const fixTeamName = require("./fixTeamName");
 
@@ -60,6 +61,8 @@ exports.create = async (URL, leagueName) => {
                 let text = span.attr("id");
                 let idParts = text.split(":br:");
                 match.date = +idParts[1] * 1000;
+
+                if(match.date > moment().add(10, "days").valueOf()) return;
             }
 
             // Coefficients

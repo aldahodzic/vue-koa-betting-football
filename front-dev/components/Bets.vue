@@ -7,9 +7,10 @@ div#bet-slip
         :class="item.classes"
         ) {{item.title}}
     
-    p#none-bets(v-if="betsType.length==0") You didn't made any bets.
+    p#loading-bets(v-if="showBlockLoadingBets") Bets are loading...
+    p#none-bets(v-if="showBlockNoneBets") You didn't made any bets.
     
-    div#bets-actions(v-else)
+    div#bets-actions(v-if="showBlockBetsActions")
         p.selector
             span Sort
                 select(@change="changeSort($event.target.value)", v-model="sort")
@@ -45,7 +46,8 @@ div#bet-slip
         )
         
     p#get-previous(
-    v-if="type=='results'"
+    v-if="showButtonLoadPrevious",
+    @click="getAllBets"
     ) Get previous bets
 
 
@@ -86,12 +88,13 @@ export default {
             ],
             trigger_hideInfoOfAllBetSlips: false,
             filter: "all",
+            betsLoadStatus: "wait",
+            showPrevious: true,
         }
     },
     computed: {
         ...mapGetters({
             _bets: "bets",
-            _trigger_updateConfirmedBets: "trigger_updateConfirmedBets"
         }),
         betsType() {
             if(!this.sortSelected) return this._bets[this.type];
@@ -110,6 +113,21 @@ export default {
             
             return newBets;
         },
+        showBlockNoneBets() {
+            return this.type === "waiting" && this.betsType.length === 0;
+        },
+        showButtonLoadPrevious() {
+            return this.type === "results" && this.readyToLoad && this.showPrevious;
+        },
+        showBlockLoadingBets() {
+            return this.type === "results" && this.betsLoadStatus === "loading";
+        },
+        showBlockBetsActions() {
+            return this.betsType.length !== 0 && this.type === "results" && this.readyToLoad;
+        },
+        readyToLoad() {
+            return ["wait", "loaded"].includes(this.betsLoadStatus);
+        },
     },
     methods: {
         ...mapActions({
@@ -117,7 +135,11 @@ export default {
             _getResults: "getResults"
         }),
         changeMenu(selectedItem) {
-            if(selectedItem.type === "check") return this._getResults(true);
+            if(selectedItem.type === "check") {
+                if(selectedItem.classes === "disabled") return;
+                return this.loadBets({force: true, created: "last"});
+            }
+
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.clearSort();
             this.type = selectedItem.type;
@@ -136,9 +158,26 @@ export default {
             this.filter = value;
             if(value === "all") this.sort = "createdAt";
         },
+        getAllBets() {
+            this.showPrevious = false;
+            this.loadBets({force: true, created: "all"});
+        },
+        loadBets({force, created}) {
+            this.betsLoadStatus = "loading";
+            let buttonLoadBetsResults = this.menu.find(item => item.type === "check");
+            buttonLoadBetsResults.classes = "disabled";
+            this._getResults({
+                force,
+                created,
+                callback: () => {
+                    this.betsLoadStatus = "loaded";
+                    buttonLoadBetsResults.classes = "";
+                }
+            });
+        },
     },
     created() {
-        this._getResults();
+        this.loadBets({created: "last"});
     },
 }
 </script>
@@ -176,6 +215,11 @@ export default {
             color: white;
             font-weight: bold;
             transform: rotateY(180deg);
+            
+            &.disabled {
+                background: #3d3d3d;
+                cursor: not-allowed;
+            }
         }
     }
 }
@@ -221,11 +265,6 @@ export default {
         }
         
     }
-    
-    
-    
-    
-    
 }
 
 #none-bets {
@@ -242,5 +281,15 @@ export default {
     margin: 10px auto;
     background: darkorange;
     width: 60%;
+    cursor: pointer;
+}
+#loading-bets {
+    color: blue;
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+    margin: 10px 0;
+    padding: 5px 0;
+    background: white;
 }
 </style>

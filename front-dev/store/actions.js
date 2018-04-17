@@ -44,11 +44,13 @@ export default {
         commit("deleteBetSlip", {index, force: true});
         commit("setResultsUpdatedStatus", false);
     },
-    async getResults({commit, getters}, force = false) {
-        if(!force && getters.trigger_resultsUpdated) return;
+    async getResults({commit, getters}, {force, created, callback}) {
+        let _callback = callback || function() {};
+        if(!force && getters.trigger_resultsUpdated) return _callback();
         commit("clearResults");
-        let {data} = await Vue.axios.get("/bets/results");
+        let {data} = await Vue.axios.get(`/bets/results/${created}`);
         commit("pushToResults", data);
         commit("setResultsUpdatedStatus", true);
+        _callback();
     },
 }

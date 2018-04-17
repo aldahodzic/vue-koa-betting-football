@@ -50,7 +50,7 @@ export default {
                 actions: this.type === "waiting",
                 deleteBet: this.type === "waiting",
                 result: this.type === "results",
-                info: this.showInfo || (this.type === "results" && !this.betSlipOld) || this.type === "waiting",
+                info: this.showInfo || this.type === "waiting",
                 filter: this.showFiltered === "all" || this.showFiltered === this.betSlipStatus
             }
         },
@@ -74,9 +74,6 @@ export default {
             if(matchResults.some(bet => bet === "waiting")) return "waiting";
             if(matchResults.every(bet => bet === true)) return "win";
             else return "lose";
-        },
-        betSlipOld() {
-            return moment(this.createdAt).valueOf() < moment().subtract(1, "days").valueOf();
         },
         betSlipResultText() {
             switch(this.betSlipStatus) {

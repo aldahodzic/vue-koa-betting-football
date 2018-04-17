@@ -4,7 +4,7 @@ div#actions
         span(@click="loadMatches") {{$t(textAction)}}
         span(v-if="showInfo", @click="changeSelectButtonMode") {{$t(buttonInfoText)}}
         span(v-if="currentBets.length!=0", @click="sendToWaitingBets") {{$t('confirm.betSlip')}}
-    div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}
+    div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}...
     app-matches-selector(v-if="showSelector")
 </template>
 

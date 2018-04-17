@@ -16,7 +16,9 @@ exports.confirm = async ctx => {
 };
 
 exports.getResults = async (ctx, next) => {
-    let allBets = await Bet.find({userId: ctx.user._id});
+
+    let old = ctx.params.created === "last" ? moment().subtract(2, "weeks").valueOf() : 0;
+    let allBets = await Bet.find({userId: ctx.user._id, createdAt: {$gt: old}});
 
     // if after parsing, immediately return bets
     if(ctx.state.allBetsUpdated) return ctx.end(allBets);

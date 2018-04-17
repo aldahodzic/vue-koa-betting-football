@@ -60,6 +60,8 @@ exports.create = async (URL, leagueName) => {
                 let leftBracket = text.indexOf("(");
                 let rightBracket = text.indexOf(")");
                 match.date = +text.slice(leftBracket + 1, rightBracket);
+
+                if(match.date > moment().add(10, "days").valueOf()) return;
             }
 
             // Coefficients
