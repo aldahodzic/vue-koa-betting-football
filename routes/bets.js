@@ -54,16 +54,18 @@ exports.setScoreOfMatches = async (ctx, next) => {
     });
     daysForUpdate = _.uniqBy(daysForUpdate, dateNum => moment(dateNum).format("DD.MM"));
 
-    // console.log("days for update", daysForUpdate.map(date => moment(date).format("DD.MM")));
-    // console.log("match result exist", matchResultsExist);
-
     // parse results of all matches in selected days
     let matchResultsPromises = daysForUpdate.map(dateNum => parsers.results(dateNum));
     let matchResults = await Promise.all(matchResultsPromises);
     matchResults = _.flattenDeep(matchResults);
 
     // set result for selected matches in db
-    let matchUpdatedPromises = matchResults.map(({key, score}) => Match.findOneAndUpdate({key}, {score}, {new: true}));
+    let matchUpdatedPromises = matchResults.map(({key, score}) => {
+        let match = matches.find(match => match.key === key);
+        if(match && (!match.score || match.score === "none")) return Match.findOneAndUpdate({key}, {score}, {new: true});
+        else return null;
+    });
+
     let updatedMatches = await Promise.all(matchUpdatedPromises);
     _.remove(updatedMatches, match => match === null);
 
@@ -79,8 +81,6 @@ exports.updateBets = async (ctx, next) => {
 
     let bets = ctx.state.allBetsOfUser;
     let matches = ctx.state.matchResults;
-
-    // console.log("all match results", matches);
 
     // set result of all matches or 'none', in all bets, in all betSlips of user
     let betPromises = [];

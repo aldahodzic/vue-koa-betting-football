@@ -36,7 +36,6 @@ export default {
         rate: Number,
         id: String,
         createdAt: String,
-        hideInfo: Boolean,
         showFiltered: String,
     },
     data() {
@@ -131,11 +130,9 @@ export default {
             if(result === false) return "bet-match-lose";
         },
     },
-    watch: {
-        hideInfo() {
-            this.showInfo = false;
-        }
-    }
+    mounted() {
+        this.$root.$on("changeInfoViewStatus", status => this.showInfo = status);
+    },
 }
 </script>
 

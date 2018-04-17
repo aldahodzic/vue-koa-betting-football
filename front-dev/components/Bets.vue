@@ -27,8 +27,9 @@ div#bet-slip
                     option(value="win") Wins
                     option(value="waiting") Waiting
                     option(value="lose") Loses
-        p.buttons(@click="trigger_hideInfoOfAllBetSlips=!trigger_hideInfoOfAllBetSlips")
-            span(title="Hide info of all bet slips") &emptyset;
+        p.buttons
+            span(@click="$root.$emit('changeInfoViewStatus', false)"): img(src="../images/hide.svg", title="Hide info of all bet slips")
+            span(@click="$root.$emit('changeInfoViewStatus', true)"): img(src="../images/show.svg", title="Show info of all bet slips")
     
     div.bets-type(v-if="betsType.length>0")
         app-bet-slip(
@@ -41,7 +42,6 @@ div#bet-slip
         :createdAt="betSlip.createdAt",
         :rate="betSlip.rate",
         @new-rate="onNewRate",
-        :hideInfo="trigger_hideInfoOfAllBetSlips",
         :showFiltered="filter"
         )
         
@@ -86,7 +86,6 @@ export default {
                     tagTitle: "Check all bets"
                 }
             ],
-            trigger_hideInfoOfAllBetSlips: false,
             filter: "all",
             betsLoadStatus: "wait",
             showPrevious: true,
@@ -242,7 +241,8 @@ export default {
         align-items: center;
     
         &.buttons > span {
-            padding: 5px 12px 2px 11px;
+            padding: 5px 10px 2px 10px;
+            margin: 0 3px;
             cursor: pointer;
         }
         
