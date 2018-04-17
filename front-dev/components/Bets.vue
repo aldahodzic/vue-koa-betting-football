@@ -155,6 +155,7 @@ export default {
         },
         changeFilter(value) {
             this.filter = value;
+            this.menu.find(item => item.type === "check").classes = ["all", "waiting"].includes(value) ? "" : "disabled";
             if(value === "all") this.sort = "createdAt";
         },
         getAllBets() {
@@ -244,6 +245,7 @@ export default {
             padding: 5px 10px 2px 10px;
             margin: 0 3px;
             cursor: pointer;
+            font-size: 20px;
         }
         
         span {
@@ -251,7 +253,7 @@ export default {
             border-radius: 5px;
             color: white;
             font-weight: bold;
-            padding: 5px 12px;
+            padding: 5px 20px;
         }
         
         select {
