@@ -6,6 +6,11 @@ div#bet-slip
         @click="changeMenu(item)",
         :class="item.classes"
         ) {{item.title}}
+        span.get-last-bets(
+        @click="getLastBets",
+        :class="buttonLoadResults.classes",
+        :title="buttonLoadResults.title"
+        ) {{buttonLoadResults.text}}
     
     p#loading-bets(v-if="showBlockLoadingBets") Bets are loading...
     p#none-bets(v-if="showBlockNoneBets") You didn't made any bets.
@@ -78,17 +83,16 @@ export default {
                     type: "results",
                     classes: "",
                     title: "Results"
-                },
-                {
-                    type: "check",
-                    classes: "",
-                    title: "⌕",
-                    tagTitle: "Check all bets"
                 }
             ],
             filter: "all",
             betsLoadStatus: "wait",
             showPrevious: true,
+            buttonLoadResults: {
+                classes: "",
+                text: "⌕",
+                title: "Check latest bets"
+            }
         }
     },
     computed: {
@@ -130,15 +134,9 @@ export default {
     },
     methods: {
         ...mapActions({
-            _getConfirmedBets: "getConfirmedBets",
             _getResults: "getResults"
         }),
         changeMenu(selectedItem) {
-            if(selectedItem.type === "check") {
-                if(selectedItem.classes === "disabled") return;
-                return this.loadBets({force: true, created: "last"});
-            }
-
             _.each(this.menu, item => item.classes = item.type === selectedItem.type ? "selected" : "");
             this.clearSort();
             this.type = selectedItem.type;
@@ -155,7 +153,7 @@ export default {
         },
         changeFilter(value) {
             this.filter = value;
-            this.menu.find(item => item.type === "check").classes = ["all", "waiting"].includes(value) ? "" : "disabled";
+            this.buttonLoadResults.classes = ["all", "waiting"].includes(value) ? "" : "disabled";
             if(value === "all") this.sort = "createdAt";
         },
         getAllBets() {
@@ -164,16 +162,19 @@ export default {
         },
         loadBets({force, created}) {
             this.betsLoadStatus = "loading";
-            let buttonLoadBetsResults = this.menu.find(item => item.type === "check");
-            buttonLoadBetsResults.classes = "disabled";
+            this.buttonLoadResults.classes = "disabled";
             this._getResults({
                 force,
                 created,
                 callback: () => {
                     this.betsLoadStatus = "loaded";
-                    buttonLoadBetsResults.classes = "";
+                    this.buttonLoadResults.classes = "";
                 }
             });
+        },
+        getLastBets() {
+            if(this.buttonLoadResults.classes === "disabled") return;
+            this.loadBets({force: true, created: "last"});
         },
     },
     created() {
@@ -205,7 +206,7 @@ export default {
         &:first-of-type {margin-left: 4px}
         &:last-of-type {margin-right: 4px}
         &.selected {background: #009933; color: white;}
-        &:nth-child(3) {
+        &.get-last-bets {
             margin-left: -2px;
             background: blue;
             flex-basis: 40px;
