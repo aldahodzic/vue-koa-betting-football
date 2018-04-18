@@ -6,6 +6,9 @@ const Match = require("libs/mongo/schemas/match");
 const parsers = require("libs/parsers");
 
 exports.confirm = async ctx => {
+
+    if(!ctx.user) ctx.error(401, "not.authorized.user");
+
     let data = ctx.request.body;
 
     _.each(data.bets , bet => {if(bet.dateNum < Date.now()) ctx.error(403, "Disallowed: Update matches")});
@@ -16,6 +19,8 @@ exports.confirm = async ctx => {
 };
 
 exports.getResults = async (ctx, next) => {
+
+    if(!ctx.user) ctx.error(401, "not.authorized.user");
 
     let old = ctx.params.created === "last" ? moment().subtract(2, "weeks").valueOf() : 0;
     let allBets = await Bet.find({userId: ctx.user._id, createdAt: {$gt: old}});

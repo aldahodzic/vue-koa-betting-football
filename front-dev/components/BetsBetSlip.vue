@@ -8,19 +8,19 @@ div.bet-slip(v-if="show.filter", :class="betSlipClass")
             span.teams {{bet.home}} &mdash; {{bet.guest}}
             span.type {{bet.type}}
             span.coefficient {{bet.bookie.coefficient}}
-            span.score(v-if="bet.score", :class="betStatusClass(bet)") {{bet.score}}
+            span.score(v-if="bet.score", :class="betStatusClass(bet)", :title="$t('Score')") {{bet.score!='none' ? bet.score : $t('none')}}
     div.actions(v-if="show.actions")
-        p.remove(@click="deleteBetSlip") &#10006;
+        p.remove(@click="deleteBetSlip") ✖
         p.input
-            span Bet amount:
+            span {{$t('rate.bet')}}:
             input(type="number", @input="newRate", :value="rate")
             span * {{totalCoefficient}} = {{totalSum}}
-        p.confirm(:class="disabledClass", @click="confirmBetSlip") &#10004;
+        p.confirm(:class="disabledClass", @click="confirmBetSlip") ✔
     div.result(v-if="show.result", @click="showInfo=!showInfo")
-        p.date Date: <b>{{createdDate}}</b>
-        p.rate Rate: <b>{{rate}}</b>
-        p.coefficient Total coefficient: <b>{{totalCoefficient}}</b>
-        p.sum {{betSlipResultText}}: <b>{{betSlipResultSum}}</b>
+        p.date {{$t('Date')}}: <b>{{createdDate}}</b>
+        p.rate {{$t('Rate')}}: <b>{{rate}}</b>
+        p.coefficient {{$t('total.coefficient')}}: <b>{{totalCoefficient}}</b>
+        p.sum {{$t(betSlipResultText)}}: <b>{{betSlipResultSum}}</b>
     
 </template>
 
@@ -76,9 +76,9 @@ export default {
         },
         betSlipResultText() {
             switch(this.betSlipStatus) {
-                case "waiting":  return "Potential win sum";
+                case "waiting":  return "sum.potential";
                 case "win":  return "Profit";
-                case "lose":  return "Lost sum";
+                case "lose":  return "sum.lost";
             }
         },
         betSlipResultSum() {
@@ -224,9 +224,9 @@ export default {
         cursor: pointer;
     
         .date {flex-basis: 18%}
-        .rate {flex-basis: 10%}
-        .coefficient {flex-basis: 25%}
-        .sum {flex-basis: 30%}
+        .rate {flex-basis: 12%}
+        .coefficient {flex-basis: 27%}
+        .sum {flex-basis: 40%}
     }
     
 }

@@ -7,7 +7,7 @@ import en from "./en/";
 Vue.use(VueI18n);
 
 export const i18n = new VueI18n({
-    locale: 'en',
+    locale: localStorage.getItem("language") || "en",
     fallbackLocale: "en",
     messages: {en, ru}
 });

@@ -5,36 +5,36 @@ div#bet-slip
         v-for="item in menu",
         @click="changeMenu(item)",
         :class="item.classes"
-        ) {{item.title}}
+        ) {{$t(item.title)}}
         span.get-last-bets(
         @click="getLastBets",
         :class="buttonLoadResults.classes",
-        :title="buttonLoadResults.title"
+        :title="$t(buttonLoadResults.title)"
         ) {{buttonLoadResults.text}}
     
-    p#loading-bets(v-if="showBlockLoadingBets") Bets are loading...
-    p#none-bets(v-if="showBlockNoneBets") You didn't made any bets.
+    p#loading-bets(v-if="showBlockLoadingBets") {{$t('loading.bets')}}...
+    p#none-bets(v-if="showBlockNoneBets") {{$t('not.made.bets')}}.
     
     div#bets-actions(v-if="showBlockBetsActions")
         p.selector
-            span Sort
+            span {{$t('Sort')}}
                 select(@change="changeSort($event.target.value)", v-model="sort")
-                    option(value="createdAt") Date
-                    option(value="rate") Rate
-                    option(value="totalCoefficient") Coefficient
-                    option(value="betSlipResultSum", v-if="filter!='all'") Result sum
+                    option(value="createdAt") {{$t('Date')}}
+                    option(value="rate") {{$t('Rate')}}
+                    option(value="totalCoefficient") {{$t('Coefficient')}}
+                    option(value="betSlipResultSum", v-if="filter!='all'") {{$t('sum.result')}}
         p.buttons(v-if="sortSelected")
-            span#arrows(@click="direction*=-1") &UpArrowDownArrow;
+            span#arrows(@click="direction*=-1", :title="$t('change.direction')") ⇅
         p.selector
-            span Filter
+            span {{$t('Filter')}}
                 select(@change="changeFilter($event.target.value)", v-model="filter")
-                    option(value="all") All
-                    option(value="win") Wins
-                    option(value="waiting") Waiting
-                    option(value="lose") Loses
+                    option(value="all") {{$t('All')}}
+                    option(value="win") {{$t('Wins')}}
+                    option(value="waiting") {{$t('Waiting')}}
+                    option(value="lose") {{$t('Loses')}}
         p.buttons
-            span(@click="$root.$emit('changeInfoViewStatus', false)"): img(src="../images/hide.svg", title="Hide info of all bet slips")
-            span(@click="$root.$emit('changeInfoViewStatus', true)"): img(src="../images/show.svg", title="Show info of all bet slips")
+            span(@click="$root.$emit('changeInfoViewStatus', false)"): img(src="../images/hide.svg", :title="$t('hide.info.betSlips')")
+            span(@click="$root.$emit('changeInfoViewStatus', true)"): img(src="../images/show.svg", :title="$t('show.info.betSlips')")
     
     div.bets-type(v-if="betsType.length>0")
         app-bet-slip(
@@ -53,7 +53,7 @@ div#bet-slip
     p#get-previous(
     v-if="showButtonLoadPrevious",
     @click="getAllBets"
-    ) Get previous bets
+    ) {{$t('load.bets.previous')}}
 
 
 </template>
@@ -77,7 +77,7 @@ export default {
                 {
                     type: "waiting",
                     classes: "selected",
-                    title: "Waiting to confirm"
+                    title: "waiting.confirm"
                 },
                 {
                     type: "results",
@@ -91,13 +91,14 @@ export default {
             buttonLoadResults: {
                 classes: "",
                 text: "⌕",
-                title: "Check latest bets"
+                title: "check.bets.latest"
             }
         }
     },
     computed: {
         ...mapGetters({
             _bets: "bets",
+            _user: "user",
         }),
         betsType() {
             if(!this.sortSelected) return this._bets[this.type];
@@ -178,7 +179,8 @@ export default {
         },
     },
     created() {
-        this.loadBets({created: "last"});
+        if(this._user.auth) this.loadBets({created: "last"});
+        else this.$router.replace("matches");
     },
 }
 </script>

@@ -5,23 +5,23 @@ header
         router-link#logo(to="/"): img(src="../images/logo.png", :title="$t('site.goToMain')")
         nav#auth(v-if="user.auth")
             p: router-link(to="/about"): a {{$t('About')}}
-            p Language:
-                span.cl(@click="setLanguage('en')") {{$t('English')}}
+            p {{$t('Language')}}:
+                span.change-language(@click="setLanguage('en')") {{$t('English')}}
                 span /
-                span.cl(@click="setLanguage('ru')") {{$t('Russian')}}
+                span.change-language(@click="setLanguage('ru')") {{$t('Russian')}}
             p: router-link(to="/bets"): a {{$t('Bets')}}
-            p {{$t('Logout')}}
+            p: span#logout(@click="userLogout") {{$t('Logout')}}
         nav#not-auth(v-else)
             p: router-link(to="/about"): a {{$t('About')}}
             p {{$t('Language')}}:
-                span.cl(@click="setLanguage('en')") {{$t('English')}}
+                span.change-language(@click="setLanguage('en')") {{$t('English')}}
                 span /
-                span.cl(@click="setLanguage('ru')") {{$t('Russian')}}
+                span.change-language(@click="setLanguage('ru')") {{$t('Russian')}}
             p: router-link(to="/auth"): a {{$t('Authentication')}}
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import {mapGetters, mapActions} from "vuex";
 export default {
     name: "app-header",
     data() {
@@ -33,8 +33,15 @@ export default {
         ...mapGetters(["user"]),
     },
     methods: {
+        ...mapActions({
+            _userLogout: "userLogout"
+        }),
+        userLogout() {
+            this._userLogout(() => this.$router.replace("matches"));
+        },
         setLanguage(language) {
             document.documentElement.lang = language;
+            localStorage.setItem("language", language);
             this.$set(this.$i18n, "locale", language);
         }
     }
@@ -80,7 +87,16 @@ header {
             p {
                 margin: 0;
                 
-                .cl {
+                #logout:hover {
+                    color: red;
+                    cursor: pointer;
+                }
+                
+                a {
+                    text-decoration: none;
+                }
+                
+                .change-language {
                     cursor: pointer;
                     margin: 0 5px;
                     

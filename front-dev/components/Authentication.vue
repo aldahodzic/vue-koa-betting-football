@@ -1,6 +1,5 @@
 <template lang="pug">
 div#auth
-    
     div#head
         h2(
         v-for="auth in authTypes",
@@ -20,10 +19,10 @@ div#auth
     )
     input#login(
     type="button",
-    :value="buttonValue",
+    :value="$t(buttonValue)",
     @click="send",
     :disabled="!dataValid || !dataFilled",
-    :title="buttonTitle"
+    :title="$t(buttonTitle)"
     )
 </template>
 
@@ -42,13 +41,13 @@ export default {
                     title: "login",
                     value: "",
                     pattern: /^[a-zA-Z _]+$/,
-                    failMessage: this.$t("phrases.only.characters_numbers")
+                    failMessage: "phrases.only.characters_numbers"
                 },
                 {
                     title: "password",
                     value: "",
                     pattern: /^[a-zA-Z0-9]+$/,
-                    failMessage: this.$t("phrases.only.characters_symbols")
+                    failMessage: "phrases.only.characters_symbols"
                 }
             ],
             authTypes: [
@@ -74,15 +73,15 @@ export default {
             return this.fields.every(field => field.value !== "");
         },
         buttonTitle() {
-            if(!this.dataFilled) return this.$t("fill.data");
-            if(!this.dataValid) return this.$t("move.mouse.sign");
+            if(!this.dataFilled) return "fill.data";
+            if(!this.dataValid) return "move.mouse.sign";
             return false;
         },
         currentMode() {
             return _.find(this.authTypes, {className: "active"}).mode;
         },
         buttonValue() {
-            return this.currentMode === "authorization" ? this.$t("SignIn") : this.$t("SignUp");
+            return this.currentMode === "authorization" ? "SignIn" : "SignUp";
         }
     },
     methods: {

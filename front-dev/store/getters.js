@@ -26,7 +26,7 @@ export default {
     user(state) {
         let authToken = Vue.cookie.get("auth");
         let auth = !!authToken && authToken !== "guest";
-        console.log(auth);
+        if(state.user.logout) auth = false;
         return {...state.user, auth};
     },
     // triggers

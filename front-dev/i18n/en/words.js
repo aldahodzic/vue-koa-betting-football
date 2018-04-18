@@ -25,11 +25,26 @@ export default {
     Draw: "Draw",
     Load: "Load",
     Update: "Update",
-
+    OK: "OK",
+    "0": "0",
+    "1": "1",
+    "2": "2",
+    Results: "Results",
+    Sort: "Sort",
+    Rate: "Rate",
+    Coefficient: "Coefficient",
+    Filter: "Filter",
+    All: "All",
+    Wins: "Wins",
+    Waiting: "Waiting",
+    Loses: "Loses",
+    Score: "Score",
+    Profit: "Profit",
 
     // lower case
     login: "login",
     password: "password",
+    none: "none",
 
 
 
@@ -44,34 +59,72 @@ export default {
     },
     click: {
         for: {
-            sort: "Click to sort by: {title}",
+            sort: "Click to sort",
         }
     },
     win: {
-        home: "Home team winning",
-        guest: "Guest team winning",
+        home: "Home win",
+        guest: "Guest win",
     },
     loading: {
         matches: "Matches are loading",
+        bets: "Bets are loading",
     },
     leagues: {
         all: "all leagues",
         selected: "selected leagues",
     },
     show: {
-        info: "Show info of bets",
+        info: {
+            bets: "Show info of bets",
+            betSlips: "Show info of all bet slips",
+        }
     },
     hide: {
-        info: "Hide info of bets",
+        info: {
+            bets: "Hide info of bets",
+            betSlips: "Hide info of all bet slips",
+        }
     },
     confirm: {
         betSlip: "Confirm current bet slip"
+    },
+    waiting: {
+        confirm: "Waiting for confirm"
+    },
+    check: {
+        bets: {
+            latest: "Check latest bets",
+            all: "Check all bets",
+        },
+    },
+    sum: {
+        result: "Result sum",
+        potential: "Potential win sum",
+        lost: "Lost sum",
+    },
+    rate: {
+        bet: "Bet rate",
+    },
+    change: {
+        direction: "Change direction",
+    },
+    load: {
+        bets: {
+            previous: "Load previous bets"
+        },
+    },
+    total: {
+        coefficient: "Total coefficient"
     },
 
     // structured phrases with not
     not: {
         found: {
             matches: "No matches found",
-        }
+        },
+        made: {
+            bets: "You didn't made any bets"
+        },
     },
 };

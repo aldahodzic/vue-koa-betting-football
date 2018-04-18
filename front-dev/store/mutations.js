@@ -55,6 +55,9 @@ export default {
     setUserAuthStatus(state, status) {
         state.user.auth = status;
     },
+    setUserLogout(state, value) {
+        state.user.logout = value;
+    },
     deleteBet(state, {indexOfBet, indexOfBetSlip}) {
         state.bets.waiting[indexOfBetSlip].bets.splice(indexOfBet, 1);
     },

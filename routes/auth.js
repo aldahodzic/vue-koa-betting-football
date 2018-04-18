@@ -3,6 +3,8 @@ const User = require("libs/mongo/schemas/user");
 
 exports.authorization = async ctx => {
 
+    if(ctx.user) ctx.error(403, "authorized.user");
+
     let {login, password} = ctx.request.body;
 
     if(!login || !/^[a-zA-Z _]+$/.test(login)) ctx.error("login not valid");
@@ -24,6 +26,8 @@ exports.authorization = async ctx => {
 
 exports.registration = async ctx => {
 
+    if(ctx.user) ctx.error(403, "authorized.user");
+
     let {login, password} = ctx.request.body;
 
     if(!login || !/^[a-zA-Z _]+$/.test(login)) ctx.error("login not valid");
@@ -40,5 +44,15 @@ exports.registration = async ctx => {
         ctx.error(400, "login is occupied");
     }
 
+
+};
+
+exports.logout = async ctx => {
+
+    if(!ctx.user) ctx.error(401, "not.authorized.user");
+
+    ctx.cookies.set("auth", "guest", {httpOnly: false});
+
+    ctx.end("ok");
 
 };

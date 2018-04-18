@@ -10,7 +10,8 @@ export default {
         results: []
     },
     user: {
-        auth: false
+        auth: false,
+        logout: false
     },
     // triggers
     trigger_updateMatchButtonsSelectClass: false,

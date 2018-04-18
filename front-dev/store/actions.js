@@ -26,7 +26,15 @@ export default {
     async userAuthAction({commit}, {url, userData, callback}) {
         let {data, status} = await Vue.axios.post(`/auth/${url}`, userData);
         commit("setUserAuthStatus", status);
+        commit("setUserLogout", false);
         callback({data, status});
+    },
+    async userLogout({commit}, callback) {
+        let {data, status} = await Vue.axios.delete("/auth/logout");
+        if(!status) alert(data);
+        commit("setUserAuthStatus", false);
+        commit("setUserLogout", true);
+        callback();
     },
     deleteBet({commit}, data) {
         commit("deleteBet", data);

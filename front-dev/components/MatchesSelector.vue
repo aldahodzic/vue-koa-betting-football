@@ -6,7 +6,7 @@ main
             span(
             v-for="button in sort.buttons",
             :key="button.type",
-            :title="$t('click.for.sort', {title: $t(button.title)})",
+            :title="$t(button.title)+'. '+$t('click.for.sort')",
             :class="button.type",
             @click="sortMatches(button)"
             ) {{$t(button.name)}}

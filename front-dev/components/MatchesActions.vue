@@ -16,7 +16,7 @@ export default {
     data() {
         return {
             loading: "wait",
-            buttonInfoText: "show.info"
+            buttonInfoText: "show.info.bets"
         }
     },
     computed: {
@@ -44,7 +44,7 @@ export default {
             this._loadMatches(() => this.loading = "end");
         },
         changeSelectButtonMode() {
-            this.buttonInfoText = this.buttonInfoText === "show.info" ? "hide.info" : "show.info";
+            this.buttonInfoText = this.buttonInfoText === "show.info.bets" ? "hide.info.bets" : "show.info.bets";
             this._changeSelectButtonMode();
         },
         sendToWaitingBets() {

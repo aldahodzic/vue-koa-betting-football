@@ -2,10 +2,9 @@
 label
     span.icon(
     v-if="activated",
-    v-html="icon.context",
     :class="icon.className",
-    :title="icon.title"
-    )
+    :title="$t(icon.title)"
+    ) {{icon.context}}
     span {{$t('Enter')}} {{$t(title)}}
     input(
     :value="value",
@@ -29,12 +28,12 @@ export default {
             icons: {
                 valid: {
                     className: "valid",
-                    context: "&#10004;",
+                    context: "✔",
                     title: "OK"
                 },
                 failed: {
                     className: "failed",
-                    context: "&#10006;",
+                    context: "✖",
                     title: this.failMessage
                 }
             }
