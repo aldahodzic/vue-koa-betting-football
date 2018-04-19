@@ -13,7 +13,7 @@ export default {
     Registration: "Регистрация",
     SignIn: "Войти",
     SignUp: "Зарегистрироваться",
-    ChampionsLeague: "Лига чемпионов",
+    ChampionsLeague: "Лига Чемпионов",
     EuropaLeague: "Лига Европы",
     England: "Англия",
     Italy: "Италия",
@@ -40,6 +40,8 @@ export default {
     Loses: "Проигрыши",
     Score: "Счет",
     Profit: "Прибыль",
+    Data: "Данные",
+    Functional: "Функционал",
 
     // lower case
     login: "логин",

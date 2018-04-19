@@ -13,8 +13,8 @@ export default {
     Registration: "Registration",
     SignIn: "Sign in",
     SignUp: "Sign up",
-    ChampionsLeague: "Champions league",
-    EuropaLeague: "Europa league",
+    ChampionsLeague: "Champions League",
+    EuropaLeague: "Europa League",
     England: "England",
     Italy: "Italy",
     Germany: "Germany",
@@ -40,6 +40,8 @@ export default {
     Loses: "Loses",
     Score: "Score",
     Profit: "Profit",
+    Data: "Data",
+    Functional: "Functional",
 
     // lower case
     login: "login",
@@ -90,7 +92,7 @@ export default {
         betSlip: "Confirm current bet slip"
     },
     waiting: {
-        confirm: "Waiting for confirm"
+        confirm: "Waiting for confirmation"
     },
     check: {
         bets: {
