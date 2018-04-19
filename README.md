@@ -1,19 +1,23 @@
-# fakebet
-
+# Fakebet
 > Site with fake bets on football
 
-## Build Setup
+Demo: [link](https://fakebet.herokuapp.com)
+Description: [link](https://fakebet.herokuapp.com/about)
 
-``` bash
-# install dependencies
-npm install
+## Commands
+    # install dependencies
+    npm install
+    # development (need nodemon -g)
+    npm run dev
+    npm run node
+    # production
+    npm run build
+    npm run node-clear
 
-# serve with hot reload: vue at localhost:8080, node at localhost:3000 (need nodemon)
-npm run dev
-npm run node
+## Using
+**Front:** Vue: router, i18n, vuex, axios
+**Back:** Node, Koa
+**Database:** Mongo
 
-# production
-npm run build
-npm run node-clear
-```
-
+## License
+This software is free to use under the MIT license.
