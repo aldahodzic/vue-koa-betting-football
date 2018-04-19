@@ -1,7 +1,7 @@
 # Fakebet
 > Site with fake bets on football
 
-Demo: [link](https://fakebet.herokuapp.com)
+Demo: [link](https://fakebet.herokuapp.com)  
 Description: [link](https://fakebet.herokuapp.com/about)
 
 ## Commands
@@ -15,8 +15,8 @@ Description: [link](https://fakebet.herokuapp.com/about)
     npm run node-clear
 
 ## Using
-**Front:** Vue: router, i18n, vuex, axios
-**Back:** Node, Koa
+**Front:** Vue: router, i18n, vuex, axios  
+**Back:** Node, Koa  
 **Database:** Mongo
 
 ## License
