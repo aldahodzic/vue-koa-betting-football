@@ -16,4 +16,5 @@ yarn-error.log
 package-lock.json
 front/
 !front/index.html
+!front/favicon.ico
 index.html

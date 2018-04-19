@@ -24,7 +24,9 @@ div#about
     div
         p: b {{$t('site.howMakeBet.question')}}
         ol: li(v-for="index of 7") {{$t('site.howMakeBet.answer['+(index-1)+']')}}
-
+    div
+        span {{$t('site.openSource')}}
+        a(href="https://github.com/someuser94n/fakebet") github
 
 
 </template>
@@ -46,7 +48,9 @@ export default {
     
     div {
         margin: 15px 0;
+        padding: 0 5px;
         
+        &:nth-of-type(odd) {background: #f2f2f2; padding: 5px}
         &:first-of-type {margin-top: 5px}
         &:last-of-type {margin-bottom: 5px}
         

@@ -24,4 +24,5 @@ export default {
             "The result is calculated automatically, otherwise click on the \"⌕\" button",
         ]
     },
+    openSource: "This site is an open source project. You can see the code on "
 };
