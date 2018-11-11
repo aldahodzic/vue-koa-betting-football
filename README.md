@@ -1,12 +1,12 @@
 # Fakebet v2.0
 > Site with fake bets on football
 
-Demo: [link](https://fakebet.herokuapp.com)
+Demo: [link](https://fakebet.herokuapp.com)  
 Description: [link](https://fakebet.herokuapp.com/about)
 
 ## Using
-**Front:** Vue: vuex, router, test, i18n, axios
-**Back:** Node, Koa
+**Front:** Vue: vuex, router, test, i18n, axios  
+**Back:** Node, Koa  
 **Database:** MongoDB
 
 ## Commands
