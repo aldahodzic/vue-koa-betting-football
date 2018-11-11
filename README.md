@@ -1,6 +1,13 @@
-# Starter App
+# Fakebet v2.0
+> Site with fake bets on football
 
-> Fakebet v1.1
+Demo: [link](https://fakebet.herokuapp.com)
+Description: [link](https://fakebet.herokuapp.com/about)
+
+## Using
+**Front:** Vue: vuex, router, test, i18n, axios
+**Back:** Node, Koa
+**Database:** MongoDB
 
 ## Commands
 
@@ -31,3 +38,14 @@ $ cd server && npm install
 $ npm run vue-production
 $ npm run node-production
 ```
+
+### Test
+
+```sh
+# need jest
+$ npm run test # watch files,
+$ npm run test-a # all tests once
+```
+
+## License
+This software is free to use under the MIT license.
