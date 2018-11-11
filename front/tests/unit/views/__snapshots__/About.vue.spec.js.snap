@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About.vue Testing snapshots Component itself 1`] = `
+<div
+  id="about"
+>
+  <div>
+    <b>
+      Fakebet
+    </b>
+    <span>
+       — site.description
+    </span>
+  </div>
+  <div>
+    <p>
+      <b>
+        site.forWho.question
+      </b>
+    </p>
+    <p>
+      site.forWho.answer
+    </p>
+  </div>
+  <div>
+    <p>
+      <b>
+        Data
+      </b>
+    </p>
+    <p>
+      site.dataFrom.coefficients:
+      <ul>
+        <li>
+          <a
+            href="https://www.parimatch.com"
+          >
+            Parimatch
+          </a>
+        </li>
+        <li>
+          <a
+            href="http://www.williamhill.com"
+          >
+            Williamhill
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.leonbets.net"
+          >
+            Leonbets
+          </a>
+        </li>
+      </ul>
+    </p>
+    <p>
+      site.dataFrom.leagues:
+      <ul>
+        <li>
+          League 1
+        </li>
+        <li>
+          League 2
+        </li>
+        <li>
+          League 3
+        </li>
+      </ul>
+    </p>
+    <p />
+  </div>
+  <div>
+    <p>
+      <b>
+        site.notDo.
+      </b>
+    </p>
+  </div>
+  <div>
+    <p>
+      <b>
+        Functional
+      </b>
+    </p>
+    <p>
+      site.functional
+    </p>
+  </div>
+  <div>
+    <p>
+      <b>
+        site.howMakeBet.question
+      </b>
+    </p>
+    <ol>
+      <li>
+        site.howMakeBet.answer[0]
+      </li>
+      <li>
+        site.howMakeBet.answer[1]
+      </li>
+      <li>
+        site.howMakeBet.answer[2]
+      </li>
+      <li>
+        site.howMakeBet.answer[3]
+      </li>
+      <li>
+        site.howMakeBet.answer[4]
+      </li>
+      <li>
+        site.howMakeBet.answer[5]
+      </li>
+      <li>
+        site.howMakeBet.answer[6]
+      </li>
+    </ol>
+  </div>
+  <div>
+    <span>
+      site.openSource
+    </span>
+    <a
+      href="https://github.com/levchak0910/fakebet"
+    >
+      github
+    </a>
+  </div>
+</div>
+`;

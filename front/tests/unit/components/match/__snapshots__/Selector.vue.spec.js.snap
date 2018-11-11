@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match/Selector.vue Testing snapshots Match-selector 1`] = `
+<main>
+  <p
+    class="row head"
+  >
+    <span
+      class="date"
+      title="Date. click.for.sort"
+    >
+      Date
+    </span>
+    <span
+      class="teams"
+      title="Teams. click.for.sort"
+    >
+      Teams
+    </span>
+    <span
+      class="h"
+      title="win.home. click.for.sort"
+    >
+      1
+    </span>
+    <span
+      class="d"
+      title="Draw. click.for.sort"
+    >
+      0
+    </span>
+    <span
+      class="g"
+      title="win.guest. click.for.sort"
+    >
+      2
+    </span>
+  </p>
+  <p
+    class="row"
+  >
+    <span
+      class="date"
+    >
+      27.10
+    </span>
+    <span
+      class="teams"
+    >
+      Home team 1 — Guest team 1
+    </span>
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League1:Home team 1-Guest team 1"
+      type="0"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League1:Home team 1-Guest team 1"
+      type="1"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League1:Home team 1-Guest team 1"
+      type="2"
+    />
+  </p>
+  <p
+    class="row"
+  >
+    <span
+      class="date"
+    >
+      28.10
+    </span>
+    <span
+      class="teams"
+    >
+      Home team 2 — Guest team 2
+    </span>
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League2:Home team 2-Guest team 2"
+      type="0"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League2:Home team 2-Guest team 2"
+      type="1"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League2:Home team 2-Guest team 2"
+      type="2"
+    />
+  </p>
+  <p
+    class="row"
+  >
+    <span
+      class="date"
+    >
+      29.10
+    </span>
+    <span
+      class="teams"
+    >
+      Home team 3 — Guest team 3
+    </span>
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League3:Home team 3-Guest team 3"
+      type="0"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League3:Home team 3-Guest team 3"
+      type="1"
+    />
+    <app-match-selector-item-stub
+      coefficients="[object Object],[object Object],[object Object]"
+      matchkey="League3:Home team 3-Guest team 3"
+      type="2"
+    />
+  </p>
+</main>
+`;
+
+exports[`match/Selector.vue Testing snapshots None matches element 1`] = `
+<p
+  id="none-matches"
+>
+  not.found.matches
+</p>
+`;

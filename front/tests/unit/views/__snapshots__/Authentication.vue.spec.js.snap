@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Authentication.vue Testing snapshots Component itself 1`] = `
+<div
+  id="auth"
+>
+  <div
+    id="head"
+  >
+    <h2
+      class="active"
+    >
+      Authorization
+    </h2>
+    <h2
+      class=""
+    >
+      Registration
+    </h2>
+  </div>
+  <app-validating-input-stub
+    failmessage="phrases.only.characters_numbers"
+    mode="authorization"
+    pattern="/^[a-zA-Z _]+$/"
+    title="login"
+    value=""
+  />
+  <app-validating-input-stub
+    failmessage="phrases.only.characters_symbols"
+    mode="authorization"
+    pattern="/^[a-zA-Z0-9]+$/"
+    title="password"
+    value=""
+  />
+  <input
+    disabled="disabled"
+    id="submit"
+    title="fill.data"
+    type="button"
+    value="SignIn"
+  />
+</div>
+`;

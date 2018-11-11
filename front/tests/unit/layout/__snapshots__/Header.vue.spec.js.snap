@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header.vue Testing snapshots User authorized 1`] = `
+<nav
+  id="auth"
+>
+  <p>
+    <router-link-stub
+      to="/about"
+    >
+      <a>
+        About
+      </a>
+    </router-link-stub>
+  </p>
+  <p>
+    Language:
+    <span
+      class="change-language"
+    >
+      English
+    </span>
+    <span>
+      /
+    </span>
+    <span
+      class="change-language"
+    >
+      Russian
+    </span>
+  </p>
+  <p>
+    <router-link-stub
+      to="/bets"
+    >
+      <a>
+        Bets
+      </a>
+    </router-link-stub>
+  </p>
+  <p>
+    <span
+      id="logout"
+    >
+      Logout
+    </span>
+  </p>
+</nav>
+`;
+
+exports[`Header.vue Testing snapshots User not authorized 1`] = `
+<nav
+  id="not-auth"
+>
+  <p>
+    <router-link-stub
+      to="/about"
+    >
+      <a>
+        About
+      </a>
+    </router-link-stub>
+  </p>
+  <p>
+    Language:
+    <span
+      class="change-language"
+    >
+      English
+    </span>
+    <span>
+      /
+    </span>
+    <span
+      class="change-language"
+    >
+      Russian
+    </span>
+  </p>
+  <p>
+    <router-link-stub
+      to="/auth"
+    >
+      <a>
+        Authentication
+      </a>
+    </router-link-stub>
+  </p>
+</nav>
+`;

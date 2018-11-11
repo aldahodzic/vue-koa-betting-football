@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match/Actions.vue Testing snapshots Show action buttons 1`] = `
+<div
+  id="buttons"
+>
+  <span
+    id="load-matches"
+  >
+    phrases.update.leagues_all
+  </span>
+  <span
+    id="change-mode"
+  >
+    show.info.bets
+  </span>
+  <!---->
+</div>
+`;
+
+exports[`match/Actions.vue Testing snapshots Show button which change mode of selector-item 1`] = `
+<span
+  id="change-mode"
+>
+  show.info.bets
+</span>
+`;
+
+exports[`match/Actions.vue Testing snapshots Show confirm current bet slip button 1`] = `
+<span
+  id="confirm-current-bet-slip"
+>
+  confirm.betSlip
+</span>
+`;
+
+exports[`match/Actions.vue Testing snapshots Show div with loading text 1`] = `
+<div
+  id="loading"
+>
+  loading.matches...
+</div>
+`;
+
+exports[`match/Actions.vue Testing snapshots Show match-selector 1`] = `<app-match-selector-stub />`;

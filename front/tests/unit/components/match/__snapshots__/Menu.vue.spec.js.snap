@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`match/Menu.vue Testing snapshots Component itself 1`] = `
+<menu>
+  <li
+    class="selected"
+  >
+    League 1
+  </li>
+  <li
+    class="selected"
+  >
+    League 2
+  </li>
+  <li
+    class="selected"
+  >
+    League 3
+  </li>
+</menu>
+`;
+
+exports[`match/Menu.vue Testing snapshots Correct class appointment 1`] = `
+<menu>
+  <li
+    class=""
+  >
+    League 1
+  </li>
+  <li
+    class="selected"
+  >
+    League 2
+  </li>
+  <li
+    class=""
+  >
+    League 3
+  </li>
+</menu>
+`;
