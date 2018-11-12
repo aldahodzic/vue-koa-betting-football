@@ -9,67 +9,76 @@ export const createWrapper = (component, options = {}) => {
         stubs = [],
         data = {},
         props = {},
+        remove = {},
     } = options;
+
+    let computedProps = {
+        user: () => ({
+            auth: _.at(options, "computed.user.auth")[0] || true,
+        }),
+        leagueList: () => ["League 1", "League 2", "League 3"],
+        selectedLeagues: () => ["League 1", "League 2", "League 3"],
+        matches: () => [
+            {
+                "key": "League1:Home team 1-Guest team 1",
+                "home": "Home team 1",
+                "guest": "Guest team 1",
+                "league": "League1",
+                "dateTmpl": "27.10",
+                "date": 1540648800000,
+                "coefficients": {
+                    "0": [{"name": "Bookmaker 1", "coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.1}, {"name": "Bookmaker 3", "coefficient": 1.1}],
+                    "1": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.1}, {"name": "Bookmaker 3", "coefficient": 2.1}],
+                    "2": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.1}, {"name": "Bookmaker 3", "coefficient": 3.1}]
+                },
+            },
+            {
+                "key": "League2:Home team 2-Guest team 2",
+                "home": "Home team 2",
+                "guest": "Guest team 2",
+                "league": "League2",
+                "dateTmpl": "28.10",
+                "date": 1540738800000,
+                "coefficients": {
+                    "0": [{"name": "Bookmaker 1", "coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.2}, {"name": "Bookmaker 3", "coefficient": 2.2}],
+                    "1": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.2}, {"name": "Bookmaker 3", "coefficient": 3.2}],
+                    "2": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.2}, {"name": "Bookmaker 3", "coefficient": 1.2}]
+                },
+            },
+            {
+                "key": "League3:Home team 3-Guest team 3",
+                "home": "Home team 3",
+                "guest": "Guest team 3",
+                "league": "League3",
+                "dateTmpl": "29.10",
+                "date": 1540825200000,
+                "coefficients": {
+                    "0": [{"name": "Bookmaker 1", "coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.3}, {"name": "Bookmaker 3", "coefficient": 3.3}],
+                    "1": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.3}, {"name": "Bookmaker 3", "coefficient": 1.3}],
+                    "2": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.3}, {"name": "Bookmaker 3", "coefficient": 2.3}]
+                },
+            },
+        ],
+        bets: () => ({
+            current: [],
+            waiting: [],
+            results: [],
+        }),
+        ...computed,
+    };
+
+    for(let option in remove) {
+        for(let property of remove[option]) {
+            if(option == "computed") delete computedProps[property];
+        }
+    }
 
     let wrapper = shallowMount(component, {
         propsData: props,
-        computed: {
-            user: () => ({
-                auth: _.at(options, "computed.user.auth")[0] || true,
-            }),
-            leagueList: () => ["League 1", "League 2", "League 3"],
-            selectedLeagues: () => ["League 1", "League 2", "League 3"],
-            matches: () => [
-                {
-                    "key": "League1:Home team 1-Guest team 1",
-                    "home": "Home team 1",
-                    "guest": "Guest team 1",
-                    "league": "League1",
-                    "dateTmpl": "27.10",
-                    "date": 1540648800000,
-                    "coefficients": {
-                        "0": [{"name": "Bookmaker 1", "coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.1}, {"name": "Bookmaker 3", "coefficient": 1.1}],
-                        "1": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.1}, {"name": "Bookmaker 3", "coefficient": 2.1}],
-                        "2": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.1}, {"name": "Bookmaker 3", "coefficient": 3.1}]
-                    },
-                },
-                {
-                    "key": "League2:Home team 2-Guest team 2",
-                    "home": "Home team 2",
-                    "guest": "Guest team 2",
-                    "league": "League2",
-                    "dateTmpl": "28.10",
-                    "date": 1540738800000,
-                    "coefficients": {
-                        "0": [{"name": "Bookmaker 1", "coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.2}, {"name": "Bookmaker 3", "coefficient": 2.2}],
-                        "1": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.2}, {"name": "Bookmaker 3", "coefficient": 3.2}],
-                        "2": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.2}, {"name": "Bookmaker 3", "coefficient": 1.2}]
-                    },
-                },
-                {
-                    "key": "League3:Home team 3-Guest team 3",
-                    "home": "Home team 3",
-                    "guest": "Guest team 3",
-                    "league": "League3",
-                    "dateTmpl": "29.10",
-                    "date": 1540825200000,
-                    "coefficients": {
-                        "0": [{"name": "Bookmaker 1", "coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.3}, {"name": "Bookmaker 3", "coefficient": 3.3}],
-                        "1": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.3}, {"name": "Bookmaker 3", "coefficient": 1.3}],
-                        "2": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.3}, {"name": "Bookmaker 3", "coefficient": 2.3}]
-                    },
-                },
-            ],
-            bets: () => ({
-                current: [],
-                waiting: [],
-                confirmed: [],
-                results: [],
-            }),
-            ...computed,
-        },
+        computed: computedProps,
         methods: {
             $t: message => message,
+            _getResults: () => null, // stub vuex method
         },
         mocks: {
             $router: {
@@ -138,4 +147,16 @@ export const expectAsyncFunctionCalled = (wrapper, functionName, payload) => {
             reject(e);
         }
     });
+};
+
+export const cutFromOptions = (options, props) => {
+
+    let cutProperties = {};
+
+    props.forEach(prop => {
+        cutProperties[prop] = options[prop];
+        delete options[prop];
+    });
+
+    return cutProperties;
 };

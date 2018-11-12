@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bet/ResultBetSlip.vue Testing snapshots Component itself 1`] = `
+<div
+  class="bet-slip bet-slip-undefined"
+>
+  <div
+    class="info"
+    style="display: none;"
+  >
+    <app-bet-slip-info-stub
+      linemode="result"
+    />
+  </div>
+  <div
+    class="result"
+  >
+    <p
+      class="date"
+    >
+      Date: 
+      <b>
+        
+      </b>
+    </p>
+    <p
+      class="rate"
+    >
+      Rate: 
+      <b>
+        
+      </b>
+    </p>
+    <p
+      class="coefficient"
+    >
+      total.coefficient: 
+      <b>
+        10.000
+      </b>
+    </p>
+    <p
+      class="sum"
+    >
+      : 
+      <b>
+        200.00
+      </b>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`bet/ResultBetSlip.vue Testing snapshots Show info 1`] = `
+<div
+  class="info"
+  style=""
+>
+  <app-bet-slip-info-stub
+    linemode="result"
+  />
+</div>
+`;

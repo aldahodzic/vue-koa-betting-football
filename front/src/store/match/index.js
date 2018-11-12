@@ -22,7 +22,7 @@ export const mutations = {
         state.matches = state.matches.filter(match => !selectedLeagues.includes(match.league));
     },
     pushMatches(state, matchData) {
-        state.matches = matchData.map(match => ({
+        matchData.forEach(match => state.matches.push({
             ...match,
             dateTmpl: $moment(match.date).format("DD.MM"),
         }));

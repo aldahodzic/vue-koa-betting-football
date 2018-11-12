@@ -1,6 +1,6 @@
 export const state = {
     leagueList: ["ChampionsLeague", "EuropaLeague", "England", "Italy", "Germany", "Spain", "France"],
-    selectedLeagues: [],
+    selectedLeagues: ["ChampionsLeague"],
 };
 
 export const getters = {

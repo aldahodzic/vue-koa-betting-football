@@ -19,14 +19,14 @@ exports[`Authentication.vue Testing snapshots Component itself 1`] = `
     </h2>
   </div>
   <app-validating-input-stub
-    failmessage="phrases.only.characters_numbers"
+    failmessage="phrases.only.characters_symbols"
     mode="authorization"
     pattern="/^[a-zA-Z _]+$/"
     title="login"
     value=""
   />
   <app-validating-input-stub
-    failmessage="phrases.only.characters_symbols"
+    failmessage="phrases.only.characters_numbers"
     mode="authorization"
     pattern="/^[a-zA-Z0-9]+$/"
     title="password"

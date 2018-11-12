@@ -41,13 +41,13 @@ export default {
                     title: "login",
                     value: "",
                     pattern: /^[a-zA-Z _]+$/,
-                    failMessage: "phrases.only.characters_numbers"
+                    failMessage: "phrases.only.characters_symbols"
                 },
                 {
                     title: "password",
                     value: "",
                     pattern: /^[a-zA-Z0-9]+$/,
-                    failMessage: "phrases.only.characters_symbols"
+                    failMessage: "phrases.only.characters_numbers"
                 }
             ],
             authTypes: [

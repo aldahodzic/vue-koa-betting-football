@@ -56,13 +56,11 @@ export default {
             this.loading = "end";
         },
         async toggleSelectorItemMode() {
-            // todo rewrite buttonInfo
             this.buttonInfoText = this.buttonInfoText === "show.info.bets" ? "hide.info.bets" : "show.info.bets";
             await this._toggleSelectorItemMode();
         },
         async sendToWaitingBets() {
             await this._pushToWaiting();
-            this.$root.$emit("updateAllSelectorItems.class[selected]");
         },
     },
 }

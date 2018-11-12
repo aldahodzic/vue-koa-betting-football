@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import AppMatches from "@/views/Match.vue";
 import AppAuthentication from "@/views/Authentication.vue";
 import AppAbout from "@/views/About.vue";
-import AppBets from "@/views/Bets.vue";
+import AppBet from "@/views/Bet.vue";
 
 Vue.use(Router);
 
@@ -16,7 +16,7 @@ export default new Router({
         {path: "/matches", component: AppMatches},
         {path: "/auth", component: AppAuthentication},
         {path: "/about", component: AppAbout},
-        {path: "/bets", component: AppBets},
+        {path: "/bets", component: AppBet},
         {path: "*", redirect: "/matches"}
     ]
 });

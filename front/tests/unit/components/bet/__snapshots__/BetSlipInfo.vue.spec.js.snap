@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bet/BetSlipInfo.vue Testing snapshots Component itself 1`] = `
+<div>
+  <app-bet-slip-info-line-stub
+    betindex="0"
+    bookie="bookie 1"
+    datetmpl="12.12"
+    guest="guest team 1"
+    home="home team 1"
+    league="league 1"
+    score="3 : 2"
+    type="1"
+  />
+  <app-bet-slip-info-line-stub
+    betindex="1"
+    bookie="bookie 2"
+    datetmpl="12.12"
+    guest="guest team 2"
+    home="home team 2"
+    league="league 2"
+    score="1 : 1"
+    type="2"
+  />
+</div>
+`;

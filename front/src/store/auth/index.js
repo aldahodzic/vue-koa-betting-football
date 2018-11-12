@@ -26,12 +26,11 @@ export const mutations = {
 };
 
 export const actions = {
-    async userAuthAction({commit}, {url, userData, callback}) {
+    async userAuthAction({commit}, {url, userData}) {
         let {data, status} = await $axios.post(`/auth/${url}`, userData);
         commit("setUserAuthStatus", status);
         commit("setUserLogout", false);
         if(!status) alert(data);
-        if(callback) callback({data, status}); // todo remove
     },
     async userLogout({commit}) {
         let {data, status} = await $axios.delete("/auth/logout");

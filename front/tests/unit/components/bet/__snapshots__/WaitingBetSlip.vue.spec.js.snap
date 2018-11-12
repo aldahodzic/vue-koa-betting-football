@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bet/WaitingBetSlip.vue Testing snapshots Component itself 1`] = `
+<div
+  class="bet-slip"
+>
+  <div
+    class="info"
+  >
+    <app-bet-slip-info-stub
+      linemode="waiting"
+    />
+  </div>
+  <div
+    class="actions"
+  >
+    <p
+      class="remove"
+    >
+      ✖
+    </p>
+    <p
+      class="input"
+    >
+      <span>
+        rate.bet:
+      </span>
+      <input
+        type="number"
+      />
+      <span>
+        * 10.000 = 20.00
+      </span>
+    </p>
+    <p
+      class="confirm"
+    >
+      ✔
+    </p>
+  </div>
+</div>
+`;

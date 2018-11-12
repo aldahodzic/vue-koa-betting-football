@@ -123,10 +123,17 @@ export default {
     // structured phrases with not
     not: {
         found: {
-            matches: "No matches found",
+            matches: "Matches not found",
         },
         made: {
-            bets: "You didn't made any bets"
+            bets: "You didn't make any bets",
+        },
+        have: {
+            bets: {
+                win: "You have no won bets",
+                lose: "You have no lost bets",
+                waiting: "You haven't any waiting bets",
+            },
         },
     },
 };

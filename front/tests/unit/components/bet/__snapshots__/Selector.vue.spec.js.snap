@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`bet/Selector.vue Testing snapshots Component itself 1`] = `
+<div
+  id="bet-selector"
+>
+  <p
+    class="selector"
+  >
+    <span>
+      Sort
+      <select
+        id="sort"
+      >
+        <option
+          value="createdAt"
+        >
+          Date
+        </option>
+        <option
+          value="rate"
+        >
+          Rate
+        </option>
+        <option
+          value="totalCoefficient"
+        >
+          Coefficient
+        </option>
+        <option
+          value="outcomeSum"
+        >
+          sum.result
+        </option>
+      </select>
+    </span>
+  </p>
+  <p
+    class="buttons"
+  >
+    <span
+      id="arrows"
+      title="change.direction"
+    >
+      ⇅
+    </span>
+  </p>
+  <p
+    class="selector"
+  >
+    <span>
+      Filter
+      <select
+        id="filter"
+      >
+        <option
+          value="all"
+        >
+          All
+        </option>
+        <option
+          value="win"
+        >
+          Wins
+        </option>
+        <option
+          value="waiting"
+        >
+          Waiting
+        </option>
+        <option
+          value="lose"
+        >
+          Loses
+        </option>
+      </select>
+    </span>
+  </p>
+  <p
+    class="buttons"
+    id="toogle-info-visibility"
+  >
+    <span>
+      <img
+        src="@/assets/images/icons/hide.svg"
+        title="hide.info.betSlips"
+      />
+    </span>
+    <span>
+      <img
+        src="@/assets/images/icons/show.svg"
+        title="show.info.betSlips"
+      />
+    </span>
+  </p>
+</div>
+`;
+
+exports[`bet/Selector.vue Testing snapshots Show option, when show not all types of betSlip 1`] = `
+<option
+  value="outcomeSum"
+>
+  sum.result
+</option>
+`;

@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, expectAsyncFunctionCalled} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
 import Component from "@/components/match/Actions";
 
 disableFile();
@@ -7,11 +7,13 @@ describe("match/Actions.vue", () => {
 
     let wrapper, buttons, divLoading, selector, buttonChangeMode, confirmCurrentBetSlip, loadMatches;
     let mountWrapper = (options = {}) => {
-        let localComputed = options.computed;
-        delete options.computed;
+        let {computed} = cutFromOptions(options, ["computed"]);
         wrapper = createWrapper(Component, {
             stubs: ["app-match-selector"],
-            computed: {leagues: () => ["League 1", "League 2", "League 3"], ...localComputed},
+            computed: {
+                leagues: () => ["League 1", "League 2", "League 3"],
+                ...computed,
+            },
             ...options,
         });
         buttons = wrapper.find("#buttons");
@@ -174,13 +176,10 @@ describe("match/Actions.vue", () => {
 
         it("sendToWaitingBets", async () => {
             mountWrapper({methods: ["_pushToWaiting"]});
-            let stubFunction = jest.fn();
-            wrapper.vm.$root.$on("updateAllSelectorItems.class[selected]", stubFunction);
 
             wrapper.vm.sendToWaitingBets();
 
             expect(wrapper.vm._pushToWaiting).toBeCalled();
-            await expectAsyncFunctionCalled(wrapper, stubFunction);
         });
 
 

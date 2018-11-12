@@ -1,8 +1,8 @@
 <template lang="pug">
 span(
-    :class="classes",
+    :class="[classes, selectedClass]",
     :title="button.title",
-    @click="doFunction(button.func)",
+    @click="makeBet",
     v-html="button.text"
 )
 </template>
@@ -23,8 +23,7 @@ export default {
                 h: this.type == "1",
                 d: this.type == "0",
                 g: this.type == "2",
-                selected: false,
-            }
+            },
         }
     },
     computed: {
@@ -32,6 +31,13 @@ export default {
             selectorItemMode: "match/selectorItemMode",
             bets: "bet/bets",
         }),
+        selected() {
+            let item = this.bets.current.find(({key}) => key == this.matchKey);
+            return item && item.type == this.type;
+        },
+        selectedClass() {
+            return this.selected ? "selected" : "";
+        },
         bestBookie() {
             let bestBookie = _.maxBy(this.coefficients, "coefficient");
             return {
@@ -49,7 +55,6 @@ export default {
             if(this.selectorItemMode == "bet") return {
                 title: this.bestBookie.name,
                 text: this.bestBookie.coefficientTmpl,
-                func: this.makeBet,
             };
             else return {
                 text: this.infoBookies,
@@ -61,29 +66,13 @@ export default {
             _changeCurrentBetSlip: "bet/changeCurrentBetSlip",
         }),
         async makeBet() {
-            let beforeLength = this.bets.current.length;
-            
+            if(this.selectorItemMode != "bet") return;
             await this._changeCurrentBetSlip({
                 key: this.matchKey,
                 bookie: this.bestBookie,
                 type: this.type,
             });
-
-            this.changeClass(beforeLength);
         },
-        changeClass(beforeLength) {
-            let afterLength = this.bets.current.length;
-            if(beforeLength != afterLength) this.classes.selected = !this.classes.selected;
-        },
-        doFunction(buttonFunction) {
-            if(typeof buttonFunction == "function") buttonFunction();
-        },
-    },
-    created() {
-        this.$root.$on("updateAllSelectorItems.class[selected]", () => {
-            // todo if change league do it for any change sort filter ...
-            this.classes.selected = false;
-        });
     },
 }
 </script>
