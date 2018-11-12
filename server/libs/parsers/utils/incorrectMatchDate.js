@@ -6,8 +6,8 @@ module.exports = date => {
         return true;
     }
 
-    // time of starting match more than 10 days from now, exclude this match
-    if(date > moment().add(10, "days").valueOf()) {
+    // time of starting match more than 20 days from now, exclude this match
+    if(date > moment().add(20, "days").valueOf()) {
         return true;
     }
 

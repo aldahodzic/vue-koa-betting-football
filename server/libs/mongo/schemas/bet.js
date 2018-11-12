@@ -11,6 +11,7 @@ const BetSlipSchema = new mongoose.Schema({
     guest: String,
     home: String,
     league: String,
+    // todo rewrite prediction
     type: String,
     score: String
 });
