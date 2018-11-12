@@ -74,6 +74,7 @@ module.exports = name => {
     if(name === "Lokomotiv Moscow") return "Lokomotiv";
     if(name === "PSV Eindhoven") return "PSV";
     if(name === "Vik. Plzen") return "Viktoria Plzen";
+    if(name === "Plzen") return "Viktoria Plzen";
     if(name === "SL Benfica") return "Benfica";
     if(name === "Crvena Zvezda") return "Red Star Belgrade";
     if(name === "FC Porto") return "Porto";
