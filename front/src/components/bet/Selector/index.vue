@@ -23,7 +23,6 @@ div#bet-selector
 </template>
 
 <script>
-import _ from "lodash";
 import {mapGetters, mapActions} from "vuex";
 export default {
     name: "app-bet-selector",

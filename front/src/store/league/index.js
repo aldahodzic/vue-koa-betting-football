@@ -4,15 +4,19 @@ export const state = {
 };
 
 export const getters = {
+
     leagueList(state) {
         return state.leagueList;
     },
+
     selectedLeagues(state) {
         return state.selectedLeagues.length == 0 ? state.leagueList : state.selectedLeagues;
     },
+
 };
 
 export const mutations = {
+
     selectLeague(state, leagueName) {
         if(state.selectedLeagues.includes(leagueName)) {
             state.selectedLeagues = state.selectedLeagues.filter(league => league != leagueName);
@@ -21,12 +25,15 @@ export const mutations = {
             state.selectedLeagues.push(leagueName);
         }
     },
+
 };
 
 export const actions = {
-    async selectLeague({commit}, leagueName) {
+
+    selectLeague({commit}, leagueName) {
         commit("selectLeague", leagueName);
     },
+
 };
 
 export const league = {
