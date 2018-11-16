@@ -38,9 +38,7 @@ export default {
             this.$router.replace("matches")
         },
         setLanguage(language) {
-            document.documentElement.lang = language;
-            localStorage.setItem("language", language);
-            this.$set(this.$i18n, "locale", language);
+            this.$setLanguage(language);
         },
     },
 }
