@@ -65,13 +65,11 @@ describe("Header.vue", () => {
         });
 
         it("setLanguage", () => {
-            mountWrapper();
+            mountWrapper({methods: ["$setLanguage"]});
 
             wrapper.vm.setLanguage("en");
 
-            expect(document.documentElement.lang).toBe("en");
-            expect(localStorage.getItem("language")).toBe("en");
-            expect(wrapper.vm.$i18n.locale).toBe("en");
+            expect(wrapper.vm.$setLanguage).toBeCalledWith("en");
         });
 
     });
