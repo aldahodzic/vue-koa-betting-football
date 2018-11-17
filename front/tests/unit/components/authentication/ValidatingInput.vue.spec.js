@@ -1,4 +1,4 @@
-import {createWrapper, disableFile} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
 import Component from "@/components/authentication/ValidatingInput";
 
 disableFile();
@@ -7,37 +7,46 @@ describe("authentication/ValidatingInput.vue", () => {
 
     let wrapper, icon, input;
     let mountWrapper = (options = {}) => {
-        wrapper = createWrapper(Component, options);
-        icon = wrapper.find(".icon");
+        let {props} = cutFromOptions(options, ["props"]);
+        wrapper = createWrapper(Component, {
+            props: {
+                pattern: /[a-z]+/,
+                value: "za",
+                ...props,
+            },
+            ...options,
+        });
         input = wrapper.find("input");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            props: {
+                title: "title",
+            },
+            data: {
+                activated: true,
+            },
+            computed: {
+                icon: {
+                    className: "some-class",
+                    title: "icon title",
+                    context: "icon context"
+                },
+            },
         });
 
-        it("Icon visible", () => {
-            mountWrapper({
-                data: {activated: true},
-                computed: {icon: () => ({className: "some-class", title: "icon title", context: "icon context"})},
-            });
-
-            expect(icon.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
-    describe("Triggering event", () => {
+    describe("Triggering events", () => {
 
         it("onInput", () => {
-            mountWrapper({methods: ["onInput"]});
+            mountWrapper({
+                methods: ["onInput"],
+            });
 
             input.setValue("some value");
-            input.trigger("input");
 
             expect(wrapper.vm.onInput).toBeCalledWith("some value");
         });
@@ -49,13 +58,23 @@ describe("authentication/ValidatingInput.vue", () => {
         describe("valid", () => {
 
             it("valid = true", () => {
-                mountWrapper({props: {pattern: /[a-z]+/, value: "az"}});
+                mountWrapper({
+                    props: {
+                        pattern: /[a-z]+/,
+                        value: "az",
+                    },
+                });
 
                 expect(wrapper.vm.valid).toBeTruthy();
             });
 
             it("valid = true", () => {
-                mountWrapper({props: {pattern: /[0-9]+/, value: "az"}});
+                mountWrapper({
+                    props: {
+                        pattern: /[0-9]+/,
+                        value: "az",
+                    },
+                });
 
                 expect(wrapper.vm.valid).toBeFalsy();
             });
@@ -65,13 +84,27 @@ describe("authentication/ValidatingInput.vue", () => {
         describe("icon", () => {
 
             it("icon = valid", () => {
-                mountWrapper({data: {icons: {valid: "valid icon"}}, computed: {valid: () => true}});
+                mountWrapper({
+                    data: {
+                        icons: {valid: "valid icon"},
+                    },
+                    computed: {
+                        valid: true,
+                    }
+                });
 
                 expect(wrapper.vm.icon).toBe("valid icon");
             });
 
             it("icon = failed", () => {
-                mountWrapper({data: {icons: {failed: "failed icon"}}, computed: {valid: () => false}});
+                mountWrapper({
+                    data: {
+                        icons: {failed: "failed icon"},
+                    },
+                    computed: {
+                        valid: false,
+                    },
+                });
 
                 expect(wrapper.vm.icon).toBe("failed icon");
             });
@@ -83,7 +116,11 @@ describe("authentication/ValidatingInput.vue", () => {
     describe("Testing methods", () => {
 
         it("onInput", () => {
-            mountWrapper({data: {activated: false}});
+            mountWrapper({
+                data: {
+                    activated: false,
+                },
+            });
             let stubFunction = jest.fn();
             wrapper.vm.$on("new-value", stubFunction);
 
@@ -98,7 +135,11 @@ describe("authentication/ValidatingInput.vue", () => {
     describe("Testing watch", () => {
 
         it("mode", () => {
-            mountWrapper({data: {activated: true}});
+            mountWrapper({
+                data: {
+                    activated: true,
+                },
+            });
             let stubFunction = jest.fn();
             wrapper.vm.$on("new-value", stubFunction);
 

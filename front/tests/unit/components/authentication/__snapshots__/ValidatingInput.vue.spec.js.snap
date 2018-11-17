@@ -1,20 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`authentication/ValidatingInput.vue Testing snapshots Component itself 1`] = `
+exports[`authentication/ValidatingInput.vue Testing snapshot 1`] = `
 <label>
-  <!---->
+  <span
+    class="icon some-class"
+    title="icon title"
+  >
+    icon context
+  </span>
   <span>
-    Enter 
+    Enter title
   </span>
   <input />
 </label>
-`;
-
-exports[`authentication/ValidatingInput.vue Testing snapshots Icon visible 1`] = `
-<span
-  class="icon some-class"
-  title="icon title"
->
-  icon context
-</span>
 `;
