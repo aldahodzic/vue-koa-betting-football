@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/betSlip/types/Waiting";
 
 disableFile();
@@ -22,20 +22,21 @@ describe("bet/WaitingBetSlip.vue", () => {
         betSlipRate = wrapper.find(".input > input");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper({remove: {computed: ["bets"]}});
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            props: mapProperties("bets", "betSlipIndex"),
+            computed: mapProperties("totalCoefficientTmpl", "totalSumTmpl", "disabledClass"),
         });
 
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("deleteBetSlip", () => {
-            mountWrapper({methods: ["deleteBetSlip"]});
+            mountWrapper({
+                methods: ["deleteBetSlip"],
+            });
 
             removeBetSlipButton.trigger("click");
 
@@ -43,7 +44,9 @@ describe("bet/WaitingBetSlip.vue", () => {
         });
 
         it("confirmBetSlip", () => {
-            mountWrapper({methods: ["confirmBetSlip"]});
+            mountWrapper({
+                methods: ["confirmBetSlip"],
+            });
 
             confirmBetSlipButton.trigger("click");
 
@@ -51,10 +54,11 @@ describe("bet/WaitingBetSlip.vue", () => {
         });
 
         it("newRate", () => {
-            mountWrapper({methods: ["newRate"]});
+            mountWrapper({
+                methods: ["newRate"],
+            });
 
             betSlipRate.setValue("10");
-            betSlipRate.trigger("input");
 
             expect(wrapper.vm.newRate).toBeCalledWith("10");
         });
@@ -64,13 +68,21 @@ describe("bet/WaitingBetSlip.vue", () => {
     describe("Testing computed properties", () => {
 
         it("totalCoefficientTmpl", () => {
-            mountWrapper({props: {totalCoefficient: 9.23674}});
+            mountWrapper({
+                props: {
+                    totalCoefficient: 9.23674,
+                },
+            });
 
             expect(wrapper.vm.totalCoefficientTmpl).toBe("9.237");
         });
 
         it("totalSumTmpl", () => {
-            mountWrapper({props: {totalSum: 125.1}});
+            mountWrapper({
+                props: {
+                    totalSum: 125.1,
+                },
+            });
 
             expect(wrapper.vm.totalSumTmpl).toBe("125.10");
         });
@@ -78,13 +90,21 @@ describe("bet/WaitingBetSlip.vue", () => {
         describe("disabled", () => {
 
             it("disable = true", () => {
-                mountWrapper({props: {rate: -1}});
+                mountWrapper({
+                    props: {
+                        rate: -1,
+                    },
+                });
 
                 expect(wrapper.vm.disabled).toBeTruthy();
             });
 
             it("disable = false", () => {
-                mountWrapper({props: {rate: 1}});
+                mountWrapper({
+                    props: {
+                        rate: 1,
+                    },
+                });
 
                 expect(wrapper.vm.disabled).toBeFalsy();
             });
@@ -94,13 +114,21 @@ describe("bet/WaitingBetSlip.vue", () => {
         describe("disabledClass", () => {
 
             it("disabledClass > exist", () => {
-                mountWrapper({computed: {disabled: () => true}});
+                mountWrapper({
+                    computed: {
+                        disabled: true,
+                    },
+                });
 
                 expect(wrapper.vm.disabledClass).toBe("confirm-disabled");
             });
 
             it("disabledClass not exist", () => {
-                mountWrapper({computed: {disabled: () => false}});
+                mountWrapper({
+                    computed: {
+                        disabled: false,
+                    },
+                });
 
                 expect(wrapper.vm.disabledClass).toBe("");
             });
@@ -112,7 +140,12 @@ describe("bet/WaitingBetSlip.vue", () => {
     describe("Testing methods", () => {
 
         it("deleteBetSlip", () => {
-            mountWrapper({props: {betSlipIndex: 11}, methods: ["_deleteBetSlip"]});
+            mountWrapper({
+                props: {
+                    betSlipIndex: 11,
+                },
+                methods: ["_deleteBetSlip"],
+            });
 
             wrapper.vm.deleteBetSlip();
 
@@ -120,7 +153,12 @@ describe("bet/WaitingBetSlip.vue", () => {
         });
 
         it("newRate", () => {
-            mountWrapper({props: {betSlipIndex: 12}, methods: ["_newRateOfBetSlip"]});
+            mountWrapper({
+                props: {
+                    betSlipIndex: 12,
+                },
+                methods: ["_newRateOfBetSlip"],
+            });
 
             wrapper.vm.newRate("100");
 
@@ -130,7 +168,12 @@ describe("bet/WaitingBetSlip.vue", () => {
         describe("confirmBetSlip", () => {
 
             it("_confirmBetSlip not called", () => {
-                mountWrapper({computed: {disabled: () => true}, methods: ["_confirmBetSlip"]});
+                mountWrapper({
+                    computed: {
+                        disabled: true,
+                    },
+                    methods: ["_confirmBetSlip"],
+                });
 
                 wrapper.vm.confirmBetSlip();
 
@@ -139,9 +182,13 @@ describe("bet/WaitingBetSlip.vue", () => {
 
             it("_confirmBetSlip was called", () => {
                 mountWrapper({
-                    props: {betSlipIndex: 13},
-                    computed: {disabled: () => false},
-                    methods: ["_confirmBetSlip"]
+                    props: {
+                        betSlipIndex: 13,
+                    },
+                    computed: {
+                        disabled: false,
+                    },
+                    methods: ["_confirmBetSlip"],
                 });
 
                 wrapper.vm.confirmBetSlip();

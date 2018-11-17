@@ -108,3 +108,7 @@ export const cutFromOptions = (options, props) => {
 
     return cutProperties;
 };
+
+export const mapProperties = (...properties) => {
+    return properties.reduce((result, property) => ({...result, [property]: `{{${property}}}`}), {});
+};

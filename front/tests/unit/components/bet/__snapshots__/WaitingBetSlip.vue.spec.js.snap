@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bet/WaitingBetSlip.vue Testing snapshots Component itself 1`] = `
+exports[`bet/WaitingBetSlip.vue Testing snapshot 1`] = `
 <div
   class="bet-slip"
 >
@@ -8,6 +8,8 @@ exports[`bet/WaitingBetSlip.vue Testing snapshots Component itself 1`] = `
     class="info"
   >
     <app-bet-slip-info-stub
+      bets="{{bets}}"
+      betslipindex="{{betSlipIndex}}"
       linemode="waiting"
     />
   </div>
@@ -29,11 +31,11 @@ exports[`bet/WaitingBetSlip.vue Testing snapshots Component itself 1`] = `
         type="number"
       />
       <span>
-        * 10.000 = 20.00
+        * {{totalCoefficientTmpl}} = {{totalSumTmpl}}
       </span>
     </p>
     <p
-      class="confirm"
+      class="confirm {{disabledClass}}"
     >
       ✔
     </p>

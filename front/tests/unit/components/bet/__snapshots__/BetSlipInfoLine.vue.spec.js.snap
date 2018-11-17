@@ -1,52 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bet/BetSlipInfoLine.vue Testing snapshots Component itself 1`] = `
+exports[`bet/BetSlipInfoLine.vue Testing snapshot 1`] = `
 <div
   class="row"
 >
-  <!---->
+  <span
+    class="close"
+  >
+    ✖
+  </span>
   <span
     class="date"
   >
-    12.12
+    {{dateTmpl}}
   </span>
   <span
     class="league"
   >
-    league 1
+    {{league}}
   </span>
   <span
     class="teams"
   >
-    home team 1 — guest team 1
+    {{home}} — {{guest}}
   </span>
   <span
     class="type"
   >
-    1
+    {{type}}
   </span>
   <span
     class="coefficient"
     title="bookie 1"
   >
-    2.00
+    {{coefficientTmpl}}
   </span>
-  <!---->
+  <span
+    class="score {{betClass}}"
+  >
+    {{scoreTmpl}}
+  </span>
 </div>
-`;
-
-exports[`bet/BetSlipInfoLine.vue Testing snapshots close button 1`] = `
-<span
-  class="close"
->
-  ✖
-</span>
-`;
-
-exports[`bet/BetSlipInfoLine.vue Testing snapshots score block 1`] = `
-<span
-  class="score betClass"
->
-  1 : 1
-</span>
 `;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bet/Selector.vue Testing snapshots Component itself 1`] = `
+exports[`bet/Selector.vue Testing snapshot 1`] = `
 <div
   id="bet-selector"
 >
@@ -94,12 +94,4 @@ exports[`bet/Selector.vue Testing snapshots Component itself 1`] = `
     </span>
   </p>
 </div>
-`;
-
-exports[`bet/Selector.vue Testing snapshots Show option, when show not all types of betSlip 1`] = `
-<option
-  value="outcomeSum"
->
-  sum.result
-</option>
 `;

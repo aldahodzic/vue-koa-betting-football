@@ -1,11 +1,11 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/betSlip/types/Result";
 
 disableFile();
 
 describe("bet/ResultBetSlip.vue", () => {
 
-    let wrapper, info, result, betSlipRate;
+    let wrapper, info, result;
     let mountWrapper = (options = {}) => {
         let {props} = cutFromOptions(options, ["props"]);
         wrapper = createWrapper(Component, {
@@ -16,34 +16,30 @@ describe("bet/ResultBetSlip.vue", () => {
                 outcomeSum: 200,
                 ...props,
             },
-            remove: {computed: ["bets"]},
             ...options,
         });
         info = wrapper.find(".info");
         result = wrapper.find(".result");
-        betSlipRate = wrapper.find(".input > input");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            props: mapProperties("bets", "betSlipIndex", "createdDate", "rate"),
+            data: {
+                showInfo: true,
+            },
+            computed: mapProperties("betSlipClass", "totalCoefficientTmpl", "betSlipResultText", "betSlipResultSum"),
         });
 
-        it("Show info", () => {
-            mountWrapper({data: {showInfo: true}});
-
-            expect(info.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("toggleShowInfo", () => {
-            mountWrapper({methods: ["toggleShowInfo"]});
+            mountWrapper({
+                methods: ["toggleShowInfo"],
+            });
 
             result.trigger("click");
 
@@ -55,13 +51,21 @@ describe("bet/ResultBetSlip.vue", () => {
     describe("Testing computed properties", () => {
 
         it("totalCoefficientTmpl", () => {
-            mountWrapper({props: {totalCoefficient: 9.23674}});
+            mountWrapper({
+                props: {
+                    totalCoefficient: 9.23674,
+                },
+            });
 
             expect(wrapper.vm.totalCoefficientTmpl).toBe("9.237");
         });
 
         it("totalSumTmpl", () => {
-            mountWrapper({props: {totalSum: 125.1}});
+            mountWrapper({
+                props: {
+                    totalSum: 125.1,
+                },
+            });
 
             expect(wrapper.vm.totalSumTmpl).toBe("125.10");
         });
@@ -83,13 +87,21 @@ describe("bet/ResultBetSlip.vue", () => {
         });
 
         it("betSlipResultSum", () => {
-            mountWrapper({props: {outcomeSum: 53.122}});
+            mountWrapper({
+                props: {
+                    outcomeSum: 53.122,
+                },
+            });
 
             expect(wrapper.vm.betSlipResultSum).toBe("53.12");
         });
 
         it("betSlipClass", () => {
-            mountWrapper({props: {outcome: "classType"}});
+            mountWrapper({
+                props: {
+                    outcome: "classType",
+                },
+            });
 
             expect(wrapper.vm.betSlipClass).toBe("bet-slip-classType");
         });
@@ -99,7 +111,11 @@ describe("bet/ResultBetSlip.vue", () => {
     describe("Testing methods", () => {
 
         it("toggleShowInfo", () => {
-            mountWrapper({data: {showInfo: false}});
+            mountWrapper({
+                data: {
+                    showInfo: false,
+                },
+            });
 
             wrapper.vm.toggleShowInfo();
 
@@ -111,7 +127,11 @@ describe("bet/ResultBetSlip.vue", () => {
     describe("Testing hooks", () => {
 
         it("created", () => {
-            mountWrapper({data: {showInfo: false}});
+            mountWrapper({
+                data: {
+                    showInfo: false,
+                },
+            });
 
             wrapper.vm.$root.$emit("changeBetSlipInfoVisibility", "visibility status");
 

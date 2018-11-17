@@ -6,7 +6,7 @@ div#bet-selector
                 option(value="createdAt") {{$t('Date')}}
                 option(value="rate") {{$t('Rate')}}
                 option(value="totalCoefficient") {{$t('Coefficient')}}
-                option(value="outcomeSum", v-if="selector.filter!='all'") {{$t('sum.result')}}
+                option(value="outcomeSum", v-if="show.sumResultOption") {{$t('sum.result')}}
     p.buttons
         span#arrows(@click="changeSelector('direction')", :title="$t('change.direction')") ⇅
     p.selector
@@ -30,6 +30,11 @@ export default {
         ...mapGetters({
             selector: "bet/selector",
         }),
+        show() {
+            return {
+                sumResultOption: this.selector.filter != "all",
+            }
+        },
     },
     methods: {
         ...mapActions({

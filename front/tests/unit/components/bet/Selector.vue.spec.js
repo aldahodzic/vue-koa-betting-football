@@ -5,40 +5,31 @@ disableFile();
 
 describe("bet/Selector.vue", () => {
 
-    let wrapper, outcomeSumOption, sortSelect, sortSelectOptions, arrowButton, filterSelect, filterSelectOptions, hideButton, showButton;
+    let wrapper, sortSelectOptions, arrowButton, filterSelectOptions, hideButton, showButton;
     let mountWrapper = (options = {}) => {
         let {computed} = cutFromOptions(options, ["computed"]);
         wrapper = createWrapper(Component, {
             computed: {
-                selector: () => ({}),
+                selector: {},
                 ...computed
             },
             ...options,
         });
-        sortSelect = wrapper.find("#sort");
-        sortSelectOptions = sortSelect.findAll("option");
-        outcomeSumOption = sortSelect.find("option[value='outcomeSum']");
+        sortSelectOptions = wrapper.findAll("#sort > option");
         arrowButton = wrapper.find("#arrows");
-        filterSelect = wrapper.find("#filter");
-        filterSelectOptions = filterSelect.findAll("option");
+        filterSelectOptions = wrapper.findAll("#filter > option");
         hideButton = wrapper.find("#toogle-info-visibility > span:nth-of-type(1)");
         showButton = wrapper.find("#toogle-info-visibility > span:nth-of-type(2)");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            computed: {
+                show: {sumResultOption: true},
+            },
         });
 
-        it("Show option, when show not all types of betSlip", () => {
-            mountWrapper({computed: {selector: () => ({filter: "!all"})}});
-
-            expect(outcomeSumOption.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
@@ -46,7 +37,9 @@ describe("bet/Selector.vue", () => {
         describe("changeSelector", () => {
 
             it("changeSelector > sort", () => {
-                mountWrapper({methods: ["changeSelector"]});
+                mountWrapper({
+                    methods: ["changeSelector"],
+                });
 
                 sortSelectOptions.at(1).setSelected();
 
@@ -54,7 +47,9 @@ describe("bet/Selector.vue", () => {
             });
 
             it("changeSelector > direction", () => {
-                mountWrapper({methods: ["changeSelector"]});
+                mountWrapper({
+                    methods: ["changeSelector"],
+                });
 
                 arrowButton.trigger("click");
 
@@ -62,7 +57,9 @@ describe("bet/Selector.vue", () => {
             });
 
             it("changeSelector > filter", () => {
-                mountWrapper({methods: ["changeSelector"]});
+                mountWrapper({
+                    methods: ["changeSelector"],
+                });
 
                 filterSelectOptions.at(1).setSelected();
 
@@ -74,7 +71,9 @@ describe("bet/Selector.vue", () => {
         describe("changeBetSlipInfoVisibility", () => {
 
             it("changeBetSlipInfoVisibility to hide", () => {
-                mountWrapper({methods: ["changeBetSlipInfoVisibility"]});
+                mountWrapper({
+                    methods: ["changeBetSlipInfoVisibility"],
+                });
 
                 hideButton.trigger("click");
 
@@ -82,7 +81,9 @@ describe("bet/Selector.vue", () => {
             });
 
             it("changeBetSlipInfoVisibility to show", () => {
-                mountWrapper({methods: ["changeBetSlipInfoVisibility"]});
+                mountWrapper({
+                    methods: ["changeBetSlipInfoVisibility"],
+                });
 
                 showButton.trigger("click");
 
@@ -93,12 +94,42 @@ describe("bet/Selector.vue", () => {
 
     });
 
+    describe("Testing computed properties", () => {
+
+        describe("show", () => {
+
+            it("show.sumResultOption = true", () => {
+                mountWrapper({
+                    computed: {
+                        selector: {filter: "!all"},
+                    }
+                });
+
+                expect(wrapper.vm.show.sumResultOption).toBeTruthy();
+            });
+
+            it("show.sumResultOption = false", () => {
+                mountWrapper({
+                    computed: {
+                        selector: {filter: "all"},
+                    }
+                });
+
+                expect(wrapper.vm.show.sumResultOption).toBeFalsy();
+            });
+
+        });
+
+    });
+
     describe("Testing methods", () => {
 
         describe("changeSelector", () => {
 
             it("changeSelector for all options not direction", () => {
-                mountWrapper({methods: ["_changeSelector"]});
+                mountWrapper({
+                    methods: ["_changeSelector"],
+                });
 
                 wrapper.vm.changeSelector("selector field", "selector value");
 
@@ -106,7 +137,12 @@ describe("bet/Selector.vue", () => {
             });
 
             it("changeSelector specially for direction", () => {
-                mountWrapper({computed: {selector: () => ({direction: 2})}, methods: ["_changeSelector"]});
+                mountWrapper({
+                    computed: {
+                        selector: {direction: 2},
+                    },
+                    methods: ["_changeSelector"],
+                });
 
                 wrapper.vm.changeSelector("direction");
 

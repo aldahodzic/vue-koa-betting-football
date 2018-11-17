@@ -1,11 +1,11 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/betSlip/Info/Line";
 
 disableFile();
 
 describe("bet/BetSlipInfoLine.vue", () => {
 
-    let wrapper, closeButton, scoreInfo;
+    let wrapper, closeButton;
     let mountWrapper = (options = {}) => {
         let {props} = cutFromOptions(options, ["props"]);
         wrapper = createWrapper(Component, {
@@ -16,42 +16,32 @@ describe("bet/BetSlipInfoLine.vue", () => {
             ...options,
         });
         closeButton = wrapper.find(".close");
-        scoreInfo = wrapper.find(".score");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper({props: {
-                dateTmpl: "12.12",
-                league: "league 1",
-                home: "home team 1",
-                guest: "guest team 1",
-                type: "1",
+    it("Testing snapshot", () => {
+         mountWrapper({
+            props: {
+                ...mapProperties("dateTmpl", "league", "home", "guest", "type"),
                 bookie: {name: "bookie 1", coefficient: 2},
-            }});
-
-            expect(wrapper.element).toMatchSnapshot();
+            },
+            computed: {
+                mode: {waiting: true, results: true},
+                ...mapProperties("coefficientTmpl", "betClass", "scoreTmpl"),
+            },
         });
 
-        it("close button", () => {
-            mountWrapper({computed: {mode: () => ({waiting: true})}});
-
-            expect(closeButton.element).toMatchSnapshot();
-        });
-
-        it("score block", () => {
-            mountWrapper({computed: {mode: () => ({results: true}), betClass: () => "betClass", scoreTmpl: () => "1 : 1"}});
-
-            expect(scoreInfo.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("deleteBet", () => {
-            mountWrapper({methods: ["deleteBet"], computed: {mode: () => ({waiting: true})}});
+            mountWrapper({
+                methods: ["deleteBet"],
+                computed: {
+                    mode: {waiting: true},
+                },
+            });
 
             closeButton.trigger("click");
 
@@ -60,19 +50,26 @@ describe("bet/BetSlipInfoLine.vue", () => {
 
     });
 
-
     describe("Testing computed properties", () => {
 
         describe("mode", () => {
 
             it("mode = waiting", () => {
-                mountWrapper({props: {lineMode: "waiting"}});
+                mountWrapper({
+                    props: {
+                        lineMode: "waiting",
+                    },
+                });
 
                 expect(wrapper.vm.mode).toEqual({waiting: true, results: false});
             });
 
             it("mode = results", () => {
-                mountWrapper({props: {lineMode: "result"}});
+                mountWrapper({
+                    props: {
+                        lineMode: "result",
+                    },
+                });
 
                 expect(wrapper.vm.mode).toEqual({waiting: false, results: true});
             });
@@ -80,7 +77,11 @@ describe("bet/BetSlipInfoLine.vue", () => {
         });
 
         it("coefficientTmpl", () => {
-            mountWrapper({computed: {bookie: () => ({coefficient: 26.577})}});
+            mountWrapper({
+                computed: {
+                    bookie: {coefficient: 26.577},
+                },
+            });
 
             expect(wrapper.vm.coefficientTmpl).toBe("26.58");
         });
@@ -88,13 +89,22 @@ describe("bet/BetSlipInfoLine.vue", () => {
         describe("scoreTmpl", () => {
 
             it("scoreTmpl = result", () => {
-                mountWrapper({props: {score: "3 : 1", matchResult: "1"}});
+                mountWrapper({
+                    props: {
+                        score: "3 : 1",
+                        matchResult: "1",
+                    },
+                });
 
                 expect(wrapper.vm.scoreTmpl).toBe("3 : 1");
             });
 
             it("scoreTmpl = default template", () => {
-                mountWrapper({props: {matchResult: null}});
+                mountWrapper({
+                    props: {
+                        matchResult: null,
+                    },
+                });
 
                 expect(wrapper.vm.scoreTmpl).toBe("- : -");
             });
@@ -104,19 +114,33 @@ describe("bet/BetSlipInfoLine.vue", () => {
         describe("betClass", () => {
 
             it("betClass = empty", () => {
-                mountWrapper({props: {matchResult: null}});
+                mountWrapper({
+                    props: {
+                        matchResult: null,
+                    },
+                });
 
                 expect(wrapper.vm.betClass).toBe("");
             });
 
             it("betClass when win", () => {
-                mountWrapper({props: {matchResult: "1", type: "1"}});
+                mountWrapper({
+                    props: {
+                        matchResult: "1",
+                        type: "1",
+                    },
+                });
 
                 expect(wrapper.vm.betClass).toBe("bet-match-won");
             });
 
             it("betClass when lose", () => {
-                mountWrapper({props: {matchResult: "2", type: "1"}});
+                mountWrapper({
+                    props: {
+                        matchResult: "2",
+                        type: "1",
+                    },
+                });
 
                 expect(wrapper.vm.betClass).toBe("bet-match-lose");
             });
@@ -128,7 +152,13 @@ describe("bet/BetSlipInfoLine.vue", () => {
     describe("Testing methods", () => {
 
         it("deleteBet", () => {
-            mountWrapper({data: {betIndex: 1, betSlipIndex: 2}, methods: ["_deleteBet"]});
+            mountWrapper({
+                props: {
+                    betIndex: 1,
+                    betSlipIndex: 2,
+                },
+                methods: ["_deleteBet"],
+            });
 
             wrapper.vm.deleteBet();
 

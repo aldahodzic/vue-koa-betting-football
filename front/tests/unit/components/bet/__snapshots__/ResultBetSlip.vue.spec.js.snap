@@ -1,14 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bet/ResultBetSlip.vue Testing snapshots Component itself 1`] = `
+exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
 <div
-  class="bet-slip bet-slip-undefined"
+  class="bet-slip {{betSlipClass}}"
 >
   <div
     class="info"
-    style="display: none;"
   >
     <app-bet-slip-info-stub
+      bets="{{bets}}"
+      betslipindex="{{betSlipIndex}}"
       linemode="result"
     />
   </div>
@@ -20,7 +21,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshots Component itself 1`] = `
     >
       Date: 
       <b>
-        
+        {{createdDate}}
       </b>
     </p>
     <p
@@ -28,7 +29,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshots Component itself 1`] = `
     >
       Rate: 
       <b>
-        
+        {{rate}}
       </b>
     </p>
     <p
@@ -36,28 +37,17 @@ exports[`bet/ResultBetSlip.vue Testing snapshots Component itself 1`] = `
     >
       total.coefficient: 
       <b>
-        10.000
+        {{totalCoefficientTmpl}}
       </b>
     </p>
     <p
       class="sum"
     >
-      : 
+      {{betSlipResultText}}: 
       <b>
-        200.00
+        {{betSlipResultSum}}
       </b>
     </p>
   </div>
-</div>
-`;
-
-exports[`bet/ResultBetSlip.vue Testing snapshots Show info 1`] = `
-<div
-  class="info"
-  style=""
->
-  <app-bet-slip-info-stub
-    linemode="result"
-  />
 </div>
 `;

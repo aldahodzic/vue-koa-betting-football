@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`bet/Menu.vue Testing snapshots Component itself 1`] = `
+exports[`bet/Menu.vue Testing snapshot 1`] = `
 <div
   id="bet-menu"
 >
@@ -15,7 +15,7 @@ exports[`bet/Menu.vue Testing snapshots Component itself 1`] = `
     Results
   </span>
   <span
-    class="get-last-bets"
+    class="get-last-bets buttonLoadResultsClass"
     title="check.bets.latest"
   >
     ⌕

@@ -10,7 +10,7 @@ describe("bet/Menu.vue", () => {
         let {computed} = cutFromOptions(options, ["computed"]);
         wrapper = createWrapper(Component, {
             computed: {
-                load: () => ({}),
+                load: {},
                 ...computed
             },
             ...options,
@@ -19,20 +19,22 @@ describe("bet/Menu.vue", () => {
         lastBets = wrapper.find(".get-last-bets");
     };
 
-    describe("Testing snapshots", () => {
-
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            computed: {
+                buttonLoadResultsClass: "buttonLoadResultsClass",
+            },
         });
 
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("selectLeague", () => {
-            mountWrapper({methods: ["changeMenu"]});
+            mountWrapper({
+                methods: ["changeMenu"],
+            });
 
             menuItemSample.trigger("click");
 
@@ -40,7 +42,9 @@ describe("bet/Menu.vue", () => {
         });
 
         it("selectLeague", () => {
-            mountWrapper({methods: ["getLastBets"]});
+            mountWrapper({
+                methods: ["getLastBets"],
+            });
 
             lastBets.trigger("click");
 
@@ -55,13 +59,21 @@ describe("bet/Menu.vue", () => {
         describe("buttonLoadResultsClass", () => {
 
             it("buttonLoadResultsClass = enabled", () => {
-                mountWrapper({computed: {load: () => ({status: "wait"})}});
+                mountWrapper({
+                    computed: {
+                        load: {status: "wait"},
+                    },
+                });
 
                 expect(wrapper.vm.buttonLoadResultsClass).toBe("");
             });
 
             it("buttonLoadResultsClass = disabled", () => {
-                mountWrapper({computed: {load: () => ({status: "loading"})}});
+                mountWrapper({
+                    computed: {
+                        load: {status: "loading"},
+                    },
+                });
 
                 expect(wrapper.vm.buttonLoadResultsClass).toBe("disabled");
             });
@@ -74,7 +86,9 @@ describe("bet/Menu.vue", () => {
 
         it("changeMenu", () => {
             mountWrapper({
-                data: {menu: [{classes: "selected", type: "type 1"}, {classes: "", type: "type 2"}]},
+                data: {
+                    menu: [{classes: "selected", type: "type 1"}, {classes: "", type: "type 2"}],
+                },
                 methods: ["_changeSelector"],
             });
 
@@ -86,7 +100,9 @@ describe("bet/Menu.vue", () => {
         });
 
         it("getLastBets", () => {
-            mountWrapper({methods: ["_getResults"]});
+            mountWrapper({
+                methods: ["_getResults"],
+            });
 
             wrapper.vm.getLastBets();
 
