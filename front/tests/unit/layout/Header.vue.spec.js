@@ -1,42 +1,41 @@
-import {createWrapper, disableFile, expectAsyncFunctionCalled} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions} from "../__utils__";
 import Component from "@/components/layout/Header";
 
 disableFile();
 
-describe("Header.vue", () => {
+describe("layout/Header.vue", () => {
 
-    let wrapper, authNav, notAuthNav, setEnLanguage, logout;
+    let wrapper, setEnLanguage, logout;
     let mountWrapper = (options = {}) => {
+        let {computed} = cutFromOptions(options, ["computed"]);
         wrapper = createWrapper(Component, {
             stubs: ["app-validating-input"],
+            computed: {
+                user: {auth: true},
+                ...computed,
+            },
             ...options,
         });
-        authNav = wrapper.find("#auth");
-        notAuthNav = wrapper.find("#not-auth");
         setEnLanguage = wrapper.find(".change-language:nth-of-type(1)");
         logout = wrapper.find("#logout");
     };
 
-    describe("Testing snapshots", () => {
+    it("Testing snapshot", () => {
+            mountWrapper({
+                computed: {
+                    show: {authorized: true, unauthorized: true},
+                },
+            });
 
-        it("User authorized", () => {
-            mountWrapper({computed: {user: () => ({auth: true})}});
-
-            expect(authNav.element).toMatchSnapshot();
-        });
-
-        it("User not authorized", () => {
-            mountWrapper({computed: {user: () => ({auth: false})}});
-
-            expect(notAuthNav.element).toMatchSnapshot();
-        });
-
+            expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("setLanguage", () => {
-            mountWrapper({methods: ["setLanguage"]});
+            mountWrapper({
+                methods: ["setLanguage"],
+            });
 
             setEnLanguage.trigger("click");
 
@@ -44,7 +43,9 @@ describe("Header.vue", () => {
         });
 
         it("userLogout", () => {
-            mountWrapper({methods: ["userLogout"]});
+            mountWrapper({
+                methods: ["userLogout"],
+            });
 
             logout.trigger("click");
 
@@ -53,28 +54,57 @@ describe("Header.vue", () => {
 
     });
 
+    describe("Testing computed properties", () => {
+
+        describe("show", () => {
+
+            it("show when user authorized", () => {
+                mountWrapper({
+                    computed: {
+                        user: {auth: true},
+                    },
+                });
+
+                expect(wrapper.vm.show).toEqual({authorized: true, unauthorized: false});
+            });
+
+            it("show when user unauthorized", () => {
+                mountWrapper({
+                    computed: {
+                        user: {auth: false},
+                    },
+                });
+
+                expect(wrapper.vm.show).toEqual({authorized: false, unauthorized: true});
+            });
+
+        });
+
+    });
+
     describe("Testing methods", () => {
 
         it("userLogout", async () => {
-            mountWrapper({methods: ["_userLogout"]});
+            mountWrapper({
+                methods: ["_userLogout"],
+            });
 
             wrapper.vm.userLogout();
+            await wrapper.vm.$nextTick();
 
             expect(wrapper.vm._userLogout).toBeCalled();
-            expectAsyncFunctionCalled(wrapper, "$router.replace", "matches");
+            expect(wrapper.vm.$router.replace).toBeCalledWith("matches");
         });
 
         it("setLanguage", () => {
-            mountWrapper({methods: ["$setLanguage"]});
+            mountWrapper({
+                methods: ["$setLanguage"],
+            });
 
             wrapper.vm.setLanguage("en");
 
             expect(wrapper.vm.$setLanguage).toBeCalledWith("en");
         });
-
-    });
-
-    describe("Testing hooks", () => {
 
     });
 
