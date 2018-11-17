@@ -20,14 +20,14 @@ exports[`views/Authentication.vue Testing snapshot 1`] = `
   </div>
   <app-validating-input-stub
     failmessage="phrases.only.characters_symbols"
-    mode="currentMode"
+    mode="{{currentMode}}"
     pattern="/^[a-zA-Z _]+$/"
     title="login"
     value=""
   />
   <app-validating-input-stub
     failmessage="phrases.only.characters_numbers"
-    mode="currentMode"
+    mode="{{currentMode}}"
     pattern="/^[a-zA-Z0-9]+$/"
     title="password"
     value=""
@@ -35,9 +35,9 @@ exports[`views/Authentication.vue Testing snapshot 1`] = `
   <input
     disabled="disabled"
     id="submit"
-    title="buttonTitle"
+    title="{{buttonTitle}}"
     type="button"
-    value="buttonValue"
+    value="{{buttonValue}}"
   />
 </div>
 `;

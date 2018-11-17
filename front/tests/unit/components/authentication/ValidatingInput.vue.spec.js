@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/authentication/ValidatingInput";
 
 disableFile();
@@ -28,11 +28,7 @@ describe("authentication/ValidatingInput.vue", () => {
                 activated: true,
             },
             computed: {
-                icon: {
-                    className: "some-class",
-                    title: "icon title",
-                    context: "icon context"
-                },
+                icon: mapProperties("className", "title", "context"),
             },
         });
 

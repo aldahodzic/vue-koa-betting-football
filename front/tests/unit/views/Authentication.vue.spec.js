@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../__utils__";
 import Component from "@/views/Authentication.vue";
 
 disableFile();
@@ -36,12 +36,7 @@ describe("views/Authentication.vue", () => {
 
     it("Testing snapshot", () => {
         mountWrapper({
-            computed: {
-                currentMode: "currentMode",
-                buttonValue: "buttonValue",
-                disableButton: "disabled",
-                buttonTitle: "buttonTitle",
-            },
+            computed: mapProperties("currentMode", "buttonValue", "disabled", "buttonTitle"),
         });
 
         expect(wrapper.element).toMatchSnapshot();

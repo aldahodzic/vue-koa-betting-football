@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions, DATA} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions, DATA, mapProperties} from "../__utils__";
 import Component from "@/views/Bet.vue";
 
 disableFile();
@@ -34,7 +34,7 @@ describe("views/Bet.vue", () => {
                     loading: true,
                     selector: true,
                 },
-                emptyBetsText: "emptyBetsText",
+                ...mapProperties("emptyBetsText"),
                 betSlipComponent: "bet-slip-component-test-name",
                 bets: DATA.bets,
             },

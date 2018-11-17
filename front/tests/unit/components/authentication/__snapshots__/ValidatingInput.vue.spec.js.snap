@@ -3,10 +3,10 @@
 exports[`authentication/ValidatingInput.vue Testing snapshot 1`] = `
 <label>
   <span
-    class="icon some-class"
-    title="icon title"
+    class="icon {{className}}"
+    title="{{title}}"
   >
-    icon context
+    {{context}}
   </span>
   <span>
     Enter title
