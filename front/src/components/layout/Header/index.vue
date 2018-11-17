@@ -3,21 +3,17 @@ header
     h1 {{$t('site.welcome')}}
     div
         router-link#logo(to="/"): img(src="@/assets/images/logo.png", :title="$t('site.goToMain')")
-        nav#auth(v-if="user.auth")
+        nav
             p: router-link(to="/about"): a {{$t('About')}}
             p {{$t('Language')}}:
                 span.change-language(@click="setLanguage('en')") {{$t('English')}}
                 span /
                 span.change-language(@click="setLanguage('ru')") {{$t('Russian')}}
-            p: router-link(to="/bets"): a {{$t('Bets')}}
-            p: span#logout(@click="userLogout") {{$t('Logout')}}
-        nav#not-auth(v-else)
-            p: router-link(to="/about"): a {{$t('About')}}
-            p {{$t('Language')}}:
-                span.change-language(@click="setLanguage('en')") {{$t('English')}}
-                span /
-                span.change-language(@click="setLanguage('ru')") {{$t('Russian')}}
-            p: router-link(to="/auth"): a {{$t('Authentication')}}
+                
+            p(v-if="show.authorized"): router-link(to="/bets"): a {{$t('Bets')}}
+            p(v-if="show.authorized"): span#logout(@click="userLogout") {{$t('Logout')}}
+            
+            p(v-if="show.unauthorized"): router-link(to="/auth"): a {{$t('Authentication')}}
 </template>
 
 <script>
@@ -28,6 +24,12 @@ export default {
         ...mapGetters({
             user: "auth/user"
         }),
+        show() {
+            return {
+                authorized: this.user.auth == true,
+                unauthorized: this.user.auth == false,
+            };
+        },
     },
     methods: {
         ...mapActions({
