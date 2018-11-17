@@ -3,7 +3,7 @@ import Component from "@/views/Match.vue";
 
 disableFile();
 
-describe("Match.vue", () => {
+describe("views/Match.vue", () => {
 
     let wrapper;
     let mountWrapper = (options = {}) => {
@@ -13,14 +13,10 @@ describe("Match.vue", () => {
         });
     };
 
-    describe("Testing snapshot", () => {
+    it("Testing snapshot", () => {
+        mountWrapper();
 
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
 });

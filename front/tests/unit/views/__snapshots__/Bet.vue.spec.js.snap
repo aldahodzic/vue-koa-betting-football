@@ -1,94 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Match.vue Testing snapshot Block load previous 1`] = `
-<p
-  id="get-previous"
->
-  load.bets.previous
-</p>
-`;
-
-exports[`Match.vue Testing snapshot Block loading bets 1`] = `
-<p
-  id="loading-bets"
->
-  loading.bets...
-</p>
-`;
-
-exports[`Match.vue Testing snapshot Block none bets 1`] = `
-<p
-  id="none-bets"
->
-  empty-bets-text
-</p>
-`;
-
-exports[`Match.vue Testing snapshot Block selected bets betSlip type = result 1`] = `
-<div
-  class="selected-bets"
->
-  <app-result-bet-slip-stub
-    bets="bets 1"
-    betslipindex="0"
-    createddate="createdDate 1"
-    outcome="outcome 1"
-    outcomesum="outcomeSum 1"
-    rate="rate 1"
-    totalcoefficient="totalCoefficient 1"
-    totalsum="totalSum 1"
-  />
-  <app-result-bet-slip-stub
-    bets="bets 2"
-    betslipindex="1"
-    createddate="createdDate 2"
-    outcome="outcome 2"
-    outcomesum="outcomeSum 2"
-    rate="rate 2"
-    totalcoefficient="totalCoefficient 2"
-    totalsum="totalSum 2"
-  />
-</div>
-`;
-
-exports[`Match.vue Testing snapshot Block selected bets betSlip type = waiting 1`] = `
-<div
-  class="selected-bets"
->
-  <app-waiting-bet-slip-stub
-    bets="bets 1"
-    betslipindex="0"
-    createddate="createdDate 1"
-    outcome="outcome 1"
-    outcomesum="outcomeSum 1"
-    rate="rate 1"
-    totalcoefficient="totalCoefficient 1"
-    totalsum="totalSum 1"
-  />
-  <app-waiting-bet-slip-stub
-    bets="bets 2"
-    betslipindex="1"
-    createddate="createdDate 2"
-    outcome="outcome 2"
-    outcomesum="outcomeSum 2"
-    rate="rate 2"
-    totalcoefficient="totalCoefficient 2"
-    totalsum="totalSum 2"
-  />
-</div>
-`;
-
-exports[`Match.vue Testing snapshot Component itself 1`] = `
+exports[`views/Bet.vue Testing snapshot 1`] = `
 <div
   id="bet-slip"
 >
   <app-bet-menu-stub />
-  <!---->
-  <!---->
-  <!---->
-  <!---->
-  <!---->
+  <p
+    id="loading-bets"
+  >
+    loading.bets...
+  </p>
+  <app-bet-selector-stub />
+  <p
+    id="none-bets"
+  >
+    emptyBetsText
+  </p>
+  <div
+    class="selected-bets"
+  >
+    <bet-slip-component-test-name-stub
+      bets="bets 1"
+      betslipindex="0"
+      createddate="createdDate 1"
+      outcome="outcome 1"
+      outcomesum="11.11"
+      rate="11"
+      totalcoefficient="1.111"
+      totalsum="11.11"
+    />
+    <bet-slip-component-test-name-stub
+      bets="bets 2"
+      betslipindex="1"
+      createddate="createdDate 2"
+      outcome="outcome 2"
+      outcomesum="22.22"
+      rate="22"
+      totalcoefficient="2.222"
+      totalsum="22.22"
+    />
+  </div>
+  <p
+    id="get-previous"
+  >
+    load.bets.previous
+  </p>
 </div>
 `;
-
-exports[`Match.vue Testing snapshot Selector 1`] = `<app-bet-selector-stub />`;

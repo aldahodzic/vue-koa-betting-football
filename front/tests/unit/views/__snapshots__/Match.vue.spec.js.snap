@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Match.vue Testing snapshot Component itself 1`] = `
+exports[`views/Match.vue Testing snapshot 1`] = `
 <div>
   <app-match-menu-stub />
   <app-match-actions-stub />

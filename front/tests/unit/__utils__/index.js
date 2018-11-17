@@ -1,81 +1,23 @@
 import {shallowMount} from "@vue/test-utils";
 import _ from "lodash";
+import * as _data from "./fakeData";
+
+export const DATA = _data;
 
 export const createWrapper = (component, options = {}) => {
 
-    let {
-        computed = {},
-        methods = [],
-        stubs = [],
-        data = {},
-        props = {},
-        remove = {},
-    } = options;
+    let {computed, methods, stubs, data, props} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props"]);
 
-    let computedProps = {
-        user: () => ({
-            auth: _.at(options, "computed.user.auth")[0] || true,
-        }),
-        leagueList: () => ["League 1", "League 2", "League 3"],
-        selectedLeagues: () => ["League 1", "League 2", "League 3"],
-        matches: () => [
-            {
-                "key": "League1:Home team 1-Guest team 1",
-                "home": "Home team 1",
-                "guest": "Guest team 1",
-                "league": "League1",
-                "dateTmpl": "27.10",
-                "date": 1540648800000,
-                "coefficients": {
-                    "0": [{"name": "Bookmaker 1", "coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.1}, {"name": "Bookmaker 3", "coefficient": 1.1}],
-                    "1": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.1}, {"name": "Bookmaker 3", "coefficient": 2.1}],
-                    "2": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.1}, {"name": "Bookmaker 3", "coefficient": 3.1}]
-                },
-            },
-            {
-                "key": "League2:Home team 2-Guest team 2",
-                "home": "Home team 2",
-                "guest": "Guest team 2",
-                "league": "League2",
-                "dateTmpl": "28.10",
-                "date": 1540738800000,
-                "coefficients": {
-                    "0": [{"name": "Bookmaker 1", "coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.2}, {"name": "Bookmaker 3", "coefficient": 2.2}],
-                    "1": [{"name": "Bookmaker 1","coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.2}, {"name": "Bookmaker 3", "coefficient": 3.2}],
-                    "2": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.2}, {"name": "Bookmaker 3", "coefficient": 1.2}]
-                },
-            },
-            {
-                "key": "League3:Home team 3-Guest team 3",
-                "home": "Home team 3",
-                "guest": "Guest team 3",
-                "league": "League3",
-                "dateTmpl": "29.10",
-                "date": 1540825200000,
-                "coefficients": {
-                    "0": [{"name": "Bookmaker 1", "coefficient": 3}, {"name": "Bookmaker 2","coefficient": 3.3}, {"name": "Bookmaker 3", "coefficient": 3.3}],
-                    "1": [{"name": "Bookmaker 1","coefficient": 1}, {"name": "Bookmaker 2","coefficient": 1.3}, {"name": "Bookmaker 3", "coefficient": 1.3}],
-                    "2": [{"name": "Bookmaker 1","coefficient": 2}, {"name": "Bookmaker 2","coefficient": 2.3}, {"name": "Bookmaker 3", "coefficient": 2.3}]
-                },
-            },
-        ],
-        bets: () => ({
-            current: [],
-            waiting: [],
-            results: [],
-        }),
-        ...computed,
-    };
-
-    for(let option in remove) {
-        for(let property of remove[option]) {
-            if(option == "computed") delete computedProps[property];
-        }
+    // adapting computed properties for vue-test-utils structure
+    for(let computedProperty in computed) {
+        let computedPropertyValue = computed[computedProperty];
+        computed[computedProperty] = () => computedPropertyValue;
     }
 
     let wrapper = shallowMount(component, {
+        data: () => data,
         propsData: props,
-        computed: computedProps,
+        computed,
         methods: {
             $t: message => message,
             _getResults: () => null, // stub vuex method
@@ -97,8 +39,6 @@ export const createWrapper = (component, options = {}) => {
     let mockMethods = {};
     methods.forEach(methodName => mockMethods[methodName] = jest.fn());
     wrapper.setMethods(mockMethods);
-
-    wrapper.setData(data);
 
     wrapper.callHook = name => {
         let hooks = wrapper.vm.$options[name];
@@ -152,11 +92,19 @@ export const expectAsyncFunctionCalled = (wrapper, functionName, payload) => {
 export const cutFromOptions = (options, props) => {
 
     let cutProperties = {};
+    let defaultArray = ["methods", "stubs"];
+    let defaultObject = ["computed", "data", "props",    "remove"];
 
     props.forEach(prop => {
         cutProperties[prop] = options[prop];
         delete options[prop];
     });
+
+    for(let property in cutProperties) {
+        let propertyValue = cutProperties[property];
+        if(!propertyValue && defaultArray.includes(property)) cutProperties[property] = [];
+        if(!propertyValue && defaultObject.includes(property)) cutProperties[property] = {};
+    }
 
     return cutProperties;
 };

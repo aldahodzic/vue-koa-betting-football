@@ -30,7 +30,7 @@ function setMessages(language) {
         return;
     }
 
-    import(`@/locales/${language}`).then(messages => {
+    import("@/locales/" + language).then(messages => {
         i18n.setLocaleMessage(language, messages.default);
         localStorage.setItem(`i18n::messages[${language}]`, JSON.stringify(messages.default));
         setI18nLanguage(language);

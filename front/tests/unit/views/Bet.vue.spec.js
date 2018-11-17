@@ -1,107 +1,57 @@
-import {createWrapper, disableFile, cutFromOptions} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions, DATA} from "../__utils__";
 import Component from "@/views/Bet.vue";
 
 disableFile();
 
-describe("Match.vue", () => {
+describe("views/Bet.vue", () => {
 
-    let wrapper, loadingBets, noneBets, selector, selectedBets, previous;
+    let wrapper, previous;
     let mountWrapper = (options = {}) => {
-        let {computed} = cutFromOptions(options, ["computed"]);
+        let {computed, stubs} = cutFromOptions(options, ["computed", "stubs"]);
         wrapper = createWrapper(Component, {
-            stubs: ["app-bet-menu", "app-bet-selector", "app-waiting-bet-slip", "app-result-bet-slip"],
+            stubs: ["app-bet-menu", "app-bet-selector", ...stubs],
             computed: {
-                waitingBets: () => [],
-                resultBets: () => [],
-                selector: () => ({}),
-                load: () => ({}),
-                bets: () => [
-                    {
-                        _id: "_id 1",
-                        bets: "bets 1",
-                        rate: "rate 1",
-                        totalCoefficient: "totalCoefficient 1",
-                        totalSum: "totalSum 1",
-                        createdDate: "createdDate 1",
-                        outcome: "outcome 1",
-                        outcomeSum: "outcomeSum 1",
-                    },
-                    {
-                        _id: "_id 2",
-                        bets: "bets 2",
-                        rate: "rate 2",
-                        totalCoefficient: "totalCoefficient 2",
-                        totalSum: "totalSum 2",
-                        createdDate: "createdDate 2",
-                        outcome: "outcome 2",
-                        outcomeSum: "outcomeSum 2",
-                    },
-                ],
+                user: {auth: true},
+                waitingBets: [],
+                resultBets: [],
+                selector: {},
+                load: {},
                 ...computed,
             },
             ...options,
         });
-        loadingBets = wrapper.find("#loading-bets");
-        noneBets = wrapper.find("#none-bets");
-        selector = wrapper.find("app-bet-selector-stub");
-        selectedBets = wrapper.find(".selected-bets");
         previous = wrapper.find("#get-previous");
     };
 
-    describe("Testing snapshot", () => {
-
-        it("Component itself", () => {
-            mountWrapper();
-
-            expect(wrapper.element).toMatchSnapshot();
+    it("Testing snapshot", () => {
+        mountWrapper({
+            stubs: ["bet-slip-component-test-name"],
+            computed: {
+                show: {
+                    noneBets: true,
+                    bets: true,
+                    loadPrevious: true,
+                    loading: true,
+                    selector: true,
+                },
+                emptyBetsText: "emptyBetsText",
+                betSlipComponent: "bet-slip-component-test-name",
+                bets: DATA.bets,
+            },
         });
 
-        it("Block loading bets", () => {
-            mountWrapper({computed: {show: () => ({loading: true})}});
-
-            expect(loadingBets.element).toMatchSnapshot();
-        });
-
-        it("Block none bets", () => {
-            mountWrapper({computed: {show: () => ({noneBets: true}), emptyBetsText: () => "empty-bets-text"}});
-
-            expect(noneBets.element).toMatchSnapshot();
-        });
-
-        it("Selector", () => {
-            mountWrapper({computed: {show: () => ({selector: true})}});
-
-            expect(selector.element).toMatchSnapshot();
-        });
-
-        describe("Block selected bets", () => {
-
-            it("betSlip type = waiting", () => {
-                mountWrapper({computed: {show: () => ({bets: true}), betSlipComponent: () => "app-waiting-bet-slip"}});
-
-                expect(selectedBets.element).toMatchSnapshot();
-            });
-
-            it("betSlip type = result", () => {
-                mountWrapper({computed: {show: () => ({bets: true}), betSlipComponent: () => "app-result-bet-slip"}});
-
-                expect(selectedBets.element).toMatchSnapshot();
-            });
-
-        });
-
-        it("Block load previous", () => {
-            mountWrapper({computed: {show: () => ({loadPrevious: true})}});
-
-            expect(previous.element).toMatchSnapshot();
-        });
-
+        expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Testing triggering methods", () => {
 
         it("getAllBets", () => {
-            mountWrapper({methods: ["getAllBets"], computed: {show: () => ({loadPrevious: true})}});
+            mountWrapper({
+                methods: ["getAllBets"],
+                computed: {
+                    show: {loadPrevious: true},
+                },
+            });
 
             previous.trigger("click");
 
@@ -116,7 +66,7 @@ describe("Match.vue", () => {
 
             let makeIt = (showProp, showValue, {selector = {}, load = {}, emptyBets}) => {
                 it(`show.${showProp} = ${showValue}`, () => {
-                    mountWrapper({computed: {selector: () => selector, emptyBets: () => emptyBets, load: () => load}});
+                    mountWrapper({computed: {selector, emptyBets, load}});
 
                     expect(wrapper.vm.show[showProp]).toBe(showValue);
                 });
@@ -172,13 +122,21 @@ describe("Match.vue", () => {
         describe("betSlipComponent", () => {
 
             it("betSlipComponent = app-waiting-bet-slip", () => {
-                mountWrapper({computed: {selector: () => ({type: "waiting"})}});
+                mountWrapper({
+                    computed: {
+                        selector: {type: "waiting"},
+                    },
+                });
 
                 expect(wrapper.vm.betSlipComponent).toBe("app-waiting-bet-slip");
             });
 
             it("betSlipComponent = app-result-bet-slip", () => {
-                mountWrapper({computed: {selector: () => ({type: "result"})}});
+                mountWrapper({
+                    computed: {
+                        selector: {type: "result"},
+                    },
+                });
 
                 expect(wrapper.vm.betSlipComponent).toBe("app-result-bet-slip");
             });
@@ -189,8 +147,10 @@ describe("Match.vue", () => {
 
             it("bets type = waiting", () => {
                 mountWrapper({
-                    computed: {selector: () => ({type: "waiting"}), waitingBets: () => ["waiting"]},
-                    remove: {computed: ["bets"]},
+                    computed: {
+                        selector: {type: "waiting"},
+                        waitingBets: ["waiting"]
+                    },
                 });
 
                 expect(wrapper.vm.bets).toEqual(["waiting"]);
@@ -198,8 +158,10 @@ describe("Match.vue", () => {
 
             it("bets type = result", () => {
                 mountWrapper({
-                    computed: {selector: () => ({type: "result"}), resultBets: () => ["results"]},
-                    remove: {computed: ["bets"]},
+                    computed: {
+                        selector: {type: "result"},
+                        resultBets: ["results"],
+                    },
                 });
 
                 expect(wrapper.vm.bets).toEqual(["results"]);
@@ -210,13 +172,21 @@ describe("Match.vue", () => {
         describe("emptyBets", () => {
 
             it("emptyBets = true", () => {
-                mountWrapper({computed: {bets: () => []}});
+                mountWrapper({
+                    computed: {
+                        bets: [],
+                    },
+                });
 
                 expect(wrapper.vm.emptyBets).toBeTruthy();
             });
 
             it("emptyBets = false", () => {
-                mountWrapper();
+                mountWrapper({
+                    computed: {
+                        bets: new Array(3),
+                    },
+                });
 
                 expect(wrapper.vm.emptyBets).toBeFalsy();
             });
@@ -227,7 +197,7 @@ describe("Match.vue", () => {
 
             let makeIt = (value, selector = {}) => {
                 it(`emptyBetsText = ${value}`, () => {
-                    mountWrapper({computed: {selector: () => selector, emptyBets: () => true}});
+                    mountWrapper({computed: {selector, emptyBets: true}});
 
                     expect(wrapper.vm.emptyBetsText).toBe(value);
                 });
@@ -244,7 +214,9 @@ describe("Match.vue", () => {
     describe("Testing methods", () => {
 
         it("getAllBets", () => {
-            mountWrapper({methods: ["_changeLoad", "_getResults"]});
+            mountWrapper({
+                methods: ["_changeLoad", "_getResults"],
+            });
 
             wrapper.vm.getAllBets();
 
@@ -259,7 +231,12 @@ describe("Match.vue", () => {
         describe("created", async () => {
 
             it("user authorized => get results", () => {
-                mountWrapper({methods: ["_getResults"], computed: {user: () => ({auth: true})}});
+                mountWrapper({
+                    methods: ["_getResults"],
+                    computed: {
+                        user: {auth: true},
+                    },
+                });
 
                 wrapper.callHook("created");
 
@@ -267,7 +244,11 @@ describe("Match.vue", () => {
             });
 
             it("user not authorized => redirect to matches", () => {
-                mountWrapper({computed: {user: () => ({auth: false})}});
+                mountWrapper({
+                    computed: {
+                        user: {auth: false},
+                    },
+                });
 
                 wrapper.callHook("created");
 
@@ -277,7 +258,9 @@ describe("Match.vue", () => {
         });
 
         it("beforeDestroy", () => {
-            mountWrapper({methods: ["_resetSelector"]});
+            mountWrapper({
+                methods: ["_resetSelector"],
+            });
 
             wrapper.callHook("beforeDestroy");
 

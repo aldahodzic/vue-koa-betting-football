@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`About.vue Testing snapshots Component itself 1`] = `
+exports[`views/About.vue Testing snapshot 1`] = `
 <div
   id="about"
 >

@@ -1,7 +1,7 @@
 import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
 import Component from "@/components/bet/Selector";
 
-// disableFile();
+disableFile();
 
 describe("bet/Selector.vue", () => {
 

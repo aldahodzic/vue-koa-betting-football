@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Authentication.vue Testing snapshots Component itself 1`] = `
+exports[`views/Authentication.vue Testing snapshot 1`] = `
 <div
   id="auth"
 >
@@ -20,14 +20,14 @@ exports[`Authentication.vue Testing snapshots Component itself 1`] = `
   </div>
   <app-validating-input-stub
     failmessage="phrases.only.characters_symbols"
-    mode="authorization"
+    mode="currentMode"
     pattern="/^[a-zA-Z _]+$/"
     title="login"
     value=""
   />
   <app-validating-input-stub
     failmessage="phrases.only.characters_numbers"
-    mode="authorization"
+    mode="currentMode"
     pattern="/^[a-zA-Z0-9]+$/"
     title="password"
     value=""
@@ -35,9 +35,9 @@ exports[`Authentication.vue Testing snapshots Component itself 1`] = `
   <input
     disabled="disabled"
     id="submit"
-    title="fill.data"
+    title="buttonTitle"
     type="button"
-    value="SignIn"
+    value="buttonValue"
   />
 </div>
 `;
