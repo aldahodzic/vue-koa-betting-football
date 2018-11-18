@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../__utils__";
 import Component from "@/components/layout/Header";
 
 disableFile();
@@ -23,7 +23,7 @@ describe("layout/Header.vue", () => {
     it("Testing snapshot", () => {
             mountWrapper({
                 computed: {
-                    show: {authorized: true, unauthorized: true},
+                    show: mapProperties("authorized", "unauthorized", true),
                 },
             });
 

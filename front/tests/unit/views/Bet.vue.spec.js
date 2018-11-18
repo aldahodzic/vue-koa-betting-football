@@ -27,13 +27,7 @@ describe("views/Bet.vue", () => {
         mountWrapper({
             stubs: ["bet-slip-component-test-name"],
             computed: {
-                show: {
-                    noneBets: true,
-                    bets: true,
-                    loadPrevious: true,
-                    loading: true,
-                    selector: true,
-                },
+                show: mapProperties("noneBets", "bets", "loadPrevious", "loading", "selector", true),
                 ...mapProperties("emptyBetsText"),
                 betSlipComponent: "bet-slip-component-test-name",
                 bets: DATA.bets,

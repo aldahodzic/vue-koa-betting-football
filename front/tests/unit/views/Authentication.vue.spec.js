@@ -12,7 +12,7 @@ describe("views/Authentication.vue", () => {
             stubs: ["app-validating-input"],
             data: {
                 ...data,
-                // in some stub fields do not exist pattern
+                // in some stub-fields do not exist pattern
                 ...mergedDataFields(data.fields),
             },
             computed: {

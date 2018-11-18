@@ -42,6 +42,21 @@ describe("match/Selector.vue", () => {
 
     describe("Testing computed properties", () => {
 
+        describe("show", () => {
+
+            let makeIt = (propName, propValue, {emptySelectedMatches}) => {
+                it(`show.${propName} = ${propValue}`, () => {
+                    mountWrapper({computed: {emptySelectedMatches}});
+
+                    expect(wrapper.vm.show[propName]).toBe(propValue);
+                });
+            };
+
+            makeIt("emptyMatches", true, {emptySelectedMatches: true});
+            makeIt("selector", true, {emptySelectedMatches: false});
+
+        });
+
         describe("emptySelectedMatches", () => {
 
             it("emptySelectedMatches = true", () => {

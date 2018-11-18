@@ -1,4 +1,4 @@
-import {createWrapper, disableFile} from "../__utils__";
+import {createWrapper, disableFile, DATA} from "../__utils__";
 import Component from "@/views/About.vue";
 
 disableFile();
@@ -13,7 +13,7 @@ describe("views/About.vue", () => {
     it("Testing snapshot", () => {
         mountWrapper({
             computed: {
-                leagueList: ["League 1", "League 2", "League 3"],
+                leagueList: DATA.leagueList,
             },
         });
 

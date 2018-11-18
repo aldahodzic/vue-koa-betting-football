@@ -99,3 +99,5 @@ export const selectorItemCoefficients = [
     {"name": "Bookmaker 2","coefficient": 1.2},
     {"name": "Bookmaker 3", "coefficient": 1.3},
 ];
+
+export const leagueList = ["League 1", "League 2", "League 3"];

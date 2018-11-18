@@ -1,7 +1,7 @@
 import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/match/Menu";
 
-// disableFile();
+disableFile();
 
 describe("match/Menu.vue", () => {
 

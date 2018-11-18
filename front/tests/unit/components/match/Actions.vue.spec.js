@@ -29,13 +29,8 @@ describe("match/Actions.vue", () => {
                 data: mapProperties("buttonInfoText"),
                 computed: {
                     show: {
-                        info: true,
-                        selector: true,
-                        loading: {
-                            active: true,
-                            passive: true,
-                        },
-                        confirm: true,
+                        ...mapProperties("info", "selector", "confirm", true),
+                        loading: mapProperties("active", "passive", true),
                     },
                     ...mapProperties("textAction"),
                 },
