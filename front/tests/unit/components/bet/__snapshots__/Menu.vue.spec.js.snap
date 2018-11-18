@@ -15,7 +15,7 @@ exports[`bet/Menu.vue Testing snapshot 1`] = `
     Results
   </span>
   <span
-    class="get-last-bets buttonLoadResultsClass"
+    class="get-last-bets {{buttonLoadResultsClass}}"
     title="check.bets.latest"
   >
     ⌕

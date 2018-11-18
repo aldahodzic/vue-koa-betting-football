@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/Menu";
 
 disableFile();
@@ -11,7 +11,7 @@ describe("bet/Menu.vue", () => {
         wrapper = createWrapper(Component, {
             computed: {
                 load: {},
-                ...computed
+                ...computed,
             },
             ...options,
         });
@@ -21,9 +21,7 @@ describe("bet/Menu.vue", () => {
 
     it("Testing snapshot", () => {
         mountWrapper({
-            computed: {
-                buttonLoadResultsClass: "buttonLoadResultsClass",
-            },
+            computed: mapProperties("buttonLoadResultsClass"),
         });
 
         expect(wrapper.element).toMatchSnapshot();
@@ -52,7 +50,6 @@ describe("bet/Menu.vue", () => {
         });
 
     });
-
 
     describe("Testing computed properties", () => {
 
