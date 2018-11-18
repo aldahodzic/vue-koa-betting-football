@@ -9,7 +9,7 @@ exports[`authentication/ValidatingInput.vue Testing snapshot 1`] = `
     {{context}}
   </span>
   <span>
-    Enter title
+    Enter {{title}}
   </span>
   <input />
 </label>

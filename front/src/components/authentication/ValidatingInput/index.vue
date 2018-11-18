@@ -1,7 +1,7 @@
 <template lang="pug">
 label
     span.icon(
-    v-if="activated",
+    v-if="show.icon",
     :class="icon.className",
     :title="$t(icon.title)",
     ) {{icon.context}}
@@ -40,6 +40,11 @@ export default {
         }
     },
     computed: {
+        show() {
+            return {
+                icon: this.activated == true,
+            };
+        },
         valid() {
             return this.pattern.test(this.value);
         },

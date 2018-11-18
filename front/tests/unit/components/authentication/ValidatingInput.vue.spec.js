@@ -21,13 +21,9 @@ describe("authentication/ValidatingInput.vue", () => {
 
     it("Testing snapshot", () => {
         mountWrapper({
-            props: {
-                title: "title",
-            },
-            data: {
-                activated: true,
-            },
+            props: mapProperties("title"),
             computed: {
+                show: mapProperties("icon", true),
                 icon: mapProperties("className", "title", "context"),
             },
         });
@@ -50,6 +46,30 @@ describe("authentication/ValidatingInput.vue", () => {
     });
 
     describe("Testing computed properties", () => {
+
+        describe("show", () => {
+
+            it("show.icon = true", () => {
+                mountWrapper({
+                    data: {
+                        activated: true,
+                    },
+                });
+
+                expect(wrapper.vm.show.icon).toBeTruthy();
+            });
+
+            it("show.icon = false", () => {
+                mountWrapper({
+                    data: {
+                        activated: false,
+                    },
+                });
+
+                expect(wrapper.vm.show.icon).toBeFalsy();
+            });
+
+        });
 
         describe("valid", () => {
 
