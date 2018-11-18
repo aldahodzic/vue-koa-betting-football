@@ -8,29 +8,29 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     class="selector"
   >
     <span>
-      Sort
+      $t(::Sort::)
       <select
         id="sort"
       >
         <option
           value="createdAt"
         >
-          Date
+          $t(::Date::)
         </option>
         <option
           value="rate"
         >
-          Rate
+          $t(::Rate::)
         </option>
         <option
           value="totalCoefficient"
         >
-          Coefficient
+          $t(::Coefficient::)
         </option>
         <option
           value="outcomeSum"
         >
-          sum.result
+          $t(::sum.result::)
         </option>
       </select>
     </span>
@@ -40,7 +40,7 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
   >
     <span
       id="arrows"
-      title="change.direction"
+      title="$t(::change.direction::)"
     >
       ⇅
     </span>
@@ -49,29 +49,29 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     class="selector"
   >
     <span>
-      Filter
+      $t(::Filter::)
       <select
         id="filter"
       >
         <option
           value="all"
         >
-          All
+          $t(::All::)
         </option>
         <option
           value="win"
         >
-          Wins
+          $t(::Wins::)
         </option>
         <option
           value="waiting"
         >
-          Waiting
+          $t(::Waiting::)
         </option>
         <option
           value="lose"
         >
-          Loses
+          $t(::Loses::)
         </option>
       </select>
     </span>
@@ -83,13 +83,13 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     <span>
       <img
         src="@/assets/images/icons/hide.svg"
-        title="hide.info.betSlips"
+        title="$t(::hide.info.betSlips::)"
       />
     </span>
     <span>
       <img
         src="@/assets/images/icons/show.svg"
-        title="show.info.betSlips"
+        title="$t(::show.info.betSlips::)"
       />
     </span>
   </p>

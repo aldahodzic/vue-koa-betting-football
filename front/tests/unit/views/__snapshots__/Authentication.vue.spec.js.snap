@@ -10,12 +10,12 @@ exports[`views/Authentication.vue Testing snapshot 1`] = `
     <h2
       class="active"
     >
-      Authorization
+      $t(::Authorization::)
     </h2>
     <h2
       class=""
     >
-      Registration
+      $t(::Registration::)
     </h2>
   </div>
   <app-validating-input-stub
@@ -35,9 +35,9 @@ exports[`views/Authentication.vue Testing snapshot 1`] = `
   <input
     disabled="disabled"
     id="submit"
-    title="{{buttonTitle}}"
+    title="$t(::{{buttonTitle}}::)"
     type="button"
-    value="{{buttonValue}}"
+    value="$t(::{{buttonValue}}::)"
   />
 </div>
 `;

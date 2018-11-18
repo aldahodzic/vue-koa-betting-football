@@ -17,7 +17,7 @@ exports[`bet/BetSlipInfoLine.vue Testing snapshot 1`] = `
   <span
     class="league"
   >
-    {{league}}
+    $t(::{{league}}::)
   </span>
   <span
     class="teams"
@@ -31,7 +31,7 @@ exports[`bet/BetSlipInfoLine.vue Testing snapshot 1`] = `
   </span>
   <span
     class="coefficient"
-    title="bookie 1"
+    title="{{bookie.name}}"
   >
     {{coefficientTmpl}}
   </span>

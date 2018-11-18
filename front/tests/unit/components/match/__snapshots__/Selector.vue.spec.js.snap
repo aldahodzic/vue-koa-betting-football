@@ -5,40 +5,40 @@ exports[`match/Selector.vue Testing snapshot 1`] = `
   <p
     id="none-matches"
   >
-    not.found.matches
+    $t(::not.found.matches::)
   </p>
   <p
     class="row head"
   >
     <span
       class="date"
-      title="Date. click.for.sort"
+      title="$t(::Date::). $t(::click.for.sort::)"
     >
-      Date
+      $t(::Date::)
     </span>
     <span
       class="teams"
-      title="Teams. click.for.sort"
+      title="$t(::Teams::). $t(::click.for.sort::)"
     >
-      Teams
+      $t(::Teams::)
     </span>
     <span
       class="h"
-      title="win.home. click.for.sort"
+      title="$t(::win.home::). $t(::click.for.sort::)"
     >
-      1
+      $t(::1::)
     </span>
     <span
       class="d"
-      title="Draw. click.for.sort"
+      title="$t(::Draw::). $t(::click.for.sort::)"
     >
-      0
+      $t(::0::)
     </span>
     <span
       class="g"
-      title="win.guest. click.for.sort"
+      title="$t(::win.guest::). $t(::click.for.sort::)"
     >
-      2
+      $t(::2::)
     </span>
   </p>
   <p
@@ -47,26 +47,26 @@ exports[`match/Selector.vue Testing snapshot 1`] = `
     <span
       class="date"
     >
-      27.10
+      {{27.10}}
     </span>
     <span
       class="teams"
     >
-      Home team 1 — Guest team 1
+      {{Home team 1}} — {{Guest team 1}}
     </span>
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League1:Home team 1-Guest team 1"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{1}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{1.1}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{1.1}}\\"}}"
+      matchkey="{{League1:Home team 1-Guest team 1}}"
       type="0"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League1:Home team 1-Guest team 1"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{2}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{2.1}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{2.1}}\\"}}"
+      matchkey="{{League1:Home team 1-Guest team 1}}"
       type="1"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League1:Home team 1-Guest team 1"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{3}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{3.1}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{3.1}}\\"}}"
+      matchkey="{{League1:Home team 1-Guest team 1}}"
       type="2"
     />
   </p>
@@ -76,26 +76,26 @@ exports[`match/Selector.vue Testing snapshot 1`] = `
     <span
       class="date"
     >
-      28.10
+      {{28.10}}
     </span>
     <span
       class="teams"
     >
-      Home team 2 — Guest team 2
+      {{Home team 2}} — {{Guest team 2}}
     </span>
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League2:Home team 2-Guest team 2"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{2}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{2.2}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{2.2}}\\"}}"
+      matchkey="{{League2:Home team 2-Guest team 2}}"
       type="0"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League2:Home team 2-Guest team 2"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{3}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{3.2}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{3.2}}\\"}}"
+      matchkey="{{League2:Home team 2-Guest team 2}}"
       type="1"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League2:Home team 2-Guest team 2"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{1}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{1.2}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{1.2}}\\"}}"
+      matchkey="{{League2:Home team 2-Guest team 2}}"
       type="2"
     />
   </p>
@@ -105,26 +105,26 @@ exports[`match/Selector.vue Testing snapshot 1`] = `
     <span
       class="date"
     >
-      29.10
+      {{29.10}}
     </span>
     <span
       class="teams"
     >
-      Home team 3 — Guest team 3
+      {{Home team 3}} — {{Guest team 3}}
     </span>
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League3:Home team 3-Guest team 3"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{3}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{3.3}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{3.3}}\\"}}"
+      matchkey="{{League3:Home team 3-Guest team 3}}"
       type="0"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League3:Home team 3-Guest team 3"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{1}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{1.3}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{1.3}}\\"}}"
+      matchkey="{{League3:Home team 3-Guest team 3}}"
       type="1"
     />
     <app-match-selector-item-stub
-      coefficients="[object Object],[object Object],[object Object]"
-      matchkey="League3:Home team 3-Guest team 3"
+      coefficients="{\\"0\\":{\\"name\\":\\"{{Bookmaker 1}}\\",\\"coefficient\\":\\"{{2}}\\"},\\"1\\":{\\"name\\":\\"{{Bookmaker 2}}\\",\\"coefficient\\":\\"{{2.3}}\\"},\\"2\\":{\\"name\\":\\"{{Bookmaker 3}}\\",\\"coefficient\\":\\"{{2.3}}\\"}}"
+      matchkey="{{League3:Home team 3-Guest team 3}}"
       type="2"
     />
   </p>

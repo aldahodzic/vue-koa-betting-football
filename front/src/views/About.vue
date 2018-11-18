@@ -1,6 +1,5 @@
 <template lang="pug">
 div#about
-    
     div
         b Fakebet
         span  &mdash; {{$t('site.description')}}

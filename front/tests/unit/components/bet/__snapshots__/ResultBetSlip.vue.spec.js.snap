@@ -19,7 +19,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
     <p
       class="date"
     >
-      Date: 
+      $t(::Date::): 
       <b>
         {{createdDate}}
       </b>
@@ -27,7 +27,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
     <p
       class="rate"
     >
-      Rate: 
+      $t(::Rate::): 
       <b>
         {{rate}}
       </b>
@@ -35,7 +35,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
     <p
       class="coefficient"
     >
-      total.coefficient: 
+      $t(::total.coefficient::): 
       <b>
         {{totalCoefficientTmpl}}
       </b>
@@ -43,7 +43,7 @@ exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
     <p
       class="sum"
     >
-      {{betSlipResultText}}: 
+      $t(::{{betSlipResultText}}::): 
       <b>
         {{betSlipResultSum}}
       </b>

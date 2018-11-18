@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions, DATA, mapProperties} from "../__utils__";
+import {createWrapper, disableFile, cutFromOptions, DATA, mapProperties, changeDataToRenderableMode} from "../__utils__";
 import Component from "@/views/Bet.vue";
 
 disableFile();
@@ -30,7 +30,7 @@ describe("views/Bet.vue", () => {
                 show: mapProperties("noneBets", "bets", "loadPrevious", "loading", "selector", true),
                 ...mapProperties("emptyBetsText"),
                 betSlipComponent: "bet-slip-component-test-name",
-                bets: DATA.bets,
+                bets: changeDataToRenderableMode(DATA.bets),
             },
         });
 

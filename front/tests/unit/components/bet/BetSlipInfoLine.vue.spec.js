@@ -22,7 +22,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
          mountWrapper({
             props: {
                 ...mapProperties("dateTmpl", "league", "home", "guest", "type"),
-                bookie: {name: "bookie 1", coefficient: 2},
+                bookie: {name: "{{bookie.name}}", coefficient: 2},
             },
             computed: {
                 show: mapProperties("waiting", "results", true),

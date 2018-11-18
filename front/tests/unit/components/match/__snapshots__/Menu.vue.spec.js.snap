@@ -5,12 +5,12 @@ exports[`match/Menu.vue Testing snapshot 1`] = `
   <li
     class="{{className}}"
   >
-    {{name}}
+    $t(::{{name}}::)
   </li>
   <li
     class="{{className}}"
   >
-    {{name}}
+    $t(::{{name}}::)
   </li>
 </menu>
 `;

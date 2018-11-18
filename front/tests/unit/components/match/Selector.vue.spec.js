@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions, DATA, mapProperties} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, DATA, mapProperties, changeDataToRenderableMode} from "../../__utils__";
 import Component from "@/components/match/Actions/Selector";
 
 disableFile();
@@ -21,7 +21,11 @@ describe("match/Selector.vue", () => {
     };
 
     it("Testing snapshot", () => {
-         mountWrapper();
+         mountWrapper({
+             computed: {
+                 matches: changeDataToRenderableMode(DATA.matches)
+             },
+         });
 
         expect(wrapper.element).toMatchSnapshot();
     });

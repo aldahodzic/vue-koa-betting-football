@@ -4,12 +4,12 @@ exports[`authentication/ValidatingInput.vue Testing snapshot 1`] = `
 <label>
   <span
     class="icon {{className}}"
-    title="{{title}}"
+    title="$t(::{{title}}::)"
   >
     {{context}}
   </span>
   <span>
-    Enter {{title}}
+    $t(::Enter::) $t(::{{title}}::)
   </span>
   <input />
 </label>

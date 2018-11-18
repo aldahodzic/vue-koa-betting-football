@@ -2,8 +2,6 @@ import {shallowMount} from "@vue/test-utils";
 import _ from "lodash";
 import * as _data from "./fakeData";
 
-export const DATA = _data;
-
 export const createWrapper = (component, options = {}) => {
 
     let {computed, methods, stubs, data, props} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props"]);
@@ -19,7 +17,7 @@ export const createWrapper = (component, options = {}) => {
         propsData: props,
         computed,
         methods: {
-            $t: message => message,
+            $t: message => `$t(::${message}::)`,
             _getResults: () => null, // stub vuex method
         },
         mocks: {
@@ -82,4 +80,26 @@ export const mapProperties = (...properties) => {
             [property]: stub,
         };
     }, {});
+};
+
+export const DATA = _data;
+
+export const changeDataToRenderableMode = (_data) => {
+    let modifiedData = {};
+    let data = _.cloneDeep(_data);
+
+    _.each(data, (value, key) => {
+        if(_.isObject(value) || _.isArray(value)) {
+            modifiedData[key] = changeDataToRenderableMode(value);
+
+            let toString = function() {return JSON.stringify(this)};
+            Object.defineProperty(modifiedData[key], "toString", {
+                enumerable: false,
+                value: toString.bind(modifiedData[key]),
+            });
+        }
+        else modifiedData[key] = `{{${value.toString()}}}`;
+    });
+
+    return modifiedData;
 };
