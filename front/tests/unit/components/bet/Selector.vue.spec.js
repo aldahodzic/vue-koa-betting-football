@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/Selector";
 
 disableFile();
@@ -25,7 +25,7 @@ describe("bet/Selector.vue", () => {
     it("Testing snapshot", () => {
         mountWrapper({
             computed: {
-                show: {sumResultOption: true},
+                show: mapProperties("sumResultOption", true),
             },
         });
 

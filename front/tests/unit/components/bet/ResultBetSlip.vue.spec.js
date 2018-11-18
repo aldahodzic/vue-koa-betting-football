@@ -25,9 +25,7 @@ describe("bet/ResultBetSlip.vue", () => {
     it("Testing snapshot", () => {
         mountWrapper({
             props: mapProperties("bets", "betSlipIndex", "createdDate", "rate"),
-            data: {
-                showInfo: true,
-            },
+            data: mapProperties("showInfo", true),
             computed: mapProperties("betSlipClass", "totalCoefficientTmpl", "betSlipResultText", "betSlipResultSum"),
         });
 
