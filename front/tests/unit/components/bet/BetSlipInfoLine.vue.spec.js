@@ -25,7 +25,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
                 bookie: {name: "bookie 1", coefficient: 2},
             },
             computed: {
-                mode: {waiting: true, results: true},
+                show: mapProperties("waiting", "results", true),
                 ...mapProperties("coefficientTmpl", "betClass", "scoreTmpl"),
             },
         });
@@ -39,7 +39,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
             mountWrapper({
                 methods: ["deleteBet"],
                 computed: {
-                    mode: {waiting: true},
+                    show: {waiting: true},
                 },
             });
 
@@ -52,33 +52,33 @@ describe("bet/BetSlipInfoLine.vue", () => {
 
     describe("Testing computed properties", () => {
 
-        describe("mode", () => {
+        describe("show", () => {
 
-            it("mode = waiting", () => {
+            it("show = waiting", () => {
                 mountWrapper({
                     props: {
                         lineMode: "waiting",
                     },
                 });
 
-                expect(wrapper.vm.mode).toEqual({waiting: true, results: false});
+                expect(wrapper.vm.show).toEqual({waiting: true, results: false});
             });
 
-            it("mode = results", () => {
+            it("show = results", () => {
                 mountWrapper({
                     props: {
                         lineMode: "result",
                     },
                 });
 
-                expect(wrapper.vm.mode).toEqual({waiting: false, results: true});
+                expect(wrapper.vm.show).toEqual({waiting: false, results: true});
             });
 
         });
 
         it("coefficientTmpl", () => {
             mountWrapper({
-                computed: {
+                props: {
                     bookie: {coefficient: 26.577},
                 },
             });

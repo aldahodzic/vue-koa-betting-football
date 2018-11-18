@@ -1,12 +1,12 @@
 <template lang="pug">
 div.row
-    span.close(v-if="mode.waiting", @click="deleteBet") &#10006;
+    span.close(v-if="show.waiting", @click="deleteBet") &#10006;
     span.date {{dateTmpl}}
     span.league {{$t(league)}}
     span.teams {{home}} &mdash; {{guest}}
     span.type {{type}}
     span.coefficient(:title="bookie.name") {{coefficientTmpl}}
-    span.score(v-if="mode.results", :class="betClass") {{scoreTmpl}}
+    span.score(v-if="show.results", :class="betClass") {{scoreTmpl}}
     
 </template>
 
@@ -28,7 +28,7 @@ export default {
         matchResult: String,
     },
     computed: {
-        mode() {
+        show() {
             return {
                 waiting: this.lineMode == "waiting",
                 results: this.lineMode == "result",
