@@ -1,4 +1,4 @@
-import {createWrapper, disableFile, DATA} from "../../__utils__";
+import {createWrapper, disableFile, DATA, mapProperties} from "../../__utils__";
 import Component from "@/components/bet/betSlip/Info";
 
 disableFile();
@@ -17,8 +17,7 @@ describe("bet/BetSlipInfo.vue", () => {
         mountWrapper({
             props: {
                 bets: DATA.betSlipBetsInfo,
-                lineMode: "lineMode",
-                betSlipIndex: 2,
+                ...mapProperties("lineMode", "betSlipIndex"),
             },
         });
 
