@@ -55,45 +55,10 @@ export const disableFile = () => {
     describe.only("Bypass this test file", () => {});
 };
 
-export const expectAsyncFunctionCalled = (wrapper, functionName, payload) => {
-    return new Promise(async (resolve, reject) => {
-        if(!wrapper) return reject(new Error("Missed argument: wrapper"));
-        if(!functionName) return reject(new Error("Missed argument: functionName or function"));
-
-        let func;
-        if(typeof functionName == "function") {
-            func = functionName;
-        }
-        else {
-            func = _.at(wrapper.vm, functionName)[0];
-        }
-
-        if(!func) return reject(new Error(`Not found function: ${functionName.toString()}`));
-
-        try {
-            expect(func).not.toBeCalled();
-
-            await wrapper.vm.$nextTick();
-
-            if(!payload) {
-                expect(func).toBeCalled();
-            }
-            else {
-                expect(func).toBeCalledWith(payload);
-            }
-            resolve();
-        }
-        catch(e) {
-            reject(e);
-        }
-    });
-};
-
 export const cutFromOptions = (options, props) => {
-
     let cutProperties = {};
     let defaultArray = ["methods", "stubs"];
-    let defaultObject = ["computed", "data", "props",    "remove"];
+    let defaultObject = ["computed", "data", "props"];
 
     props.forEach(prop => {
         cutProperties[prop] = options[prop];
@@ -110,5 +75,11 @@ export const cutFromOptions = (options, props) => {
 };
 
 export const mapProperties = (...properties) => {
-    return properties.reduce((result, property) => ({...result, [property]: `{{${property}}}`}), {});
+    return properties.reduce((result, property) => {
+        let stub = _.last(properties) === true ? true : `{{${property}}}`;
+        return {
+            ...result,
+            [property]: stub,
+        };
+    }, {});
 };

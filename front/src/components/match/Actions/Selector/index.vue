@@ -1,7 +1,7 @@
 <template lang="pug">
 main
-    p#none-matches(v-if="emptySelectedMatches") {{$t('not.found.matches')}}
-    template(v-else)
+    p#none-matches(v-if="show.emptyMatches") {{$t('not.found.matches')}}
+    template(v-if="show.selector")
         p.row.head
             span(
             v-for="button in sort.buttons",
@@ -77,6 +77,12 @@ export default {
         ...mapGetters({
             "matches": "match/matches",
         }),
+        show() {
+            return {
+                emptyMatches: this.emptySelectedMatches,
+                selector: !this.emptySelectedMatches,
+            };
+        },
         matchesFromSelectedLeagues() {
             let matches = this.matches;
 

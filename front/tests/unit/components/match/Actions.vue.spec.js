@@ -1,67 +1,58 @@
-import {createWrapper, disableFile, cutFromOptions} from "../../__utils__";
+import {createWrapper, disableFile, cutFromOptions, mapProperties} from "../../__utils__";
 import Component from "@/components/match/Actions";
 
 disableFile();
 
 describe("match/Actions.vue", () => {
 
-    let wrapper, buttons, divLoading, selector, buttonChangeMode, confirmCurrentBetSlip, loadMatches;
+    let wrapper, buttonChangeMode, confirmCurrentBetSlip, loadMatches;
     let mountWrapper = (options = {}) => {
         let {computed} = cutFromOptions(options, ["computed"]);
         wrapper = createWrapper(Component, {
             stubs: ["app-match-selector"],
             computed: {
-                leagues: () => ["League 1", "League 2", "League 3"],
+                leagues: [],
+                matches: [],
+                selectedLeagues: [],
+                bets: {current: []},
                 ...computed,
             },
             ...options,
         });
-        buttons = wrapper.find("#buttons");
-        divLoading = wrapper.find("#loading");
-        selector = wrapper.find("app-match-selector-stub");
         buttonChangeMode = wrapper.find("#change-mode");
         confirmCurrentBetSlip = wrapper.find("#confirm-current-bet-slip");
         loadMatches = wrapper.find("#load-matches");
     };
 
-    describe("Testing snapshots", () => {
+    it("Testing snapshot", () => {
+            mountWrapper({
+                data: mapProperties("buttonInfoText"),
+                computed: {
+                    show: {
+                        info: true,
+                        selector: true,
+                        loading: {
+                            active: true,
+                            passive: true,
+                        },
+                        confirm: true,
+                    },
+                    ...mapProperties("textAction"),
+                },
+            });
 
-        it("Show action buttons", () => {
-            mountWrapper();
-
-            expect(buttons.element).toMatchSnapshot();
-        });
-
-        it("Show button which change mode of selector-item", () => {
-            mountWrapper({computed: {showInfo: () => true}});
-
-            expect(buttonChangeMode.element).toMatchSnapshot();
-        });
-
-        it("Show confirm current bet slip button", () => {
-            mountWrapper({computed: {currentBetsEmpty: () => false}});
-
-            expect(confirmCurrentBetSlip.element).toMatchSnapshot();
-        });
-
-        it("Show div with loading text", () => {
-            mountWrapper({data: {loading: "processing"}});
-
-            expect(divLoading.element).toMatchSnapshot();
-        });
-
-        it("Show match-selector", () => {
-            mountWrapper({computed: {showSelector: () => true}});
-
-            expect(selector.element).toMatchSnapshot();
-        });
-
+            expect(wrapper.element).toMatchSnapshot();
     });
 
     describe("Triggering event", () => {
 
         it("loadMatches", () => {
-            mountWrapper({methods: ["loadMatches"]});
+            mountWrapper({
+                computed: {
+                    show: {loading: {passive: true}},
+                },
+                methods: ["loadMatches"],
+            });
 
             loadMatches.trigger("click");
 
@@ -70,8 +61,10 @@ describe("match/Actions.vue", () => {
 
         it("toggleSelectorItemMode", () => {
             mountWrapper({
+                computed: {
+                    show: {loading: {passive: true}, info: true},
+                },
                 methods: ["toggleSelectorItemMode"],
-                computed: {showInfo: () => true},
             });
 
             buttonChangeMode.trigger("click");
@@ -81,8 +74,10 @@ describe("match/Actions.vue", () => {
 
         it("sendToWaitingBets", () => {
             mountWrapper({
+                computed: {
+                    show: {loading: {passive: true}, confirm: true},
+                },
                 methods: ["sendToWaitingBets"],
-                computed: {currentBetsEmpty: () => false},
             });
 
             confirmCurrentBetSlip.trigger("click");
@@ -94,10 +89,87 @@ describe("match/Actions.vue", () => {
 
     describe("Testing computed properties", () => {
 
-        it("currentBetsEmpty", () => {
-            mountWrapper({computed: {bets: () => ({current: new Array(3)})}});
+        describe("show", () => {
 
-            expect(wrapper.vm.currentBetsEmpty).toBeFalsy();
+            let makeIt = (showProp, showValue, {loading = {}, emptyMatches, emptyCurrentBets}) => {
+                it(`show.${showProp} = ${showValue}`, () => {
+                    mountWrapper({data: {loading}, computed: {emptyMatches, emptyCurrentBets}});
+
+                    expect(wrapper.vm.show[showProp]).toEqual(showValue);
+                });
+            };
+
+            describe("show.info", () => {
+                makeIt("info", true, {emptyCurrentBets: true, emptyMatches: false});
+                makeIt("info", false, {emptyCurrentBets: false, emptyMatches: false});
+                makeIt("info", false, {emptyCurrentBets: true, emptyMatches: true});
+            });
+
+            describe("show.selector", () => {
+                makeIt("selector", true, {loading: "end", emptyMatches: true});
+                makeIt("selector", true, {loading: "wait", emptyMatches: true});
+                makeIt("selector", true, {loading: "!wait && !end", emptyMatches: false});
+                makeIt("selector", false, {loading: "!wait && !end", emptyMatches: true});
+            });
+
+            describe("show.loading", () => {
+                makeIt("loading", {active: true, passive: false}, {loading: "processing"});
+                makeIt("loading", {active: false, passive: true}, {loading: "!processing"});
+            });
+
+            describe("show.confirm", () => {
+                makeIt("confirm", true, {emptyCurrentBets: false});
+                makeIt("confirm", false, {emptyCurrentBets: true});
+            });
+
+        });
+
+        describe("emptyCurrentBets", () => {
+
+            it("emptyCurrentBets = true", () => {
+                mountWrapper({
+                    computed: {
+                        bets: {current: []},
+                    },
+                });
+
+                expect(wrapper.vm.emptyCurrentBets).toBeTruthy();
+            });
+
+            it("emptyCurrentBets = false", () => {
+                mountWrapper({
+                    computed: {
+                        bets: {current: new Array(3)},
+                    },
+                });
+
+                expect(wrapper.vm.emptyCurrentBets).toBeFalsy();
+            });
+
+        });
+
+        describe("emptyMatches", () => {
+
+            it("emptyMatches = true", () => {
+                mountWrapper({
+                    computed: {
+                        matches: [],
+                    },
+                });
+
+                expect(wrapper.vm.emptyMatches).toBeTruthy();
+            });
+
+            it("emptyMatches = false", () => {
+                mountWrapper({
+                    computed: {
+                        matches: new Array(3),
+                    },
+                });
+
+                expect(wrapper.vm.emptyMatches).toBeFalsy();
+            });
+
         });
 
         describe("textAction", () => {
@@ -105,9 +177,9 @@ describe("match/Actions.vue", () => {
             let makeIt = ({matches, selectedLeagues, leagues, result}) => {
                 it(`textAction == ${result.split(/[\._]/).slice(1).join(" -> ")}`, () => {
                     mountWrapper({computed: {
-                        matches: () => new Array(matches),
-                        selectedLeagues: () => new Array(selectedLeagues),
-                        leagues: () => new Array(leagues),
+                        matches: new Array(matches),
+                        selectedLeagues: new Array(selectedLeagues),
+                        leagues: new Array(leagues),
                     }});
 
                     expect(wrapper.vm.textAction).toBe(result);
@@ -121,50 +193,33 @@ describe("match/Actions.vue", () => {
 
         });
 
-        it("showInfo", () => {
-            mountWrapper({computed: {currentBetsEmpty: () => false}});
-            expect(wrapper.vm.showInfo).toBeFalsy();
-
-            mountWrapper({computed: {currentBetsEmpty: () => true, matches: () => []}});
-            expect(wrapper.vm.showInfo).toBeFalsy();
-
-            mountWrapper({computed: {currentBetsEmpty: () => true, matches: () => new Array(3)}});
-            expect(wrapper.vm.showInfo).toBeTruthy();
-        });
-
-        it("showSelector", () => {
-            mountWrapper({data: {loading: "!end"}, computed: {matches: () => []}});
-            expect(wrapper.vm.showSelector).toBeFalsy();
-
-            mountWrapper({data: {loading: "!end"}, computed: {matches: () => new Array(3)}});
-            expect(wrapper.vm.showSelector).toBeTruthy();
-
-            mountWrapper({data: {loading: "end"}, computed: {matches: () => []}});
-            expect(wrapper.vm.showSelector).toBeTruthy();
-        });
-
     });
 
     describe("Testing methods", () => {
 
         it("loadMatches", async () => {
-            mountWrapper({methods: ["_loadMatches"]});
+            mountWrapper({
+                data: {
+                    loading: "wait",
+                },
+                methods: ["_loadMatches"],
+            });
 
             wrapper.vm.loadMatches();
 
             expect(wrapper.vm.loading).toBe("processing");
             expect(wrapper.vm._loadMatches).toBeCalled();
-            expect(wrapper.vm.loading).not.toBe("end");
 
             await wrapper.vm.$nextTick();
 
             expect(wrapper.vm.loading).toBe("end");
         });
 
-
         it("toggleSelectorItemMode", async () => {
             mountWrapper({
-                data: {buttonInfoText: "show.info.bets"},
+                data: {
+                    buttonInfoText: "show.info.bets",
+                },
                 methods: ["_toggleSelectorItemMode"],
             });
 
@@ -175,13 +230,14 @@ describe("match/Actions.vue", () => {
         });
 
         it("sendToWaitingBets", async () => {
-            mountWrapper({methods: ["_pushToWaiting"]});
+            mountWrapper({
+                methods: ["_pushToWaiting"],
+            });
 
             wrapper.vm.sendToWaitingBets();
 
             expect(wrapper.vm._pushToWaiting).toBeCalled();
         });
-
 
     });
 

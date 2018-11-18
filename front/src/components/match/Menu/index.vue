@@ -3,7 +3,7 @@ menu
     li(
     v-for="league in leagues",
     @click="selectLeague(league)",
-    :class="league.classes",
+    :class="league.className",
     ) {{$t(league.name)}}
 </template>
 
@@ -19,7 +19,7 @@ export default {
         leagues() {
             return this.leagueList.map(name => ({
                 name,
-                classes: this.selectedLeagues.includes(name) ? "selected" : "",
+                className: this.selectedLeagues.includes(name) ? "selected" : "",
             }));
         },
     },

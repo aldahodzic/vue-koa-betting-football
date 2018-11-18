@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`match/Selector.vue Testing snapshots Match-selector 1`] = `
+exports[`match/Selector.vue Testing snapshot 1`] = `
 <main>
+  <p
+    id="none-matches"
+  >
+    not.found.matches
+  </p>
   <p
     class="row head"
   >
@@ -124,12 +129,4 @@ exports[`match/Selector.vue Testing snapshots Match-selector 1`] = `
     />
   </p>
 </main>
-`;
-
-exports[`match/Selector.vue Testing snapshots None matches element 1`] = `
-<p
-  id="none-matches"
->
-  not.found.matches
-</p>
 `;

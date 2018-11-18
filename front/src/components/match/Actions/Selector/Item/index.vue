@@ -17,20 +17,18 @@ export default {
         coefficients: Array,
         matchKey: String,
     },
-    data() {
-        return {
-            classes: {
-                h: this.type == "1",
-                d: this.type == "0",
-                g: this.type == "2",
-            },
-        }
-    },
     computed: {
         ...mapGetters({
             selectorItemMode: "match/selectorItemMode",
             bets: "bet/bets",
         }),
+        classes() {
+            return {
+                h: this.type == "1",
+                d: this.type == "0",
+                g: this.type == "2",
+            };
+        },
         selected() {
             let item = this.bets.current.find(({key}) => key == this.matchKey);
             return item && item.type == this.type;

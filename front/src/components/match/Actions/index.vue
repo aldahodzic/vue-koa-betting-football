@@ -1,11 +1,11 @@
 <template lang="pug">
 div#actions
-    div#buttons(v-if="loading!='processing'")
+    div#buttons(v-if="show.loading.passive")
         span#load-matches(@click="loadMatches") {{$t(textAction)}}
-        span#change-mode(v-if="showInfo", @click="toggleSelectorItemMode") {{$t(buttonInfoText)}}
-        span#confirm-current-bet-slip(v-if="!currentBetsEmpty", @click="sendToWaitingBets") {{$t('confirm.betSlip')}}
-    div#loading(v-if="loading=='processing'") {{$t('loading.matches')}}...
-    app-match-selector(v-if="showSelector")
+        span#change-mode(v-if="show.info", @click="toggleSelectorItemMode") {{$t(buttonInfoText)}}
+        span#confirm-current-bet-slip(v-if="show.confirm", @click="sendToWaitingBets") {{$t('confirm.betSlip')}}
+    div#loading(v-if="show.loading.active") {{$t('loading.matches')}}...
+    app-match-selector(v-if="show.selector")
 </template>
 
 <script>
@@ -29,19 +29,27 @@ export default {
             leagues: "league/leagueList",
             bets: "bet/bets",
         }),
-        currentBetsEmpty() {
+        show() {
+            return {
+                info: this.emptyCurrentBets && !this.emptyMatches,
+                selector: this.loading == "end" || this.loading == "wait" || !this.emptyMatches,
+                loading: {
+                    active: this.loading == "processing",
+                    passive: this.loading != "processing",
+                },
+                confirm: !this.emptyCurrentBets,
+            };
+        },
+        emptyCurrentBets() {
             return this.bets.current.length == 0;
         },
+        emptyMatches() {
+            return this.matches.length == 0;
+        },
         textAction() {
-            let action = this.matches.length == 0 ? "load" : "update";
+            let action = this.emptyMatches ? "load" : "update";
             let count = this.selectedLeagues.length == this.leagues.length ? "leagues_all" : "leagues_selected";
             return `phrases.${action}.${count}`;
-        },
-        showInfo() {
-            return this.currentBetsEmpty && this.matches.length != 0;
-        },
-        showSelector() {
-            return this.loading == "end" || this.loading == "wait" || this.matches.length != 0;
         },
     },
     methods: {
@@ -55,12 +63,12 @@ export default {
             await this._loadMatches();
             this.loading = "end";
         },
-        async toggleSelectorItemMode() {
-            this.buttonInfoText = this.buttonInfoText === "show.info.bets" ? "hide.info.bets" : "show.info.bets";
-            await this._toggleSelectorItemMode();
+        toggleSelectorItemMode() {
+            this.buttonInfoText = this.buttonInfoText == "show.info.bets" ? "hide.info.bets" : "show.info.bets";
+            this._toggleSelectorItemMode();
         },
-        async sendToWaitingBets() {
-            await this._pushToWaiting();
+        sendToWaitingBets() {
+            this._pushToWaiting();
         },
     },
 }

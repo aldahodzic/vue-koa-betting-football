@@ -1,41 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`match/Menu.vue Testing snapshots Component itself 1`] = `
+exports[`match/Menu.vue Testing snapshot 1`] = `
 <menu>
   <li
-    class="selected"
+    class="{{className}}"
   >
-    League 1
+    {{name}}
   </li>
   <li
-    class="selected"
+    class="{{className}}"
   >
-    League 2
-  </li>
-  <li
-    class="selected"
-  >
-    League 3
-  </li>
-</menu>
-`;
-
-exports[`match/Menu.vue Testing snapshots Correct class appointment 1`] = `
-<menu>
-  <li
-    class=""
-  >
-    League 1
-  </li>
-  <li
-    class="selected"
-  >
-    League 2
-  </li>
-  <li
-    class=""
-  >
-    League 3
+    {{name}}
   </li>
 </menu>
 `;

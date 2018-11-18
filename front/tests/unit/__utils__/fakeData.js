@@ -93,3 +93,9 @@ export const betSlipBetsInfo = [
         matchResult: "lose",
     },
 ];
+
+export const selectorItemCoefficients = [
+    {"name": "Bookmaker 1", "coefficient": 1.1},
+    {"name": "Bookmaker 2","coefficient": 1.2},
+    {"name": "Bookmaker 3", "coefficient": 1.3},
+];
