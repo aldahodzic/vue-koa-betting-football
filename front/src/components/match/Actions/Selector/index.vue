@@ -11,12 +11,15 @@ main
             @click="sortMatches(button)"
             ) {{$t(button.name)}}
         
-        p.row(v-for="(match, index) in matchesFromSelectedLeagues")
+        p.row(
+        v-for="(match, index) in matchesFromSelectedLeagues",
+        :key="match.key",
+        )
             span.date {{match.dateTmpl}}
             span.teams {{match.home}} &mdash; {{match.guest}}
             app-match-selector-item(
             v-for="(coefficients, type) in match.coefficients",
-            :key="index+type",
+            :key="type+match.key",
             :type="type",
             :coefficients="coefficients",
             :matchKey="match.key",
