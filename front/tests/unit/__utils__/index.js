@@ -4,7 +4,7 @@ import * as _data from "./fakeData";
 
 export const createWrapper = (component, options = {}) => {
 
-    let {computed, methods, stubs, data, props} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props"]);
+    let {computed, methods, stubs, data, props, methodsInHooks} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props", "methodsInHooks"]);
 
     // adapting computed properties for vue-test-utils structure
     for(let computedProperty in computed) {
@@ -12,13 +12,21 @@ export const createWrapper = (component, options = {}) => {
         computed[computedProperty] = () => computedPropertyValue;
     }
 
+    // cut hooks, for manual testing
+    let _component = _.cloneDeep(component);
+    let _hookNames = ["beforeCreate", "created", "beforeMount", "mounted", "beforeUpdate", "updated", "beforeDestroy", "destroyed"];
+    let hooks = cutFromOptions(_component, _hookNames);
+
+    // stub methods in hooks, can not set them to jest.fn()
+    let _methodsInHooks = methodsInHooks.reduce((stubbedMethods, method) => ({...stubbedMethods, [method]: () => null}), {});
+
     let wrapper = shallowMount(component, {
         data: () => data,
         propsData: props,
         computed,
         methods: {
             $t: message => `$t(::${message}::)`,
-            _getResults: () => null, // stub vuex method
+            ..._methodsInHooks,
         },
         mocks: {
             $router: {
@@ -38,12 +46,8 @@ export const createWrapper = (component, options = {}) => {
     methods.forEach(methodName => mockMethods[methodName] = jest.fn());
     wrapper.setMethods(mockMethods);
 
-    wrapper.callHook = name => {
-        let hooks = wrapper.vm.$options[name];
-        if(hooks && hooks.length > 0) {
-            hooks.forEach(hook => hook.call(wrapper.vm));
-        }
-    };
+    // special method to call hooks manually
+    wrapper.callHook = name => hooks[name].call(wrapper.vm);
 
     return wrapper;
 };
@@ -55,7 +59,7 @@ export const disableFile = () => {
 
 export const cutFromOptions = (options, props) => {
     let cutProperties = {};
-    let defaultArray = ["methods", "stubs"];
+    let defaultArray = ["methods", "stubs", "methodsInHooks"];
     let defaultObject = ["computed", "data", "props"];
 
     props.forEach(prop => {

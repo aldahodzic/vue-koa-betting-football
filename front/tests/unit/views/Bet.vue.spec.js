@@ -18,6 +18,7 @@ describe("views/Bet.vue", () => {
                 load: {},
                 ...computed,
             },
+            methodsInHooks: ["_getResults"],
             ...options,
         });
         previous = wrapper.find("#get-previous");
