@@ -3,7 +3,7 @@
 exports[`layout/Header.vue Testing snapshot 1`] = `
 <header>
   <h1>
-    $t(::site.welcome::)
+    {{ $t('site.welcome') }}
   </h1>
   <div>
     <router-link-stub
@@ -12,7 +12,7 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
     >
       <img
         src="@/assets/images/logo.png"
-        title="$t(::site.goToMain::)"
+        title="{{ $t('site.goToMain') }}"
       />
     </router-link-stub>
     <nav>
@@ -21,16 +21,16 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
           to="/about"
         >
           <a>
-            $t(::About::)
+            {{ $t('About') }}
           </a>
         </router-link-stub>
       </p>
       <p>
-        $t(::Language::):
+        {{ $t('Language') }}:
         <span
           class="change-language"
         >
-          $t(::English::)
+          {{ $t('English') }}
         </span>
         <span>
           /
@@ -38,7 +38,7 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
         <span
           class="change-language"
         >
-          $t(::Russian::)
+          {{ $t('Russian') }}
         </span>
       </p>
       <p>
@@ -46,7 +46,7 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
           to="/bets"
         >
           <a>
-            $t(::Bets::)
+            {{ $t('Bets') }}
           </a>
         </router-link-stub>
       </p>
@@ -54,7 +54,7 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
         <span
           id="logout"
         >
-          $t(::Logout::)
+          {{ $t('Logout') }}
         </span>
       </p>
       <p>
@@ -62,7 +62,7 @@ exports[`layout/Header.vue Testing snapshot 1`] = `
           to="/auth"
         >
           <a>
-            $t(::Authentication::)
+            {{ $t('Authentication') }}
           </a>
         </router-link-stub>
       </p>

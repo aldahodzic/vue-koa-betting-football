@@ -8,8 +8,8 @@ exports[`bet/WaitingBetSlip.vue Testing snapshot 1`] = `
     class="info"
   >
     <app-bet-slip-info-stub
-      bets="{{bets}}"
-      betslipindex="{{betSlipIndex}}"
+      bets="{{ bets }}"
+      betslipindex="{{ betSlipIndex }}"
       linemode="waiting"
     />
   </div>
@@ -25,17 +25,17 @@ exports[`bet/WaitingBetSlip.vue Testing snapshot 1`] = `
       class="input"
     >
       <span>
-        $t(::rate.bet::):
+        {{ $t('rate.bet') }}:
       </span>
       <input
         type="number"
       />
       <span>
-        * {{totalCoefficientTmpl}} = {{totalSumTmpl}}
+        * {{ totalCoefficientTmpl }} = {{ totalSumTmpl }}
       </span>
     </p>
     <p
-      class="confirm {{disabledClass}}"
+      class="confirm {{ disabledClass }}"
     >
       ✔
     </p>

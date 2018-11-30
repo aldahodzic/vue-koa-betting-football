@@ -7,16 +7,16 @@ exports[`bet/Menu.vue Testing snapshot 1`] = `
   <span
     class="selected"
   >
-    $t(::waiting.confirm::)
+    {{ $t('waiting.confirm') }}
   </span>
   <span
     class=""
   >
-    $t(::Results::)
+    {{ $t('Results') }}
   </span>
   <span
-    class="get-last-bets {{buttonLoadResultsClass}}"
-    title="$t(::check.bets.latest::)"
+    class="get-last-bets {{ buttonLoadResultsClass }}"
+    title="{{ $t('check.bets.latest') }}"
   >
     ⌕
   </span>

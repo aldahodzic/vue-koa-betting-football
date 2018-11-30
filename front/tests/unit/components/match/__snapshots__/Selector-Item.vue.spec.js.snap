@@ -2,9 +2,9 @@
 
 exports[`match/Selector-Item.vue Testing snapshot 1`] = `
 <span
-  class="{{classes}} {{selectedClass}}"
-  title="{{title}}"
+  class="{{ classes }} {{ selectedClass }}"
+  title="{{ title }}"
 >
-  {{text}}
+  {{ text }}
 </span>
 `;

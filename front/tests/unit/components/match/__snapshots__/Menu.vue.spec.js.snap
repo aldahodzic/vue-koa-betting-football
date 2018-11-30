@@ -3,14 +3,14 @@
 exports[`match/Menu.vue Testing snapshot 1`] = `
 <menu>
   <li
-    class="{{className}}"
+    class="{{ className }}"
   >
-    $t(::{{name}}::)
+    {{ $t(' name ') }}
   </li>
   <li
-    class="{{className}}"
+    class="{{ className }}"
   >
-    $t(::{{name}}::)
+    {{ $t(' name ') }}
   </li>
 </menu>
 `;

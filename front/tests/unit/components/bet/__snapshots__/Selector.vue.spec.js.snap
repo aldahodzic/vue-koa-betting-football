@@ -8,29 +8,29 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     class="selector"
   >
     <span>
-      $t(::Sort::)
+      {{ $t('Sort') }}
       <select
         id="sort"
       >
         <option
           value="createdAt"
         >
-          $t(::Date::)
+          {{ $t('Date') }}
         </option>
         <option
           value="rate"
         >
-          $t(::Rate::)
+          {{ $t('Rate') }}
         </option>
         <option
           value="totalCoefficient"
         >
-          $t(::Coefficient::)
+          {{ $t('Coefficient') }}
         </option>
         <option
           value="outcomeSum"
         >
-          $t(::sum.result::)
+          {{ $t('sum.result') }}
         </option>
       </select>
     </span>
@@ -40,7 +40,7 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
   >
     <span
       id="arrows"
-      title="$t(::change.direction::)"
+      title="{{ $t('change.direction') }}"
     >
       ⇅
     </span>
@@ -49,29 +49,29 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     class="selector"
   >
     <span>
-      $t(::Filter::)
+      {{ $t('Filter') }}
       <select
         id="filter"
       >
         <option
           value="all"
         >
-          $t(::All::)
+          {{ $t('All') }}
         </option>
         <option
           value="win"
         >
-          $t(::Wins::)
+          {{ $t('Wins') }}
         </option>
         <option
           value="waiting"
         >
-          $t(::Waiting::)
+          {{ $t('Waiting') }}
         </option>
         <option
           value="lose"
         >
-          $t(::Loses::)
+          {{ $t('Loses') }}
         </option>
       </select>
     </span>
@@ -83,13 +83,13 @@ exports[`bet/Selector.vue Testing snapshot 1`] = `
     <span>
       <img
         src="@/assets/images/icons/hide.svg"
-        title="$t(::hide.info.betSlips::)"
+        title="{{ $t('hide.info.betSlips') }}"
       />
     </span>
     <span>
       <img
         src="@/assets/images/icons/show.svg"
-        title="$t(::show.info.betSlips::)"
+        title="{{ $t('show.info.betSlips') }}"
       />
     </span>
   </p>

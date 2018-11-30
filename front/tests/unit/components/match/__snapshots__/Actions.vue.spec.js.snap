@@ -10,23 +10,23 @@ exports[`match/Actions.vue Testing snapshot 1`] = `
     <span
       id="load-matches"
     >
-      $t(::{{textAction}}::)
+      {{ $t(' textAction ') }}
     </span>
     <span
       id="change-mode"
     >
-      $t(::{{buttonInfoText}}::)
+      {{ $t(' buttonInfoText ') }}
     </span>
     <span
       id="confirm-current-bet-slip"
     >
-      $t(::confirm.betSlip::)
+      {{ $t('confirm.betSlip') }}
     </span>
   </div>
   <div
     id="loading"
   >
-    $t(::loading.matches::)...
+    {{ $t('loading.matches') }}...
   </div>
   <app-match-selector-stub />
 </div>

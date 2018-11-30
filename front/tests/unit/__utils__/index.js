@@ -25,7 +25,11 @@ export const createWrapper = (component, options = {}) => {
         propsData: props,
         computed,
         methods: {
-            $t: message => `$t(::${message}::)`,
+            $t: message => {
+                if(!message) return "";
+                let clearMessage = message.replace(/\{+/, "").replace(/\}+/, "");
+                return `{{ $t('${clearMessage}') }}`;
+            },
             ..._methodsInHooks,
         },
         mocks: {
@@ -78,7 +82,7 @@ export const cutFromOptions = (options, props) => {
 
 export const mapProperties = (...properties) => {
     return properties.reduce((result, property) => {
-        let stub = _.last(properties) === true ? true : `{{${property}}}`;
+        let stub = _.last(properties) === true ? true : `{{ ${property} }}`;
         return {
             ...result,
             [property]: stub,
@@ -102,7 +106,7 @@ export const changeDataToRenderableMode = (_data) => {
                 value: toString.bind(modifiedData[key]),
             });
         }
-        else modifiedData[key] = `{{${value.toString()}}}`;
+        else modifiedData[key] = `{{ ${value.toString()} }}`;
     });
 
     return modifiedData;

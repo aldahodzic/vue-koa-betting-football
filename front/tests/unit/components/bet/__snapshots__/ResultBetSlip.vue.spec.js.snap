@@ -2,14 +2,14 @@
 
 exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
 <div
-  class="bet-slip {{betSlipClass}}"
+  class="bet-slip {{ betSlipClass }}"
 >
   <div
     class="info"
   >
     <app-bet-slip-info-stub
-      bets="{{bets}}"
-      betslipindex="{{betSlipIndex}}"
+      bets="{{ bets }}"
+      betslipindex="{{ betSlipIndex }}"
       linemode="result"
     />
   </div>
@@ -19,33 +19,33 @@ exports[`bet/ResultBetSlip.vue Testing snapshot 1`] = `
     <p
       class="date"
     >
-      $t(::Date::): 
+      {{ $t('Date') }}: 
       <b>
-        {{createdDate}}
+        {{ createdDate }}
       </b>
     </p>
     <p
       class="rate"
     >
-      $t(::Rate::): 
+      {{ $t('Rate') }}: 
       <b>
-        {{rate}}
+        {{ rate }}
       </b>
     </p>
     <p
       class="coefficient"
     >
-      $t(::total.coefficient::): 
+      {{ $t('total.coefficient') }}: 
       <b>
-        {{totalCoefficientTmpl}}
+        {{ totalCoefficientTmpl }}
       </b>
     </p>
     <p
       class="sum"
     >
-      $t(::{{betSlipResultText}}::): 
+      {{ $t(' betSlipResultText ') }}: 
       <b>
-        {{betSlipResultSum}}
+        {{ betSlipResultSum }}
       </b>
     </p>
   </div>

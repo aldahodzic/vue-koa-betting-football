@@ -12,33 +12,33 @@ exports[`bet/BetSlipInfoLine.vue Testing snapshot 1`] = `
   <span
     class="date"
   >
-    {{dateTmpl}}
+    {{ dateTmpl }}
   </span>
   <span
     class="league"
   >
-    $t(::{{league}}::)
+    {{ $t(' league ') }}
   </span>
   <span
     class="teams"
   >
-    {{home}} — {{guest}}
+    {{ home }} — {{ guest }}
   </span>
   <span
     class="type"
   >
-    {{type}}
+    {{ type }}
   </span>
   <span
     class="coefficient"
     title="{{bookie.name}}"
   >
-    {{coefficientTmpl}}
+    {{ coefficientTmpl }}
   </span>
   <span
-    class="score {{betClass}}"
+    class="score {{ betClass }}"
   >
-    {{scoreTmpl}}
+    {{ scoreTmpl }}
   </span>
 </div>
 `;

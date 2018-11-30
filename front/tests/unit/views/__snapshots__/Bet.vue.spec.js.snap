@@ -8,42 +8,42 @@ exports[`views/Bet.vue Testing snapshot 1`] = `
   <p
     id="loading-bets"
   >
-    $t(::loading.bets::)...
+    {{ $t('loading.bets') }}...
   </p>
   <app-bet-selector-stub />
   <p
     id="none-bets"
   >
-    $t(::{{emptyBetsText}}::)
+    {{ $t(' emptyBetsText ') }}
   </p>
   <div
     class="selected-bets"
   >
     <bet-slip-component-test-name-stub
-      bets="{\\"0\\":\\"{{bets 1}}\\"}"
+      bets="{\\"0\\":\\"{{ bets 1 }}\\"}"
       betslipindex="0"
-      createddate="{{createdDate 1}}"
-      outcome="{{outcome 1}}"
-      outcomesum="{{11.11}}"
-      rate="{{11}}"
-      totalcoefficient="{{1.111}}"
-      totalsum="{{11.11}}"
+      createddate="{{ createdDate 1 }}"
+      outcome="{{ outcome 1 }}"
+      outcomesum="{{ 11.11 }}"
+      rate="{{ 11 }}"
+      totalcoefficient="{{ 1.111 }}"
+      totalsum="{{ 11.11 }}"
     />
     <bet-slip-component-test-name-stub
-      bets="{\\"0\\":\\"{{bets 2}}\\"}"
+      bets="{\\"0\\":\\"{{ bets 2 }}\\"}"
       betslipindex="1"
-      createddate="{{createdDate 2}}"
-      outcome="{{outcome 2}}"
-      outcomesum="{{22.22}}"
-      rate="{{22}}"
-      totalcoefficient="{{2.222}}"
-      totalsum="{{22.22}}"
+      createddate="{{ createdDate 2 }}"
+      outcome="{{ outcome 2 }}"
+      outcomesum="{{ 22.22 }}"
+      rate="{{ 22 }}"
+      totalcoefficient="{{ 2.222 }}"
+      totalsum="{{ 22.22 }}"
     />
   </div>
   <p
     id="get-previous"
   >
-    $t(::load.bets.previous::)
+    {{ $t('load.bets.previous') }}
   </p>
 </div>
 `;

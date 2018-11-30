@@ -9,27 +9,27 @@ exports[`views/About.vue Testing snapshot 1`] = `
       Fakebet
     </b>
     <span>
-       — $t(::site.description::)
+       — {{ $t('site.description') }}
     </span>
   </div>
   <div>
     <p>
       <b>
-        $t(::site.forWho.question::)
+        {{ $t('site.forWho.question') }}
       </b>
     </p>
     <p>
-      $t(::site.forWho.answer::)
+      {{ $t('site.forWho.answer') }}
     </p>
   </div>
   <div>
     <p>
       <b>
-        $t(::Data::)
+        {{ $t('Data') }}
       </b>
     </p>
     <p>
-      $t(::site.dataFrom.coefficients::):
+      {{ $t('site.dataFrom.coefficients') }}:
       <ul>
         <li>
           <a
@@ -55,16 +55,16 @@ exports[`views/About.vue Testing snapshot 1`] = `
       </ul>
     </p>
     <p>
-      $t(::site.dataFrom.leagues::):
+      {{ $t('site.dataFrom.leagues') }}:
       <ul>
         <li>
-          $t(::{{League 1}}::)
+          {{ $t(' League 1 ') }}
         </li>
         <li>
-          $t(::{{League 2}}::)
+          {{ $t(' League 2 ') }}
         </li>
         <li>
-          $t(::{{League 3}}::)
+          {{ $t(' League 3 ') }}
         </li>
       </ul>
     </p>
@@ -73,53 +73,53 @@ exports[`views/About.vue Testing snapshot 1`] = `
   <div>
     <p>
       <b>
-        $t(::site.notDo::).
+        {{ $t('site.notDo') }}.
       </b>
     </p>
   </div>
   <div>
     <p>
       <b>
-        $t(::Functional::)
+        {{ $t('Functional') }}
       </b>
     </p>
     <p>
-      $t(::site.functional::)
+      {{ $t('site.functional') }}
     </p>
   </div>
   <div>
     <p>
       <b>
-        $t(::site.howMakeBet.question::)
+        {{ $t('site.howMakeBet.question') }}
       </b>
     </p>
     <ol>
       <li>
-        $t(::site.howMakeBet.answer[0]::)
+        {{ $t('site.howMakeBet.answer[0]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[1]::)
+        {{ $t('site.howMakeBet.answer[1]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[2]::)
+        {{ $t('site.howMakeBet.answer[2]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[3]::)
+        {{ $t('site.howMakeBet.answer[3]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[4]::)
+        {{ $t('site.howMakeBet.answer[4]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[5]::)
+        {{ $t('site.howMakeBet.answer[5]') }}
       </li>
       <li>
-        $t(::site.howMakeBet.answer[6]::)
+        {{ $t('site.howMakeBet.answer[6]') }}
       </li>
     </ol>
   </div>
   <div>
     <span>
-      $t(::site.openSource::)
+      {{ $t('site.openSource') }}
     </span>
     <a
       href="https://github.com/levchak0910/fakebet"
