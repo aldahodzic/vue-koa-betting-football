@@ -20,10 +20,10 @@ body {
     background: #e7e7e7;
     margin: 0;
     padding: 0;
+    min-width: 650px;
 }
 
 #app {
-    width: 85%;
     max-width: 1200px;
     margin: 0 auto;
 }
