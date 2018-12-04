@@ -2,6 +2,12 @@ import {shallowMount} from "@vue/test-utils";
 import _ from "lodash";
 import * as _data from "./fakeData";
 
+import _Cookies from "./mocks/cookies";
+import _Axios from "./mocks/axios";
+
+export const Cookies = _Cookies;
+export const Axios = _Axios;
+
 export const createWrapper = (component, options = {}) => {
 
     let {computed, methods, stubs, data, props, methodsInHooks} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props", "methodsInHooks"]);
