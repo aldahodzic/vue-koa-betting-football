@@ -1,35 +1,25 @@
 import {getters, mutations, actions} from "@/store/auth";
-import {Cookies, disableFile} from "../__utils__";
+import {Cookies, disableFile, stateConstructor, storeConstructor} from "../__utils__";
 
 disableFile();
 
-// must name mockCookies
 jest.mock("@/plugins/cookies", () => require("../__utils__/mocks/cookies"));
 jest.mock("@/plugins/axios", () => require("../__utils__/mocks/axios"));
 
 describe("Testing store/auth", () => {
 
-    let state = {};
-    let defaultState = {
-        user: {
-            logout: false,
-        },
-    };
+    let state, store;
     function mergeState(newState) {
-        state = Object.assign(state, newState);
+        state = stateConstructor({
+            user: {logout: false},
+        }, newState);
     }
-
-    let store = {};
-    function createStore() {
-        store = {
-            state,
-            commit: jest.fn(),
-        };
+    function createStore(customFields) {
+        store = storeConstructor(state, customFields);
     }
 
     beforeEach(() => {
         Cookies.reset();
-        state = defaultState;
     });
 
     describe("Testing getters", () => {
@@ -37,6 +27,7 @@ describe("Testing store/auth", () => {
         describe("user", () => {
 
             it("user is authorized", () => {
+                mergeState();
                 Cookies.set("auth", "authToken");
 
                 let user = getters.user(state);
@@ -45,6 +36,7 @@ describe("Testing store/auth", () => {
             });
 
             it("user is unauthorized", () => {
+                mergeState();
                 Cookies.set("auth", "guest");
 
                 let user = getters.user(state);

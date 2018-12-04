@@ -117,3 +117,15 @@ export const changeDataToRenderableMode = (_data) => {
 
     return modifiedData;
 };
+
+export const stateConstructor = (state = {}, customState = {}) => {
+    return Object.assign(state, customState);
+};
+
+export const storeConstructor = (state, customStore = {}) => {
+    return {
+        state,
+        commit: jest.fn(),
+        ...customStore,
+    };
+};

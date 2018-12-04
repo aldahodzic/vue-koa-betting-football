@@ -1,30 +1,20 @@
-import {disableFile} from "../__utils__";
+import {disableFile, stateConstructor, storeConstructor} from "../__utils__";
 import {getters, mutations, actions} from "@/store/league";
 
 disableFile();
 
 describe("Testing store/league", () => {
 
-    let state = {};
-    let defaultState = {
-        leagueList: [],
-        selectedLeagues: [],
-    };
+    let state, store;
     function mergeState(newState) {
-        state = Object.assign(state, newState);
+        state = stateConstructor({
+            leagueList: [],
+            selectedLeagues: [],
+        }, newState);
     }
-
-    let store = {};
-    function createStore() {
-        store = {
-            state,
-            commit: jest.fn(),
-        };
+    function createStore(customFields) {
+        store = storeConstructor(state, customFields);
     }
-
-    beforeEach(() => {
-        state = defaultState;
-    });
 
     describe("Testing getters", () => {
 

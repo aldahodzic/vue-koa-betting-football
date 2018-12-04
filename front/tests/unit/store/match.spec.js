@@ -1,5 +1,5 @@
 import {getters, mutations, actions} from "@/store/match";
-import {disableFile} from "../__utils__";
+import {disableFile, stateConstructor, storeConstructor} from "../__utils__";
 
 disableFile();
 
@@ -8,27 +8,16 @@ jest.mock("@/plugins/axios", () => require("../__utils__/mocks/axios"));
 
 describe("Testing store/auth", () => {
 
-    let state = {};
-    let defaultState = {
-        matches: [],
-        selectorItemMode: "bet",
-    };
+    let state, store;
     function mergeState(newState) {
-        state = Object.assign(state, newState);
+        state = stateConstructor({
+            matches: [],
+            selectorItemMode: "bet",
+        }, newState);
     }
-
-    let store = {};
-    function createStore(localStore = {}) {
-        store = {
-            state,
-            commit: jest.fn(),
-            ...localStore,
-        };
+    function createStore(customFields) {
+        store = storeConstructor(state, customFields);
     }
-
-    beforeEach(() => {
-        state = defaultState;
-    });
 
     describe("Testing getters", () => {
 
