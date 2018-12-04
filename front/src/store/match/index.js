@@ -1,5 +1,5 @@
-import moment from "dayjs";
-import axios from "@/plugins/axios";
+import Moment from "dayjs";
+import Axios from "@/plugins/axios";
 
 export const state = {
     matches: JSON.parse(localStorage.getItem("matches")) || [],
@@ -31,7 +31,7 @@ export const mutations = {
     pushMatches(state, matchData) {
         matchData.forEach(match => state.matches.push({
             ...match,
-            dateTmpl: moment(match.date).format("DD.MM"),
+            dateTmpl: Moment(match.date).format("DD.MM"),
         }));
 
         localStorage.setItem("matches", JSON.stringify(state.matches));
@@ -44,7 +44,7 @@ export const actions = {
     async loadMatches({commit, rootGetters}) {
         let selectedLeagues = rootGetters["league/selectedLeagues"];
         commit("cleanMatches", selectedLeagues);
-        let {data} = await axios.post(`/matches`, {leagues: selectedLeagues});
+        let {data} = await Axios.post(`/matches`, {leagues: selectedLeagues});
         commit("pushMatches", data);
     },
 

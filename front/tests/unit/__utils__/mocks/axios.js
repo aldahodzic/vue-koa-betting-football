@@ -1,12 +1,16 @@
 const Axios = {
 
-    post(property) {
-        if(property == "/auth/authorizedUser") {
+    post(url) {
+        if(url == "/auth/authorizedUser") {
             return send(true, "user token");
         }
 
-        if(property == "/auth/unauthorizedUser") {
+        if(url == "/auth/unauthorizedUser") {
             return send(false, "guest");
+        }
+
+        if(url == "/matches") {
+            return send(false, "new matches");
         }
     }
 
