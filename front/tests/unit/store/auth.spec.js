@@ -1,5 +1,7 @@
 import {getters, mutations, actions} from "@/store/auth";
-import {Cookies} from "../__utils__";
+import {Cookies, disableFile} from "../__utils__";
+
+disableFile();
 
 // must name mockCookies
 jest.mock("@/plugins/cookies", () => require("../__utils__/mocks/cookies"));
