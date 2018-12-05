@@ -29,7 +29,7 @@ describe("Testing store/auth", () => {
             it("user is authorized", () => {
                 mergeState();
                 Cookies.set("auth", "authToken");
-
+                
                 let user = getters.user(state);
 
                 expect(user).toEqual({auth: true, logout: false});

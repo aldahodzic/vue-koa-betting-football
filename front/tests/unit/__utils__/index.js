@@ -119,14 +119,43 @@ export const changeDataToRenderableMode = (_data) => {
 };
 
 export const stateConstructor = (state = {}, customState = {}) => {
-    return Object.assign(state, customState);
+    return mergeObjectsDeep(state, customState);
 };
 
 export const storeConstructor = (state, customStore = {}) => {
-    return {
-        state,
-        commit: jest.fn(),
-        dispatch: jest.fn(),
-        ...customStore,
-    };
+    let store = mergeObjectsDeep({state}, customStore);
+
+    store.commit = jest.fn();
+    store.dispatch = jest.fn();
+
+    return store;
 };
+
+function mergeObjectsDeep(...objects) {
+    let mergedObjects = _.merge(...objects);
+    let flattenObject = {};
+
+    function setPlainPath(object, path) {
+        for(let field in object) {
+            let value = object[field];
+            if(!_.isObject(value) || _.isArray(value)) flattenObject[`${path}.${field}`] = value;
+            else setPlainPath(value, `${path}.${field}`)
+        }
+    }
+    setPlainPath(mergedObjects, "");
+
+    // remove . from begin
+    for(let field in flattenObject) {
+        let _field = field.slice(1);
+        flattenObject[_field] = flattenObject[field];
+        delete flattenObject[field];
+    }
+
+    // rewriting all properties
+    let resultObject = {};
+    for(let field in flattenObject) {
+        _.set(resultObject, field, flattenObject[field])
+    }
+
+    return resultObject;
+}
