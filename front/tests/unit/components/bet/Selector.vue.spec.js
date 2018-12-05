@@ -101,7 +101,7 @@ describe("bet/Selector.vue", () => {
             it("show.sumResultOption = true", () => {
                 mountWrapper({
                     computed: {
-                        selector: {filter: "!all"},
+                        "selector.filter": "!all",
                     }
                 });
 
@@ -111,7 +111,7 @@ describe("bet/Selector.vue", () => {
             it("show.sumResultOption = false", () => {
                 mountWrapper({
                     computed: {
-                        selector: {filter: "all"},
+                        "selector.filter": "all",
                     }
                 });
 
@@ -139,7 +139,7 @@ describe("bet/Selector.vue", () => {
             it("changeSelector specially for direction", () => {
                 mountWrapper({
                     computed: {
-                        selector: {direction: 2},
+                        "selector.direction": 2,
                     },
                     methods: ["_changeSelector"],
                 });

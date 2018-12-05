@@ -102,7 +102,7 @@ describe("authentication/ValidatingInput.vue", () => {
             it("icon = valid", () => {
                 mountWrapper({
                     data: {
-                        icons: {valid: "valid icon"},
+                        "icons.valid": "valid icon",
                     },
                     computed: {
                         valid: true,
@@ -115,7 +115,7 @@ describe("authentication/ValidatingInput.vue", () => {
             it("icon = failed", () => {
                 mountWrapper({
                     data: {
-                        icons: {failed: "failed icon"},
+                        "icons.failed": "failed icon",
                     },
                     computed: {
                         valid: false,

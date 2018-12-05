@@ -58,7 +58,7 @@ describe("bet/Menu.vue", () => {
             it("buttonLoadResultsClass = enabled", () => {
                 mountWrapper({
                     computed: {
-                        load: {status: "wait"},
+                        "load.status": "wait",
                     },
                 });
 
@@ -68,7 +68,7 @@ describe("bet/Menu.vue", () => {
             it("buttonLoadResultsClass = disabled", () => {
                 mountWrapper({
                     computed: {
-                        load: {status: "loading"},
+                        "load.status": "loading",
                     },
                 });
 

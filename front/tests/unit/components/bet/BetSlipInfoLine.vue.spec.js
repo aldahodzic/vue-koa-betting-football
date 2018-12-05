@@ -10,7 +10,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
         let {props} = cutFromOptions(options, ["props"]);
         wrapper = createWrapper(Component, {
             props: {
-                bookie: {coefficient: 2},
+                "bookie.coefficient": 2,
                 ...props
             },
             ...options,
@@ -39,7 +39,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
             mountWrapper({
                 methods: ["deleteBet"],
                 computed: {
-                    show: {waiting: true},
+                    "show.waiting": true,
                 },
             });
 
@@ -79,7 +79,7 @@ describe("bet/BetSlipInfoLine.vue", () => {
         it("coefficientTmpl", () => {
             mountWrapper({
                 props: {
-                    bookie: {coefficient: 26.577},
+                    "bookie.coefficient": 26.577,
                 },
             });
 

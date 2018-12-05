@@ -14,7 +14,7 @@ describe("match/Actions.vue", () => {
                 leagues: [],
                 matches: [],
                 selectedLeagues: [],
-                bets: {current: []},
+                "bets.current": [],
                 ...computed,
             },
             ...options,
@@ -44,7 +44,7 @@ describe("match/Actions.vue", () => {
         it("loadMatches", () => {
             mountWrapper({
                 computed: {
-                    show: {loading: {passive: true}},
+                    "show.loading.passive": true,
                 },
                 methods: ["loadMatches"],
             });
@@ -57,7 +57,7 @@ describe("match/Actions.vue", () => {
         it("toggleSelectorItemMode", () => {
             mountWrapper({
                 computed: {
-                    show: {loading: {passive: true}, info: true},
+                    show: {"loading.passive": true, info: true},
                 },
                 methods: ["toggleSelectorItemMode"],
             });
@@ -70,7 +70,7 @@ describe("match/Actions.vue", () => {
         it("sendToWaitingBets", () => {
             mountWrapper({
                 computed: {
-                    show: {loading: {passive: true}, confirm: true},
+                    show: {"loading.passive": true, confirm: true},
                 },
                 methods: ["sendToWaitingBets"],
             });
@@ -124,7 +124,7 @@ describe("match/Actions.vue", () => {
             it("emptyCurrentBets = true", () => {
                 mountWrapper({
                     computed: {
-                        bets: {current: []},
+                        "bets.current": [],
                     },
                 });
 
@@ -134,7 +134,7 @@ describe("match/Actions.vue", () => {
             it("emptyCurrentBets = false", () => {
                 mountWrapper({
                     computed: {
-                        bets: {current: new Array(3)},
+                        "bets.current": new Array(3),
                     },
                 });
 

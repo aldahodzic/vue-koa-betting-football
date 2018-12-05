@@ -17,7 +17,7 @@ describe("match/Selector-Item.vue", () => {
             },
             computed: {
                 selectorItemMode: "bet",
-                bets: {current: []},
+                "bets.current": [],
                 ...computed,
             },
             ...options,
@@ -75,7 +75,7 @@ describe("match/Selector-Item.vue", () => {
 
             let makeIt = (selectedValue, props) => {
                 it(`selected = ${selectedValue}`, () => {
-                    mountWrapper({props, computed: {bets: {current: [{key: "bet1", type: "0"}, {key: "bet2"}, {key: "bet3"}]}}});
+                    mountWrapper({props, computed: {"bets.current": [{key: "bet1", type: "0"}, {key: "bet2"}, {key: "bet3"}]}});
 
                     expect(wrapper.vm.selected).toBe(selectedValue);
                 });
@@ -165,7 +165,9 @@ describe("match/Selector-Item.vue", () => {
             
             it("makeBet interrupted", () => {
                 mountWrapper({
-                    computed: {selectorItemMode: "!bet"},
+                    computed: {
+                        selectorItemMode: "!bet",
+                    },
                     methods: ["_changeCurrentBetSlip"],
                 });
 

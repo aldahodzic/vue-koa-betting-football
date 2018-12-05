@@ -16,7 +16,7 @@ describe("views/Authentication.vue", () => {
                 ...mergedDataFields(data.fields),
             },
             computed: {
-                user: {auth: false},
+                "user.auth": false,
                 ...computed,
             },
             ...options,
@@ -269,7 +269,7 @@ describe("views/Authentication.vue", () => {
             it("userAuthResult = not redirecting", () => {
                 mountWrapper({
                     computed: {
-                        user: {auth: false},
+                        "user.auth": false,
                     },
                 });
 
@@ -281,7 +281,7 @@ describe("views/Authentication.vue", () => {
             it("userAuthResult = redirecting", () => {
                 mountWrapper({
                     computed: {
-                        user: {auth: true},
+                        "user.auth": true,
                     },
                 });
 

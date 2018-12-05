@@ -11,7 +11,7 @@ describe("layout/Header.vue", () => {
         wrapper = createWrapper(Component, {
             stubs: ["app-validating-input"],
             computed: {
-                user: {auth: true},
+                "user.auth": true,
                 ...computed,
             },
             ...options,
@@ -61,7 +61,7 @@ describe("layout/Header.vue", () => {
             it("show when user authorized", () => {
                 mountWrapper({
                     computed: {
-                        user: {auth: true},
+                        "user.auth": true,
                     },
                 });
 
@@ -71,7 +71,7 @@ describe("layout/Header.vue", () => {
             it("show when user unauthorized", () => {
                 mountWrapper({
                     computed: {
-                        user: {auth: false},
+                        "user.auth": false,
                     },
                 });
 

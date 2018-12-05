@@ -11,7 +11,7 @@ describe("views/Bet.vue", () => {
         wrapper = createWrapper(Component, {
             stubs: ["app-bet-menu", "app-bet-selector", ...stubs],
             computed: {
-                user: {auth: true},
+                "user.auth": true,
                 waitingBets: [],
                 resultBets: [],
                 selector: {},
@@ -44,7 +44,7 @@ describe("views/Bet.vue", () => {
             mountWrapper({
                 methods: ["getAllBets"],
                 computed: {
-                    show: {loadPrevious: true},
+                    "show.loadPrevious": true,
                 },
             });
 
@@ -119,7 +119,7 @@ describe("views/Bet.vue", () => {
             it("betSlipComponent = app-waiting-bet-slip", () => {
                 mountWrapper({
                     computed: {
-                        selector: {type: "waiting"},
+                        "selector.type": "waiting",
                     },
                 });
 
@@ -129,7 +129,7 @@ describe("views/Bet.vue", () => {
             it("betSlipComponent = app-result-bet-slip", () => {
                 mountWrapper({
                     computed: {
-                        selector: {type: "result"},
+                        "selector.type": "result",
                     },
                 });
 
@@ -143,7 +143,7 @@ describe("views/Bet.vue", () => {
             it("bets type = waiting", () => {
                 mountWrapper({
                     computed: {
-                        selector: {type: "waiting"},
+                        "selector.type": "waiting",
                         waitingBets: ["waiting"]
                     },
                 });
@@ -154,7 +154,7 @@ describe("views/Bet.vue", () => {
             it("bets type = result", () => {
                 mountWrapper({
                     computed: {
-                        selector: {type: "result"},
+                        "selector.type": "result",
                         resultBets: ["results"],
                     },
                 });
@@ -229,7 +229,7 @@ describe("views/Bet.vue", () => {
                 mountWrapper({
                     methods: ["_getResults"],
                     computed: {
-                        user: {auth: true},
+                        "user.auth": true,
                     },
                 });
 
@@ -241,7 +241,7 @@ describe("views/Bet.vue", () => {
             it("user not authorized => redirect to matches", () => {
                 mountWrapper({
                     computed: {
-                        user: {auth: false},
+                        "user.auth": false,
                     },
                 });
 
