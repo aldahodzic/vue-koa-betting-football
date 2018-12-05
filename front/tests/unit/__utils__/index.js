@@ -126,6 +126,7 @@ export const storeConstructor = (state, customStore = {}) => {
     return {
         state,
         commit: jest.fn(),
+        dispatch: jest.fn(),
         ...customStore,
     };
 };

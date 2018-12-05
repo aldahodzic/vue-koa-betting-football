@@ -101,3 +101,73 @@ export const selectorItemCoefficients = [
 ];
 
 export const leagueList = ["League 1", "League 2", "League 3"];
+
+export const resultBetsDataFromBack = [
+    {
+        "rate": 20,
+        "bets": [
+            {
+                "bookie": {
+                    "coefficient": 2,
+                },
+                "type": "change directly in test",
+                "score": "change directly in test"
+            },
+        ],
+        "createdAt": "2018-12-03T15:16:36.041Z",
+    },
+];
+
+export const expectedResultBetsWhenWon = [{
+    rate: 20,
+    totalCoefficient: 2,
+    totalSum: 40,
+    createdDate: "03.12 16:16",
+    outcome: "win",
+    outcomeSum: 20,
+    bets: [{
+        bookie: {
+            coefficient: 2,
+        },
+        type: "1",
+        score: "1 : 0",
+        matchResult: "1",
+    }],
+    createdAt: "2018-12-03T15:16:36.041Z",
+}];
+
+export const expectedResultBetsWhenWaiting = [{
+    rate: 20,
+    totalCoefficient: 2,
+    totalSum: 40,
+    createdDate: "03.12 16:16",
+    outcome: "waiting",
+    outcomeSum: 40,
+    bets: [{
+        bookie: {
+            coefficient: 2,
+        },
+        type: "1",
+        score: "none",
+        matchResult: null,
+    }],
+    createdAt: "2018-12-03T15:16:36.041Z",
+}];
+
+export const expectedResultBetsWhenLose = [{
+    rate: 20,
+    totalCoefficient: 2,
+    totalSum: 40,
+    createdDate: "03.12 16:16",
+    outcome: "lose",
+    outcomeSum: 20,
+    bets: [{
+        bookie: {
+            coefficient: 2,
+        },
+        type: "2",
+        score: "1 : 0",
+        matchResult: "1",
+    }],
+    createdAt: "2018-12-03T15:16:36.041Z",
+}]

@@ -1,6 +1,6 @@
 import _ from "lodash";
-import moment from "dayjs";
-import axios from "@/plugins/axios";
+import Moment from "dayjs";
+import Axios from "@/plugins/axios";
 
 export const state = {
     bets: {
@@ -101,7 +101,7 @@ export const mutations = {
                 ...betSlip,
                 totalCoefficient,
                 totalSum: betSlip.rate * totalCoefficient,
-                createdDate: moment(betSlip.createdAt).format("DD.MM HH:mm"),
+                createdDate: Moment(betSlip.createdAt).format("DD.MM HH:mm"),
             };
 
             _betSlip.bets.forEach(bet => {
@@ -186,7 +186,7 @@ export const actions = {
         if(getters.load.status == "loading") return;
 
         dispatch("startLoadResults");
-        let {data} = await axios.get(`/bets/results/${created}`);
+        let {data} = await Axios.get(`/bets/results/${created}`);
         dispatch("endLoadResults", data);
     },
     startLoadResults({commit}) {
@@ -213,7 +213,7 @@ export const actions = {
 
     async confirmBetSlip({commit, getters}, index) {
         let betSlip = getters.bets.waiting[index];
-        let {data, status} = await axios.post("/bets/confirm", betSlip);
+        let {data, status} = await Axios.post("/bets/confirm", betSlip);
         if(!status) return alert(data);
         commit("deleteBetSlip", {index, force: true});
         commit("changeLoad", {field: "permission", value: false});

@@ -3,10 +3,9 @@ import {disableFile, stateConstructor, storeConstructor} from "../__utils__";
 
 disableFile();
 
-// must name mockCookies
 jest.mock("@/plugins/axios", () => require("../__utils__/mocks/axios"));
 
-describe("Testing store/auth", () => {
+describe("Testing store/match", () => {
 
     let state, store;
     function mergeState(newState) {
