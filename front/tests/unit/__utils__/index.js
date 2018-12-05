@@ -8,7 +8,9 @@ import _Axios from "./mocks/axios";
 export const Cookies = _Cookies;
 export const Axios = _Axios;
 
-export const createWrapper = (component, options = {}) => {
+export const createWrapper = (component, _options = {}) => {
+
+    let options = mergeObjectsDeep(_options);
 
     let {computed, methods, stubs, data, props, methodsInHooks} = cutFromOptions(options, ["computed", "methods", "stubs", "data", "props", "methodsInHooks"]);
 
@@ -138,7 +140,17 @@ function mergeObjectsDeep(...objects) {
     function setPlainPath(object, path) {
         for(let field in object) {
             let value = object[field];
-            if(!_.isObject(value) || _.isArray(value)) flattenObject[`${path}.${field}`] = value;
+
+            // if data in renderable mode push to result immediately
+            let descriptor = giveClass(value) == "object" && Object.getOwnPropertyDescriptor(value, "toString");
+            if(descriptor) {
+                flattenObject[`${path}.${field}`] = value;
+                continue;
+            }
+
+            if(giveClass(value) !== "object" || (_.isPlainObject(value) && _.size(value) == 0)) {
+                flattenObject[`${path}.${field}`] = value;
+            }
             else setPlainPath(value, `${path}.${field}`)
         }
     }
@@ -158,4 +170,8 @@ function mergeObjectsDeep(...objects) {
     }
 
     return resultObject;
+}
+
+function giveClass(object) {
+    return Object.prototype.toString.call(object).slice(8, -1).toLowerCase();
 }
