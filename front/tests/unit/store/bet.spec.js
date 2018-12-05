@@ -30,12 +30,10 @@ describe("Testing store/bet", () => {
 
         it("waitingBets", () => {
             mergeState({
-                bets: {
-                    waiting: [{
-                        rate: 10,
-                        bets: [{bookie: {coefficient: 1}}, {bookie: {coefficient: 2}},{bookie: {coefficient: 3}}],
-                    }],
-                },
+                "bets.waiting": [{
+                    rate: 10,
+                    bets: [{bookie: {coefficient: 1}}, {bookie: {coefficient: 2}},{bookie: {coefficient: 3}}],
+                }],
             });
 
             let waitingBets = getters.waitingBets(state);
@@ -52,10 +50,8 @@ describe("Testing store/bet", () => {
 
             it("get all result bets", () => {
                 mergeState({
-                    selector: {filter: "all"},
-                    bets: {
-                        results: ["all result bets"],
-                    },
+                    "selector.filter": "all",
+                    "bets.results": ["all result bets"],
                 });
 
                 let resultBets = getters.filteredResultBets(state);
@@ -65,10 +61,8 @@ describe("Testing store/bet", () => {
 
             it("get all filtered result bets", () => {
                 mergeState({
-                    selector: {filter: "win"},
-                    bets: {
-                        results: [{outcome: "win"}, {outcome: "win"}, {outcome: "lose"}]
-                    },
+                    "selector.filter": "win",
+                    "bets.results": [{outcome: "win"}, {outcome: "win"}, {outcome: "lose"}],
                 });
 
                 let resultBets = getters.filteredResultBets(state);
@@ -146,9 +140,7 @@ describe("Testing store/bet", () => {
 
             it("must push new betSlip", () => {
                 mergeState({
-                    bets: {
-                        current: [],
-                    },
+                    "bets.current": [],
                 });
                 let betData = mapProperties("key", "bookie", "type");
                 let matchData = mapProperties("home", "guest", "date", "dateTmpl", "league");
@@ -160,9 +152,7 @@ describe("Testing store/bet", () => {
 
             it("must remove existing betSlip", () => {
                 mergeState({
-                    bets: {
-                        current: [mapProperties("key", "type")],
-                    },
+                    "bets.current": [mapProperties("key", "type")],
                 });
                 let betData = mapProperties("key", "type");
 
@@ -189,9 +179,7 @@ describe("Testing store/bet", () => {
 
         it("clearResults", () => {
             mergeState({
-                bets: {
-                    results: "some result bets",
-                },
+                "bets.results": "some result bets",
             });
 
             mutations.clearResults(state);
@@ -214,9 +202,7 @@ describe("Testing store/bet", () => {
 
             it("result bets when won", () => {
                 mergeState({
-                    bets: {
-                        results: [],
-                    },
+                    "bets.results": [],
                 });
                 stubData("1", "1 : 0");
 
@@ -227,9 +213,7 @@ describe("Testing store/bet", () => {
 
             it("result bets when waiting", () => {
                 mergeState({
-                    bets: {
-                        results: [],
-                    },
+                    "bets.results": [],
                 });
                 stubData("1", "none");
 
@@ -240,9 +224,7 @@ describe("Testing store/bet", () => {
 
             it("result bets when lose", () => {
                 mergeState({
-                    bets: {
-                        results: [],
-                    },
+                    "bets.results": [],
                 });
                 stubData("2", "1 : 0");
 
@@ -255,9 +237,7 @@ describe("Testing store/bet", () => {
 
         it("deleteBet", () => {
             mergeState({
-                bets: {
-                    waiting: [{bets: ["some bet 1", "some bet 2"]}],
-                },
+                "bets.waiting": [{bets: ["some bet 1", "some bet 2"]}],
             });
 
             mutations.deleteBet(state, {indexOfBet: 0, indexOfBetSlip: 0});
@@ -269,9 +249,7 @@ describe("Testing store/bet", () => {
 
             it("do not delete betSlip, if not forced and not empty bets", () => {
                 mergeState({
-                    bets: {
-                        waiting: [{bets: ["bet 1", "bet 2"]}],
-                    },
+                    "bets.waiting": [{bets: ["bet 1", "bet 2"]}],
                 });
 
                 mutations.deleteBetSlip(state, {force: false, index: 0});
@@ -281,9 +259,7 @@ describe("Testing store/bet", () => {
 
             it("delete betSlip, if empty bets", () => {
                 mergeState({
-                    bets: {
-                        waiting: [{bets: []}],
-                    },
+                    "bets.waiting": [{bets: []}],
                 });
 
                 mutations.deleteBetSlip(state, {force: false, index: 0});
@@ -293,9 +269,7 @@ describe("Testing store/bet", () => {
 
             it("delete betSlip, if forced", () => {
                 mergeState({
-                    bets: {
-                        waiting: [{bets: new Array(2)}],
-                    },
+                    "bets.waiting": [{bets: new Array(2)}],
                 });
 
                 mutations.deleteBetSlip(state, {force: true, index: 0});
@@ -307,9 +281,7 @@ describe("Testing store/bet", () => {
 
         it("newRateOfBetSlip", () => {
             mergeState({
-                bets: {
-                    waiting: [{rate: "some"}],
-                },
+                "bets.waiting": [{rate: "some"}],
             });
 
             mutations.newRateOfBetSlip(state, {betSlipIndex: 0, rate: "new rate"});
@@ -322,7 +294,7 @@ describe("Testing store/bet", () => {
             const makeIt = (title, {sort, field, value, incomingSort}) => {
                 it(title, () => {
                     mergeState({
-                        selector: {sort: incomingSort},
+                        "selector.sort": incomingSort,
                     });
 
                     mutations.changeSelector(state, {field, value});
@@ -377,7 +349,7 @@ describe("Testing store/bet", () => {
 
         it("changeLoad", () => {
             mergeState({
-                load: {key: "value"},
+                "load.key": "value",
             });
 
             mutations.changeLoad(state, {field: "key", value: "value 2"});
@@ -391,7 +363,7 @@ describe("Testing store/bet", () => {
 
         it("changeCurrentBetSlip", () => {
             createStore({
-                rootState: {match: {matches: [{key: "key 1"}, {key: "key 2"}]}},
+                "rootState.match.matches": [{key: "key 1"}, {key: "key 2"}],
             });
 
             actions.changeCurrentBetSlip(store, {key: "key 1"});
@@ -414,9 +386,7 @@ describe("Testing store/bet", () => {
             
             it("process stopped due to !force and none permission", () => {
                 createStore({
-                    getters: {
-                        load: {permission: false},
-                    },
+                    "getters.load.permission": false,
                 });
 
                 actions.getResults(store, {force: false});
@@ -426,9 +396,7 @@ describe("Testing store/bet", () => {
 
             it("process stopped due to load status is already loading", () => {
                 createStore({
-                    getters: {
-                        load: {status: "loading"},
-                    },
+                    "getters.load.status": "loading",
                 });
 
                 actions.getResults(store, {force: true});
@@ -438,11 +406,9 @@ describe("Testing store/bet", () => {
 
             it("process must load results", async () => {
                 createStore({
-                    getters: {
-                        load: {
-                            permission: true,
-                            status: "!loading",
-                        },
+                    "getters.load": {
+                        permission: true,
+                        status: "!loading",
                     },
                 });
 
@@ -497,11 +463,7 @@ describe("Testing store/bet", () => {
 
             it("loading failed", () => {
                 createStore({
-                    getters: {
-                        bets: {
-                            waiting: ["must fail"],
-                        },
-                    },
+                    "getters.bets.waiting": ["must fail"],
                 });
 
                 actions.confirmBetSlip(store, 0);
@@ -511,11 +473,7 @@ describe("Testing store/bet", () => {
 
             it("loading failed", async () => {
                 createStore({
-                    getters: {
-                        bets: {
-                            waiting: ["must success"],
-                        },
-                    },
+                    "getters.bets.waiting": ["must success"],
                 });
 
                 await actions.confirmBetSlip(store, 0);

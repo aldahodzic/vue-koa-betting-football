@@ -102,9 +102,7 @@ describe("Testing store/match", () => {
 
         it("loadMatches", async () => {
             createStore({
-                rootGetters: {
-                    "league/selectedLeagues": "selectedLeagues"
-                }
+                "rootGetters.league/selectedLeagues": "selectedLeagues"
             });
 
             await actions.loadMatches(store);

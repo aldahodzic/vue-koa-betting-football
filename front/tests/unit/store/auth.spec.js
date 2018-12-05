@@ -11,7 +11,7 @@ describe("Testing store/auth", () => {
     let state, store;
     function mergeState(newState) {
         state = stateConstructor({
-            user: {logout: false},
+            "user.logout": false,
         }, newState);
     }
     function createStore(customFields) {
@@ -46,7 +46,7 @@ describe("Testing store/auth", () => {
 
             it("user is logged out", () => {
                 mergeState({
-                    user: {logout: true},
+                    "user.logout": true,
                 });
 
                 let user = getters.user(state);
@@ -62,7 +62,7 @@ describe("Testing store/auth", () => {
 
         it("setUserAuthStatus", () => {
             mergeState({
-                user: {auth: "status 1"},
+                "user.logout": "status 1",
             });
 
             mutations.setUserAuthStatus(state, "status 2");
@@ -72,7 +72,7 @@ describe("Testing store/auth", () => {
 
         it("setUserLogout", () => {
             mergeState({
-                user: {logout: "status 1"},
+                "user.logout": "status 1",
             });
 
             mutations.setUserLogout(state, "status 2");
