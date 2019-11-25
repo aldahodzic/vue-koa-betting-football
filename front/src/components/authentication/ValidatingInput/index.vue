@@ -14,57 +14,57 @@ label
 
 <script>
 export default {
-    name: "app-validating-input",
-    props: {
-        title: String,
-        value: String,
-        pattern: RegExp,
-        failMessage: String,
-        mode: String,
-    },
-    data() {
-        return {
-            activated: false,
-            icons: {
-                valid: {
-                    className: "valid",
-                    context: "✔",
-                    title: "OK"
-                },
-                failed: {
-                    className: "failed",
-                    context: "✖",
-                    title: this.failMessage
-                }
-            },
-        }
-    },
-    computed: {
-        show() {
-            return {
-                icon: this.activated == true,
-            };
+  name: "AppValidatingInput",
+  props: {
+    title: String,
+    value: String,
+    pattern: RegExp,
+    failMessage: String,
+    mode: String,
+  },
+  data () {
+    return {
+      activated: false,
+      icons: {
+        valid: {
+          className: "valid",
+          context: "✔",
+          title: "OK",
         },
-        valid() {
-            return this.pattern.test(this.value);
+        failed: {
+          className: "failed",
+          context: "✖",
+          title: this.failMessage,
         },
-        icon() {
-            return this.valid ? this.icons["valid"] : this.icons["failed"];
-        },
+      },
+    };
+  },
+  computed: {
+    show () {
+      return {
+        icon: this.activated == true,
+      };
     },
-    methods: {
-        onInput(value) {
-            this.activated = true;
-            this.$emit("new-value", value);
-        },
+    valid () {
+      return this.pattern.test(this.value);
     },
-    watch: {
-        mode() {
-            this.$emit("new-value", "");
-            this.activated = false;
-        },
+    icon () {
+      return this.valid ? this.icons.valid : this.icons.failed;
     },
-}
+  },
+  methods: {
+    onInput (value) {
+      this.activated = true;
+      this.$emit("new-value", value);
+    },
+  },
+  watch: {
+    mode () {
+      this.$emit("new-value", "");
+      this.activated = false;
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -74,16 +74,16 @@ label {
     align-items: center;
     font-size: 18px;
     margin: 20px 0;
-    
+
     & > * {
         flex: 0 0 150px
     }
-    
+
     .icon {
         text-align: right;
         margin-right: 10px;
         flex-basis: 20px;
-        
+
         &.valid {color: green;}
         &.failed {color: red;}
     }

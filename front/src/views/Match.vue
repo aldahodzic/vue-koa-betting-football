@@ -8,10 +8,10 @@ div
 import AppMatchMenu from "@/components/match/Menu";
 import AppMatchActions from "@/components/match/Actions";
 export default {
-    name: "app-match",
-    components: {
-        AppMatchMenu,
-        AppMatchActions,
-    },
-}
+  name: "AppMatch",
+  components: {
+    AppMatchMenu,
+    AppMatchActions,
+  },
+};
 </script>

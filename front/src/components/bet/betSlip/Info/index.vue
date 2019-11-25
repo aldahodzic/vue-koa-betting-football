@@ -20,14 +20,14 @@ div
 <script>
 import AppBetSlipInfoLine from "./Line";
 export default {
-    name: "app-bet-slip-info",
-    components: {
-        AppBetSlipInfoLine,
-    },
-    props: {
-        bets: Array,
-        betSlipIndex: Number,
-        lineMode: String,
-    },
-}
+  name: "AppBetSlipInfo",
+  components: {
+    AppBetSlipInfoLine,
+  },
+  props: {
+    bets: Array,
+    betSlipIndex: Number,
+    lineMode: String,
+  },
+};
 </script>

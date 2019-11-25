@@ -8,10 +8,10 @@ div#app
 import AppHeader from "@/components/layout/Header";
 
 export default {
-    name: 'app',
-    components: {
-        AppHeader
-    },
+  name: "App",
+  components: {
+    AppHeader,
+  },
 };
 </script>
 

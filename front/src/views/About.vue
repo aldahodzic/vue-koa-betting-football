@@ -28,37 +28,36 @@ div#about
         span {{$t('site.openSource')}}
         a(href="https://github.com/levchak0910/fakebet") github
 
-
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 export default {
-    computed: {
-        ...mapGetters({
-            leagueList: "league/leagueList",
-        }),
-    }
-}
+  computed: {
+    ...mapGetters({
+      leagueList: "league/leagueList",
+    }),
+  },
+};
 </script>
 
 <style lang="less" scoped>
 #about {
     background: white;
     padding: 5px 10px;
-    
+
     div {
         margin: 15px 0;
         padding: 0 5px;
-        
+
         &:nth-of-type(odd) {background: #f2f2f2; padding: 5px}
         &:first-of-type {margin-top: 5px}
         &:last-of-type {margin-bottom: 5px}
-        
+
         p {
             margin: 0
         }
-        
+
         ol, ul {
             margin: 0;
             padding: 0 20px;

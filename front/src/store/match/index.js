@@ -2,62 +2,62 @@ import Moment from "dayjs";
 import Axios from "@/plugins/axios";
 
 export const state = {
-    matches: JSON.parse(localStorage.getItem("matches")) || [],
-    selectorItemMode: "bet", // [bet, info],
+  matches: JSON.parse(localStorage.getItem("matches")) || [],
+  selectorItemMode: "bet", // [bet, info],
 };
 
 export const getters = {
 
-    matches(state, getters, rootState, rootGetters) {
-        return state.matches.filter(match => rootGetters["league/selectedLeagues"].includes(match.league));
-    },
+  matches (state, getters, rootState, rootGetters) {
+    return state.matches.filter(match => rootGetters["league/selectedLeagues"].includes(match.league));
+  },
 
-    selectorItemMode(state) {
-        return state.selectorItemMode;
-    },
+  selectorItemMode (state) {
+    return state.selectorItemMode;
+  },
 
 };
 
 export const mutations = {
 
-    toggleSelectorItemMode(state) {
-        state.selectorItemMode = state.selectorItemMode === "bet" ? "info" : "bet";
-    },
+  toggleSelectorItemMode (state) {
+    state.selectorItemMode = state.selectorItemMode === "bet" ? "info" : "bet";
+  },
 
-    cleanMatches(state, selectedLeagues) {
-        state.matches = state.matches.filter(match => !selectedLeagues.includes(match.league));
-    },
+  cleanMatches (state, selectedLeagues) {
+    state.matches = state.matches.filter(match => !selectedLeagues.includes(match.league));
+  },
 
-    pushMatches(state, matchData) {
-        matchData.forEach(match => state.matches.push({
-            ...match,
-            dateTmpl: Moment(match.date).format("DD.MM"),
-        }));
+  pushMatches (state, matchData) {
+    matchData.forEach(match => state.matches.push({
+      ...match,
+      dateTmpl: Moment(match.date).format("DD.MM"),
+    }));
 
-        localStorage.setItem("matches", JSON.stringify(state.matches));
-    },
+    localStorage.setItem("matches", JSON.stringify(state.matches));
+  },
 
 };
 
 export const actions = {
 
-    async loadMatches({commit, rootGetters}) {
-        let selectedLeagues = rootGetters["league/selectedLeagues"];
-        commit("cleanMatches", selectedLeagues);
-        let {data} = await Axios.post(`/matches`, {leagues: selectedLeagues});
-        commit("pushMatches", data);
-    },
+  async loadMatches ({ commit, rootGetters }) {
+    const selectedLeagues = rootGetters["league/selectedLeagues"];
+    commit("cleanMatches", selectedLeagues);
+    const { data } = await Axios.post("/matches", { leagues: selectedLeagues });
+    commit("pushMatches", data);
+  },
 
-    toggleSelectorItemMode({commit}) {
-        commit("toggleSelectorItemMode");
-    },
+  toggleSelectorItemMode ({ commit }) {
+    commit("toggleSelectorItemMode");
+  },
 
 };
 
 export const match = {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions,
 };

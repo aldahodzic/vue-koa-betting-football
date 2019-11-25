@@ -3,7 +3,7 @@ import phrases from "./phrases";
 import site from "./site";
 
 export default {
-    ...words,
-    phrases,
-    site,
+  ...words,
+  phrases,
+  site,
 };

@@ -8,30 +8,30 @@ menu
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: "app-match-menu",
-    computed: {
-        ...mapGetters({
-            "leagueList": "league/leagueList",
-            "selectedLeagues": "league/selectedLeagues",
-        }),
-        leagues() {
-            return this.leagueList.map(name => ({
-                name,
-                className: this.selectedLeagues.includes(name) ? "selected" : "",
-            }));
-        },
+  name: "AppMatchMenu",
+  computed: {
+    ...mapGetters({
+      leagueList: "league/leagueList",
+      selectedLeagues: "league/selectedLeagues",
+    }),
+    leagues () {
+      return this.leagueList.map(name => ({
+        name,
+        className: this.selectedLeagues.includes(name) ? "selected" : "",
+      }));
     },
-    methods: {
-        ...mapActions({
-            _selectLeague: "league/selectLeague",
-        }),
-        selectLeague(league) {
-            this._selectLeague(league.name);
-        },
+  },
+  methods: {
+    ...mapActions({
+      _selectLeague: "league/selectLeague",
+    }),
+    selectLeague (league) {
+      this._selectLeague(league.name);
     },
-}
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -47,7 +47,7 @@ menu {
     display: flex;
     list-style: none;
     .justify;
-    
+
     li {
         margin: 4px 2px;
         padding: 5px 10px;
@@ -56,10 +56,10 @@ menu {
         text-align: center;
         font-size: 17px;
         cursor: pointer;
-        
+
         &:first-of-type {margin-left: 4px}
         &:last-of-type {margin-right: 4px}
-        
+
         &.selected {background: #009933; color: white;}
     }
 }

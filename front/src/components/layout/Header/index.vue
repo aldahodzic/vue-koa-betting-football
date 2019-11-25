@@ -9,41 +9,41 @@ header
                 span.change-language(@click="setLanguage('en')") {{$t('English')}}
                 span /
                 span.change-language(@click="setLanguage('ru')") {{$t('Russian')}}
-                
+
             p(v-if="show.authorized"): router-link(to="/bets"): a {{$t('Bets')}}
             p(v-if="show.authorized"): span#logout(@click="userLogout") {{$t('Logout')}}
-            
+
             p(v-if="show.unauthorized"): router-link(to="/auth"): a {{$t('Authentication')}}
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: "app-header",
-    computed: {
-        ...mapGetters({
-            user: "auth/user"
-        }),
-        show() {
-            return {
-                authorized: this.user.auth == true,
-                unauthorized: this.user.auth == false,
-            };
-        },
+  name: "AppHeader",
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+    }),
+    show () {
+      return {
+        authorized: this.user.auth == true,
+        unauthorized: this.user.auth == false,
+      };
     },
-    methods: {
-        ...mapActions({
-            _userLogout: "auth/userLogout"
-        }),
-        async userLogout() {
-            await this._userLogout();
-            this.$router.replace("matches")
-        },
-        setLanguage(language) {
-            this.$setLanguage(language);
-        },
+  },
+  methods: {
+    ...mapActions({
+      _userLogout: "auth/userLogout",
+    }),
+    async userLogout () {
+      await this._userLogout();
+      this.$router.replace("matches");
     },
-}
+    setLanguage (language) {
+      this.$setLanguage(language);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -54,50 +54,50 @@ export default {
 header {
     margin: 8px 0;
     background: white;
-    
+
     h1 {
         font-size: 22px;
         text-align: center;
         padding: 5px 0 0 0;
         margin: 0;
     }
-    
+
     & > div {
         display: flex;
-        
+
         #logo {
             flex: 1 1 auto;
             align-self: center;
             text-align: center;
             margin: 5px 0;
-            
+
             img {
                 width: 90%;
             }
         }
-        
+
         nav {
             flex: 1 1 auto;
             display: flex;
             flex-direction: column;
             .justify;
-            
+
             p {
                 margin: 0;
-                
+
                 #logout:hover {
                     color: red;
                     cursor: pointer;
                 }
-                
+
                 a {
                     text-decoration: none;
                 }
-                
+
                 .change-language {
                     cursor: pointer;
                     margin: 0 5px;
-                    
+
                     &:hover {text-decoration: underline;}
                 }
             }

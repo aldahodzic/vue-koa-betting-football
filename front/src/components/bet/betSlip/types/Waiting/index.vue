@@ -18,56 +18,56 @@ div.bet-slip
 
 <script>
 import AppBetSlipInfo from "@/components/bet/betSlip/Info";
-import {mapActions} from "vuex";
+import { mapActions } from "vuex";
 export default {
-    name: "app-waiting-bet-slip",
-    components: {
-        AppBetSlipInfo,
+  name: "AppWaitingBetSlip",
+  components: {
+    AppBetSlipInfo,
+  },
+  props: {
+    rate: Number,
+    totalCoefficient: Number,
+    totalSum: Number,
+    bets: Array,
+    betSlipIndex: Number,
+  },
+  computed: {
+    totalCoefficientTmpl () {
+      return this.totalCoefficient.toFixed(3);
     },
-    props: {
-        rate: Number,
-        totalCoefficient: Number,
-        totalSum: Number,
-        bets: Array,
-        betSlipIndex: Number,
+    totalSumTmpl () {
+      return this.totalSum.toFixed(2);
     },
-    computed: {
-        totalCoefficientTmpl() {
-            return this.totalCoefficient.toFixed(3);
-        },
-        totalSumTmpl() {
-            return this.totalSum.toFixed(2);
-        },
-        disabled() {
-            return this.rate <= 0;
-        },
-        disabledClass() {
-            return this.disabled ? "confirm-disabled" : "";
-        },
+    disabled () {
+      return this.rate <= 0;
     },
-    methods: {
-        ...mapActions({
-            _newRateOfBetSlip: "bet/newRateOfBetSlip",
-            _deleteBetSlip: "bet/deleteBetSlip",
-            _confirmBetSlip: "bet/confirmBetSlip",
-        }),
-        deleteBetSlip() {
-            this._deleteBetSlip({
-                index: this.betSlipIndex,
-                force: true,
-            });
-        },
-        newRate(value) {
-            this._newRateOfBetSlip({
-                betSlipIndex: this.betSlipIndex,
-                rate: parseInt(value) || 0
-            });
-        },
-        confirmBetSlip() {
-            if(!this.disabled) this._confirmBetSlip(this.betSlipIndex);
-        },
+    disabledClass () {
+      return this.disabled ? "confirm-disabled" : "";
     },
-}
+  },
+  methods: {
+    ...mapActions({
+      _newRateOfBetSlip: "bet/newRateOfBetSlip",
+      _deleteBetSlip: "bet/deleteBetSlip",
+      _confirmBetSlip: "bet/confirmBetSlip",
+    }),
+    deleteBetSlip () {
+      this._deleteBetSlip({
+        index: this.betSlipIndex,
+        force: true,
+      });
+    },
+    newRate (value) {
+      this._newRateOfBetSlip({
+        betSlipIndex: this.betSlipIndex,
+        rate: parseInt(value) || 0,
+      });
+    },
+    confirmBetSlip () {
+      if (!this.disabled) this._confirmBetSlip(this.betSlipIndex);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -78,20 +78,20 @@ export default {
 .bet-slip {
     margin: 10px 0;
     background: #ffff80;
-    
+
     .info {
         padding: 2px 0;
     }
-    
+
     .actions {
         display: flex;
         justify-content: space-between;
         font-size: 17px;
-        
+
         p {
             margin: 5px 0 8px 0;
             padding: 7px 14px;
-            
+
             &.remove, &.confirm {
                 background: red;
                 color: white;
@@ -114,18 +114,18 @@ export default {
             }
         }
     }
-    
+
     .result {
         display: flex;
         .justify;
         text-align: center;
         cursor: pointer;
-        
+
         .date {flex-basis: 18%}
         .rate {flex-basis: 12%}
         .coefficient {flex-basis: 27%}
         .sum {flex-basis: 40%}
     }
-    
+
 }
 </style>

@@ -7,7 +7,8 @@
         "build": "vue-cli-service build",
         "test:unit": "set CI=true&& vue-cli-service test:unit --watch",
         "test:unit:update": "vue-cli-service test:unit -u",
-        "test:unit:check-all-once": "set APP_TEST_ALL_FILES=true&& vue-cli-service test:unit"
+        "test:unit:check-all-once": "set APP_TEST_ALL_FILES=true&& vue-cli-service test:unit",
+        "eslint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
     },
     "dependencies": {
         "axios": "^0.18.0",
@@ -25,7 +26,16 @@
         "@vue/cli-service": "^3.0.4",
         "@vue/test-utils": "^1.0.0-beta.20",
         "babel-core": "7.0.0-bridge.0",
+        "babel-eslint": "^10.0.3",
         "babel-jest": "^23.0.1",
+        "eslint": "^6.7.1",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-jest": "^23.0.4",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "eslint-plugin-vue": "^6.0.1",
         "less": "^3.0.4",
         "less-loader": "^4.1.0",
         "vue-cli-plugin-pug": "^1.0.7",

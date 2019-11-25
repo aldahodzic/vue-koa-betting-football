@@ -23,32 +23,32 @@ div#bet-selector
 </template>
 
 <script>
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
-    name: "app-bet-selector",
-    computed: {
-        ...mapGetters({
-            selector: "bet/selector",
-        }),
-        show() {
-            return {
-                sumResultOption: this.selector.filter != "all",
-            }
-        },
+  name: "AppBetSelector",
+  computed: {
+    ...mapGetters({
+      selector: "bet/selector",
+    }),
+    show () {
+      return {
+        sumResultOption: this.selector.filter != "all",
+      };
     },
-    methods: {
-        ...mapActions({
-            _changeSelector: "bet/changeSelector",
-        }),
-        changeSelector(field, value) {
-            if(field == "direction") value = -this.selector.direction;
-            this._changeSelector({field, value});
-        },
-        changeBetSlipInfoVisibility(visibility) {
-            this.$root.$emit("changeBetSlipInfoVisibility", visibility);
-        },
+  },
+  methods: {
+    ...mapActions({
+      _changeSelector: "bet/changeSelector",
+    }),
+    changeSelector (field, value) {
+      if (field == "direction") value = -this.selector.direction;
+      this._changeSelector({ field, value });
     },
-}
+    changeBetSlipInfoVisibility (visibility) {
+      this.$root.$emit("changeBetSlipInfoVisibility", visibility);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -64,19 +64,19 @@ export default {
     background: white;
     margin: 10px 0;
     padding: 5px 0;
-    
+
     p {
         margin: 0;
         display: flex;
         align-items: center;
-    
+
         &.buttons > span {
             padding: 5px 10px 2px 10px;
             margin: 0 3px;
             cursor: pointer;
             font-size: 20px;
         }
-        
+
         span {
             background: #595959;
             border-radius: 5px;
@@ -84,7 +84,7 @@ export default {
             font-weight: bold;
             padding: 5px 20px;
         }
-        
+
         select {
             font-size: 14px;
             padding: 2px 6px;
@@ -94,7 +94,7 @@ export default {
             text-align: center;
             cursor: pointer;
         }
-        
+
     }
 }
 
