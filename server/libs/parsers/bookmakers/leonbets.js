@@ -60,6 +60,9 @@ exports.create = async (URL, leagueName) => {
                 match.coefficients = {};
                 let as = $(element).find(".stn-val");
                 let coefficientTypes = ["1", "0", "2"];
+
+                if(as.length < 3) return;
+
                 as.each((i, a) => {
                     let coefficient = parseFloat($(a).text().trim());
                     if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{

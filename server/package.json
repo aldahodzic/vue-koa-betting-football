@@ -22,6 +22,9 @@
         "mongoose": "^5.0.11",
         "mongoose-beautiful-unique-validation": "^7.1.1",
         "puppeteer": "^2.0.0",
+        "puppeteer-extra": "^2.1.6",
+        "puppeteer-extra-plugin-anonymize-ua": "^2.1.7",
+        "puppeteer-extra-plugin-stealth": "^2.2.5",
         "trace": "^3.1.0"
     }
 }

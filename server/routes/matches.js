@@ -71,7 +71,10 @@ exports.writeDB = async ctx => {
     _.each(matchesAll, match =>{
         let key = `${match.league}:${match.home}-${match.guest}`;
         if(key in matchesConcatenated) _.each(["1", "0", "2"], cType => {
-            matchesConcatenated[key].coefficients[cType] = [...matchesConcatenated[key].coefficients[cType], ...match.coefficients[cType]];
+            matchesConcatenated[key].coefficients[cType] = [
+                ...matchesConcatenated[key].coefficients[cType],
+                ...match.coefficients[cType],
+            ];
         });
         else matchesConcatenated[key] = match;
     });
