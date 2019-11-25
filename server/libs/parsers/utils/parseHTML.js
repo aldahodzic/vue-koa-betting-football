@@ -1,20 +1,16 @@
-const needle = require("needle");
+const puppeteer = require("puppeteer");
 
-module.exports = url => {
-    return new Promise((resolve, reject) => {
+module.exports = async (url, infoSelector = "body") => {
+    const browser = await puppeteer.launch({headless: true});
+    const page = await browser.newPage();
 
-        let config = {
-            response_timeout: 30000,
-        };
+    await page.goto(url, {timeout: 180000});
 
-        needle.get(url, config, (err, res) => {
-            if(err) {
-                reject(err);
-            }
-            else {
-                resolve(res.body);
-            }
-        });
+    await page.waitForSelector(infoSelector);
 
-    });
+    const html = await page.evaluate(s => document.querySelector(s).outerHTML, infoSelector);
+
+    await browser.close();
+
+    return html;
 };

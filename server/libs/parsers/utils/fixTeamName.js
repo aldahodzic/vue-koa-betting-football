@@ -1,6 +1,9 @@
-module.exports = name => {
+module.exports = _name => {
+
+    let name = _name.replace(/ ?FC ?/g, "");
 
     if(name === "Man Utd") return "Manchester United";
+    if(name === "Manchester Utd") return "Manchester United";
     if(name === "Man City") return "Manchester City";
     if(name === "Stoke") return "Stoke City";
     if(name === "West Brom") return "West Bromwich";
@@ -58,7 +61,9 @@ module.exports = name => {
     if(name === "VfL Wolfsburg") return "Wolfsburg";
     if(name === "FC Augsburg") return "Augsburg";
     if(name === "Brighton & Hove Albion") return "Brighton";
+    if(name === "Brighton and Hove Albion") return "Brighton";
     if(name === "AFC Bournemouth") return "Bournemouth";
+    if(name === "ABournemouth") return "Bournemouth";
     if(name === "Bayer 04 Leverkusen") return "Bayer Leverkusen";
     if(name === "Leverkusen") return "Bayer Leverkusen";
     if(name === "Hamburg SV") return "Hamburg";
@@ -111,6 +116,9 @@ module.exports = name => {
     if(name === "FC Krasnodar") return "Krasnodar";
     if(name === "Vallecano") return "Rayo Vallecano";
     if(name === "FK Krasnodar") return "Krasnodar";
+    if(name === "Sheff Utd") return "Sheffield United";
+    if(name === "Sheffield Utd") return "Sheffield United";
+    if(name === "Norwich City") return "Norwich";
 
     if(name === "Atlético Madrid") return "Atletico Madrid";
     if(name === "Leganés") return "Leganes";

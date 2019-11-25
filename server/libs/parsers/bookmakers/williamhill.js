@@ -12,7 +12,7 @@ exports.create = async (URL, leagueName) => {
     let allMatches = [];
 
     try {
-        innerHTML = await parseHTML(URL);
+        innerHTML = await parseHTML(URL, "#football");
         logger.log("got page content");
     }
     catch(e) {
@@ -24,8 +24,7 @@ exports.create = async (URL, leagueName) => {
     const $ = createDOM(innerHTML);
     logger.log("created virtual dom of page");
 
-    let tBody = $("div[id*='tup_mkt_grp']:nth-of-type(1) > table > tbody");
-    let trs = tBody.find(".rowOdd");
+    let trs = $("article.sp-o-market");
 
     trs.each((i, element) => {
 
@@ -34,10 +33,9 @@ exports.create = async (URL, leagueName) => {
 
             // Teams
             {
-                let span = $(element).find("span[id*='_mkt_namespace']");
-                let text = span.text().trim();
-                text = text.replace(/ v /g, "|-|");
-                let teams = text.split("|-|");
+                let el = $(element).find(".sp-o-market__title");
+                let text = el.text().trim();
+                let teams = text.split(/ v /);
                 match.home = fixTeamName(teams[0].trim());
                 match.guest = fixTeamName(teams[1].trim());
             }
@@ -49,10 +47,10 @@ exports.create = async (URL, leagueName) => {
 
             // Date
             {
-                let span = $(element).find("span[id*='tzTime:br:']");
-                let text = span.attr("id");
-                let idParts = text.split(":br:");
-                match.date = +idParts[1] * 1000;
+                let time = $(element).find("sp-o-market__clock__time").text().trim();
+                let date = $(element).parents(".sp-o-market--three-cols").find(".sp-o-market__header-clock").text();
+
+                match.date = moment(`${date} ${time}`, "ddd, DD MMM HH:mm").valueOf();
 
                 if(incorrectMatchDate(match.date)) return;
             }
@@ -60,15 +58,12 @@ exports.create = async (URL, leagueName) => {
             // Coefficients
             {
                 match.coefficients = {};
-                let divs = $(element).find(".eventprice");
+                let divs = $(element).find(".sp-o-market__buttons button");
                 let coefficientTypes = ["1", "0", "2"];
                 divs.each((i, div) => {
                     let coefficient, text = $(div).text().trim();
-                    if(text === "EVS") coefficient = 2;
-                    else {
-                        let [home, guest] = text.split("/");
-                        coefficient = (home / guest) + 1;
-                    }
+                    let [home, guest] = text.split("/");
+                    coefficient = (home / guest) + 1;
 
                     if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
                         name: "Williamhill",

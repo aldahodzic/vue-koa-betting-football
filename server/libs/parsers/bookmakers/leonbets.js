@@ -3,15 +3,16 @@ const Logger = require("../utils/logger");
 const parseHTML = require("../utils/parseHTML");
 const createDOM = require("../utils/createDOM");
 const incorrectMatchDate = require("../utils/incorrectMatchDate");
+const moment = require("moment");
 
 exports.create = async (URL, leagueName) => {
 
     let logger = new Logger(leagueName, "Leonbets");
-    let innerHTML;
+    let html;
     let allMatches = [];
 
     try {
-        innerHTML = await parseHTML(URL);
+        html = await parseHTML(URL, ".st-group");
         logger.log("got page content");
     }
     catch(e) {
@@ -20,11 +21,10 @@ exports.create = async (URL, leagueName) => {
         return allMatches;
     }
 
-    const $ = createDOM(innerHTML);
+    const $ = createDOM(html);
     logger.log("created virtual dom of page");
 
-    let table = $("table[class='betoffer']");
-    let trs = table.find("tr[class*='row']");
+    let trs = $(".st-event-body");
 
     trs.each((i, _element) => {
         try {
@@ -33,7 +33,7 @@ exports.create = async (URL, leagueName) => {
 
             // Teams
             {
-                let span = element.find("a.nou2");
+                let span = element.find(".st-name span");
                 let text = span.text().trim();
                 let teams = text.split(" - ");
                 match.home = fixTeamName(teams[0].trim());
@@ -47,11 +47,10 @@ exports.create = async (URL, leagueName) => {
 
             // Date
             {
-                let span = element.find("td") ;
-                let text = span.html();
-                let leftBracket = text.indexOf("(");
-                let rightBracket = text.indexOf(")");
-                match.date = +text.slice(leftBracket + 1, rightBracket);
+                let date = $(element.find(".st-date")).text();
+                let time = $(element.find(".st-time")).text();
+
+                match.date = moment(`${date} ${time}`, "DD MMM HH:mm").valueOf();
 
                 if(incorrectMatchDate(match.date)) return;
             }
@@ -59,10 +58,10 @@ exports.create = async (URL, leagueName) => {
             // Coefficients
             {
                 match.coefficients = {};
-                let as = $(element).find("a.oddj > strong");
+                let as = $(element).find(".stn-val");
                 let coefficientTypes = ["1", "0", "2"];
                 as.each((i, a) => {
-                    let coefficient = +$(a).text().trim();
+                    let coefficient = parseFloat($(a).text().trim());
                     if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
                         name: "Leonbets",
                         coefficient

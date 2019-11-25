@@ -21,7 +21,7 @@
         "moment": "^2.21.0",
         "mongoose": "^5.0.11",
         "mongoose-beautiful-unique-validation": "^7.1.1",
-        "needle": "^2.2.0",
+        "puppeteer": "^2.0.0",
         "trace": "^3.1.0"
     }
 }
