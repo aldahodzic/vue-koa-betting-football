@@ -13,5 +13,6 @@
         "test-a": "cd front && npm run test:unit:check-all-once"
     },
     "author": "",
-    "license": "ISC"
+    "license": "ISC",
+    "dependencies": {}
 }
