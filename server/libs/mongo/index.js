@@ -10,7 +10,11 @@ const beautifyUnique = require("mongoose-beautiful-unique-validation");
 mongoose.plugin(beautifyUnique);
 
 mongoose.connect(config.mongo.connection.uri, {
-    keepAlive: config.mongo.connection.keepAlive
+    keepAlive: config.mongo.connection.keepAlive,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
 });
 
 module.exports = mongoose;
