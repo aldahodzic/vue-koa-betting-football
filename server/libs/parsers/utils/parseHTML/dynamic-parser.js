@@ -9,7 +9,11 @@ puppeteer.use(UserAgentPlugin({ makeWindows: true }));
 
 module.exports = async (url, {dataSelector, waitSelector}) => {
 
-    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
+    const browser = await puppeteer.launch({headless: true, args: [
+        '--no-sandbox',
+        '--lang=uk-UA,uk;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6',
+        "--disable-webgl",
+    ]});
 
     const page = await browser.newPage();
 
