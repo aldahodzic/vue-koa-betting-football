@@ -37,9 +37,8 @@ exports.create = async (URL, leagueName) => {
 
             // Teams
             {
-                let span = element.find("td[class='l'] > a");
-                let text = span.html();
-                text = text.replace(/\((\w+)\)/g, "");
+                let span = element.find("td[class='l']");
+                let text = span.html().replace(/\((\w+)\)/g, "");
                 let teams = text.split("<br>");
                 match.home = fixTeamName(teams[0].trim());
                 match.guest = fixTeamName(teams[1].trim());
@@ -67,13 +66,13 @@ exports.create = async (URL, leagueName) => {
                 match.coefficients = {};
 
                 let coefficientTypes = ["1", "0", "2"];
-                coefficientTypes.forEach((coeff, index) => {
-                    let coefficient = +element.find(`tr > td:nth-child(${9 + index}) > u > a`).text();
-                    if(!isNaN(coefficient)) match.coefficients[coeff] = [{
+                coefficientTypes.forEach((cType, index) => {
+                    let coefficient = +element.find(`tr > td:nth-child(${9 + index})`).text();
+                    if(!isNaN(coefficient)) match.coefficients[cType] = [{
                         name: "Parimatch",
                         coefficient
                     }];
-                    else match.coefficients[coefficientTypes[coeff]] = [];
+                    else match.coefficients[coefficientTypes[cType]] = [];
                 })
             }
 
