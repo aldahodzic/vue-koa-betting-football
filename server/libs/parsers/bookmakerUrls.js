@@ -30,12 +30,12 @@ module.exports = {
     //     },
     ],
     // Very good anti bot security, use only from local PC
-    // sportingbet: [
-    //     {
-    //         url: "https://sports.sportingbet.com/en/sports#leagueIds=46&sportId=4",
-    //         league: "England",
-    //     },
-    // ],
+    sportingbet: [
+        {
+            url: "https://sports.sportingbet.com/en/sports#leagueIds=46&sportId=4",
+            league: "England",
+        },
+    ],
     williamhill: [
     //     {
     //         url: "http://sports.williamhill.com/bet/en-gb/betting/t/344/UEFA+Champions+League.html",
