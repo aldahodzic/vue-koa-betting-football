@@ -1,9 +1,11 @@
 const bookmakers = {
     parimatch: true,
     marathonbet: true,
+    // Very good anti bot security, use only from local PC
     sportingbet: false,
     betwinner: true,
     williamhill: true,
+    coral: true,
     leonbets: true,
 };
 
@@ -38,7 +40,6 @@ const urls = {
             league: "France",
         },
     ],
-    // Very good anti bot security, use only from local PC
     sportingbet: [
         {
             url: "https://sports.sportingbet.com/en/sports/4/46/betting/premier-league",
@@ -54,6 +55,12 @@ const urls = {
     betwinner: [
         {
             url: "https://betwinner1.com/us/line/Football/88637-England-Premier-League/",
+            league: "England",
+        },
+    ],
+    coral: [
+        {
+            url: "https://sports.coral.co.uk/competitions/football/football-england/premier-league",
             league: "England",
         },
     ],

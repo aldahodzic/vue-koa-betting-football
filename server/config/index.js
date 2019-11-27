@@ -17,7 +17,7 @@ module.exports = {
         timeout: {
             dynamic: {
                 page: 180000,
-                dom: 30000,
+                dom: 60000,
             },
             static: {
                 page: 30000,

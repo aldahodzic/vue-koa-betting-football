@@ -6,6 +6,7 @@ module.exports = {
         sportingbet: require("./bookmakers/sportingbet"),
         marathonbet: require("./bookmakers/marathonbet"),
         betwinner: require("./bookmakers/betwinner"),
+        coral: require("./bookmakers/coral"),
     },
     bookies: require("./bookmakerUrls"),
     results: require("./results"),
