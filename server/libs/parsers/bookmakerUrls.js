@@ -30,9 +30,21 @@ module.exports = {
     //     },
     ],
     // Very good anti bot security, use only from local PC
-    sportingbet: [
+    // sportingbet: [
+    //     {
+    //         url: "https://sports.sportingbet.com/en/sports/4/46/betting/premier-league",
+    //         league: "England",
+    //     },
+    // ],
+    marathonbet: [
         {
-            url: "https://sports.sportingbet.com/en/sports/4/46/betting/premier-league",
+            url: "https://www.marathonbet.com/en/betting/Football/England/Premier+League",
+            league: "England",
+        },
+    ],
+    betwinner: [
+        {
+            url: "https://betwinner1.com/us/line/Football/88637-England-Premier-League/",
             league: "England",
         },
     ],

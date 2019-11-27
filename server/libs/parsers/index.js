@@ -4,6 +4,8 @@ module.exports = {
         parimatch: require("./bookmakers/parimatch"),
         leonbets: require("./bookmakers/leonbets"),
         sportingbet: require("./bookmakers/sportingbet"),
+        marathonbet: require("./bookmakers/marathonbet"),
+        betwinner: require("./bookmakers/betwinner"),
     },
     bookies: require("./bookmakerUrls"),
     results: require("./results"),
