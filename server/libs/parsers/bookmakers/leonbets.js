@@ -12,7 +12,7 @@ exports.create = async (URL, leagueName) => {
     let allMatches = [];
 
     try {
-        html = await parseHTML(URL, ".st-group");
+        html = await parseHTML(URL, {infoElSelector: ".st-group", waitElSelector: ".stn-val"});
         logger.log("got page content");
     }
     catch(e) {

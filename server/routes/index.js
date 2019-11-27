@@ -7,6 +7,7 @@ const router = new koaRouter({
 let matches = require("./matches");
 let auth = require("./auth");
 let bets = require("./bets");
+let parsedData = require("./parsed-data");
 
 router.post("/matches", matches.checkDB, matches.parser, matches.writeDB);
 
@@ -16,6 +17,9 @@ router.delete("/auth/logout", auth.logout);
 
 router.get("/bets/results/:created", bets.getResults, bets.setScoreOfMatches, bets.updateBets, bets.getResults);
 router.post("/bets/confirm", bets.confirm);
+
+router.get("/parsed-data", parsedData.list);
+router.get("/parsed-data/:file", parsedData.file);
 
 
 module.exports = router.routes();

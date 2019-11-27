@@ -3,6 +3,8 @@ const send = require("koa-send");
 
 module.exports = async (ctx, next) => {
 
+    if(ctx.path.includes("/parsed-data/")) return await next();
+
     if(ctx.path === "/") return await send(ctx, "front/dist/index.html");
 
     let ext = path.extname(ctx.path);
