@@ -21,6 +21,7 @@
         "moment": "^2.21.0",
         "mongoose": "^5.0.11",
         "mongoose-beautiful-unique-validation": "^7.1.1",
+        "needle": "^2.4.0",
         "puppeteer": "^2.0.0",
         "puppeteer-extra": "^2.1.6",
         "puppeteer-extra-plugin-anonymize-ua": "^2.1.7",

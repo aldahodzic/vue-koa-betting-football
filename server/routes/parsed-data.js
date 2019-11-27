@@ -4,7 +4,7 @@ const fs = require("fs");
 
 exports.list = async ctx => {
 
-    let files = fs.readdirSync("./server/libs/parsers/parsed");
+    let files = fs.readdirSync("./server/libs/parsers/parsed-pages");
     ctx.body = `
     <div>
         ${files.map(file => `<a href="parsed-data/${file}">${file}</a>`).join("<br>")} 
@@ -20,7 +20,7 @@ exports.file = async ctx => {
     let file = ctx.params.file;
 
     try {
-        await send(ctx, file, {root: "./server/libs/parsers/parsed"});
+        await send(ctx, file, {root: "./server/libs/parsers/parsed-pages"});
     }
     catch(e) {
         ctx.error(404, "File not found");

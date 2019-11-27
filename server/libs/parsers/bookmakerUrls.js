@@ -32,7 +32,7 @@ module.exports = {
     // Very good anti bot security, use only from local PC
     sportingbet: [
         {
-            url: "https://sports.sportingbet.com/en/sports#leagueIds=46&sportId=4",
+            url: "https://sports.sportingbet.com/en/sports/4/46/betting/premier-league",
             league: "England",
         },
     ],

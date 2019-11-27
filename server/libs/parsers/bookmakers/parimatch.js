@@ -8,12 +8,16 @@ const moment = require("moment");
 
 exports.create = async (URL, leagueName) => {
 
-    const logger = new Logger(leagueName, "Parimatch");
-    let innerHTML;
+    let bookmakerName = "Parimatch"
+    const logger = new Logger(leagueName, bookmakerName);
+    let html;
     let allMatches = [];
 
     try {
-        innerHTML = await parseHTML(URL);
+        html = await parseHTML(URL, "static", {
+            bookmaker: bookmakerName,
+            league: leagueName,
+        });
         logger.log("got page content");
     }
     catch(e) {
@@ -22,7 +26,7 @@ exports.create = async (URL, leagueName) => {
         return allMatches;
     }
 
-    const $ = createDOM(innerHTML);
+    const $ = createDOM(html);
     logger.log("created virtual dom of page");
 
     let table = $("form[name='f1']");
@@ -69,7 +73,7 @@ exports.create = async (URL, leagueName) => {
                 coefficientTypes.forEach((cType, index) => {
                     let coefficient = +element.find(`tr > td:nth-child(${9 + index})`).text();
                     if(!isNaN(coefficient)) match.coefficients[cType] = [{
-                        name: "Parimatch",
+                        name: bookmakerName,
                         coefficient
                     }];
                     else match.coefficients[coefficientTypes[cType]] = [];
@@ -83,8 +87,8 @@ exports.create = async (URL, leagueName) => {
         }
     });
 
-    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: Parimatch`);
-    else logger.fail("none matches found: Parimatch");
+    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: ${bookmakerName}`);
+    else logger.fail(`none matches found: ${bookmakerName}`);
 
     logger.end();
 

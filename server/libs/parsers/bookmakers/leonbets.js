@@ -7,12 +7,18 @@ const moment = require("moment");
 
 exports.create = async (URL, leagueName) => {
 
-    let logger = new Logger(leagueName, "Leonbets");
+    let bookmakerName = "Leonbets";
+    let logger = new Logger(leagueName, bookmakerName);
     let html;
     let allMatches = [];
 
     try {
-        html = await parseHTML(URL, {infoElSelector: ".st-group", waitElSelector: ".stn-val"});
+        html = await parseHTML(URL, "dynamic", {
+            dataSelector: ".st-group",
+            waitSelector: ".stn-val",
+            league: leagueName,
+            bookmaker: bookmakerName,
+        });
         logger.log("got page content");
     }
     catch(e) {
@@ -66,7 +72,7 @@ exports.create = async (URL, leagueName) => {
                 as.each((i, a) => {
                     let coefficient = parseFloat($(a).text().trim());
                     if(!isNaN(coefficient)) match.coefficients[coefficientTypes[i]] = [{
-                        name: "Leonbets",
+                        name: bookmakerName,
                         coefficient
                     }];
                     else match.coefficients[coefficientTypes[i]] = [];
@@ -80,8 +86,8 @@ exports.create = async (URL, leagueName) => {
         }
     });
 
-    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: Leonbets`);
-    else logger.fail("none matches found: Leonbets");
+    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: ${bookmakerName}`);
+    else logger.fail(`none matches found: ${bookmakerName}`);
 
     logger.end();
 

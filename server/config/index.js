@@ -10,4 +10,55 @@ module.exports = {
             keepAlive: 1,
         },
     },
+    
+    parser: {
+        writeParsedResources: true,
+
+        timeout: {
+            dynamic: {
+                page: 180000,
+                dom: 30000,
+            },
+            static: {
+                page: 30000,
+            },
+        },
+
+        block: {
+            resources: [
+                'image',
+                'media',
+                'font',
+                'texttrack',
+                'object',
+                'beacon',
+                'csp_report',
+                'imageset',
+                "stylesheet",
+            ],
+            sites: [
+                'quantserve',
+                'adzerk',
+                'doubleclick',
+                'adition',
+                'exelator',
+                'sharethrough',
+                'cdn.api.twitter',
+                'google-analytics',
+                'googletagmanager',
+                'google',
+                'fontawesome',
+                'facebook',
+                'analytics',
+                'optimizely',
+                'clicktale',
+                'mixpanel',
+                'zedo',
+                'clicksor',
+                'tiqcdn',
+                "yandex",
+                "hotjar",
+            ],
+        }
+    }
 };

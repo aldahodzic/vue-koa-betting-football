@@ -7,12 +7,17 @@ const moment = require("moment");
 
 exports.create = async (URL, leagueName) => {
 
-    const logger = new Logger(leagueName, "Williamhill");
-    let innerHTML;
+    const bookmakerName = "Williamhill";
+    const logger = new Logger(leagueName, bookmakerName);
+    let html;
     let allMatches = [];
 
     try {
-        innerHTML = await parseHTML(URL, "#football");
+        html = await parseHTML(URL, "dynamic", {
+            dataSelector: "#football",
+            bookmaker: bookmakerName,
+            league: leagueName,
+        });
         logger.log("got page content");
     }
     catch(e) {
@@ -21,7 +26,7 @@ exports.create = async (URL, leagueName) => {
         return allMatches;
     }
 
-    const $ = createDOM(innerHTML);
+    const $ = createDOM(html);
     logger.log("created virtual dom of page");
 
     let trs = $("article.sp-o-market");
@@ -80,8 +85,8 @@ exports.create = async (URL, leagueName) => {
         }
     });
 
-    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: Williamhill`);
-    else logger.fail("none matches found: Williamhill");
+    if(allMatches.length > 0) logger.log(`[${allMatches.length}] matches created: ${bookmakerName}`);
+    else logger.fail(`none matches found: ${bookmakerName}`);
 
     logger.end();
 

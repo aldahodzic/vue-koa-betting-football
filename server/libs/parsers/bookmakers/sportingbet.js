@@ -7,16 +7,19 @@ const moment = require("moment");
 
 const fs = require("fs");
 
-const bookmakerName = "Sportingbet";
 
 exports.create = async (URL, leagueName) => {
-
+    
+    const bookmakerName = "Sportingbet";
     const logger = new Logger(leagueName, bookmakerName);
     let html;
     let allMatches = [];
 
     try {
-        html = await parseHTML(URL, ".marketboard-event-group__item-container--level-2");
+        html = await parseHTML(URL, "static", {
+            bookmaker: bookmakerName,
+            league: leagueName,
+        });
         logger.log("got page content");
     }
     catch(e) {
