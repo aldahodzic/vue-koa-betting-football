@@ -1,13 +1,13 @@
-const koaRouter = require("koa-router");
+const KoaRouter = require("koa-router");
 
-const router = new koaRouter({
-    prefix: "/api/v1",
+const router = new KoaRouter({
+  prefix: "/api/v1",
 });
 
-let matches = require("./matches");
-let auth = require("./auth");
-let bets = require("./bets");
-let parsedData = require("./parsed-data");
+const matches = require("./matches");
+const auth = require("./auth");
+const bets = require("./bets");
+const parsedData = require("./parsed-data");
 
 router.post("/matches", matches.checkDB, matches.parser, matches.writeDB);
 
@@ -20,6 +20,5 @@ router.post("/bets/confirm", bets.confirm);
 
 router.get("/parsed-data", parsedData.list);
 router.get("/parsed-data/:file", parsedData.file);
-
 
 module.exports = router.routes();

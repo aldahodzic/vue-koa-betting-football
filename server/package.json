@@ -4,7 +4,8 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint --fix ."
     },
     "author": "",
     "license": "ISC",
@@ -27,5 +28,13 @@
         "puppeteer-extra-plugin-anonymize-ua": "^2.1.7",
         "puppeteer-extra-plugin-stealth": "^2.2.5",
         "trace": "^3.1.1"
+    },
+    "devDependencies": {
+        "eslint": "^6.7.1",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1"
     }
 }

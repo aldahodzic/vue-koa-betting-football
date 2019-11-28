@@ -1,7 +1,7 @@
-const koa = require("koa");
+const Koa = require("koa");
 const config = require("config");
 
-let app = new koa();
+const app = new Koa();
 
 app.use(require("handlers/cors"));
 app.use(require("handlers/body-parser"));

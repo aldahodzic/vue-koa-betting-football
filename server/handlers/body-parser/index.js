@@ -1,3 +1,3 @@
-const bodyParser = require('koa-bodyparser');
+const bodyParser = require("koa-bodyparser");
 
 module.exports = bodyParser();

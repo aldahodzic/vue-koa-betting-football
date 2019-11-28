@@ -1,41 +1,43 @@
 const config = require("config");
 
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const UserAgentPlugin = require('puppeteer-extra-plugin-anonymize-ua');
+const puppeteer = require("puppeteer-extra");
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+const UserAgentPlugin = require("puppeteer-extra-plugin-anonymize-ua");
 
 puppeteer.use(StealthPlugin());
 puppeteer.use(UserAgentPlugin({ makeWindows: true }));
 
-module.exports = async (url, {dataSelector, waitSelector}) => {
+module.exports = async (url, { dataSelector, waitSelector }) => {
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--lang=uk-UA,uk;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6",
+      "--disable-webgl",
+    ],
+  });
 
-    const browser = await puppeteer.launch({headless: true, args: [
-        '--no-sandbox',
-        '--lang=uk-UA,uk;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6',
-        "--disable-webgl",
-    ]});
+  const page = await browser.newPage();
 
-    const page = await browser.newPage();
-
-    await page.setRequestInterception(true);
-    page.on('request', request => {
-        const requestUrl = request._url.split('?')[0].split('#')[0];
-        if (
-            config.parser.block.resources.includes(request.resourceType()) ||
+  await page.setRequestInterception(true);
+  page.on("request", request => {
+    const requestUrl = request._url.split("?")[0].split("#")[0];
+    if (
+      config.parser.block.resources.includes(request.resourceType()) ||
             config.parser.block.sites.some(resource => requestUrl.includes(resource))
-        ) request.abort();
-        else request.continue();
-    });
+    ) request.abort();
+    else request.continue();
+  });
 
-    await page.goto(url, {timeout: config.parser.timeout.dynamic.page});
+  await page.goto(url, { timeout: config.parser.timeout.dynamic.page });
 
-    await page.waitForSelector(dataSelector, {timeout: config.parser.timeout.dynamic.dom});
+  await page.waitForSelector(dataSelector, { timeout: config.parser.timeout.dynamic.dom });
 
-    if(waitSelector) await page.waitForSelector(waitSelector, {timeout: config.parser.timeout.dynamic.dom});
+  if (waitSelector) await page.waitForSelector(waitSelector, { timeout: config.parser.timeout.dynamic.dom });
 
-    const html = await page.evaluate(s => document.querySelector(s).outerHTML, dataSelector);
+  const html = await page.evaluate(s => document.querySelector(s).outerHTML, dataSelector);
 
-    await browser.close();
+  await browser.close();
 
-    return html;
+  return html;
 };

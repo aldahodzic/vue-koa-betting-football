@@ -1,43 +1,41 @@
 const User = require("libs/mongo/schemas/user");
 
 module.exports = async (ctx, next) => {
+  const setGuest = () => ctx.cookies.set("auth", "guest", { httpOnly: false });
 
-    const setGuest = () => ctx.cookies.set("auth", "guest", {httpOnly: false});
+  let handle = true;
 
-    let handle = true;
+  const authToken = ctx.cookies.get("auth");
 
-    let authToken = ctx.cookies.get("auth");
+  if (handle && authToken === "guest") {
+    handle = false;
+  }
 
-    if(handle && authToken === "guest") {
-        handle = false;
-    }
+  if (handle && !authToken) {
+    setGuest();
+    handle = false;
+  }
 
-    if(handle && !authToken) {
-        setGuest();
-        handle = false;
-    }
+  let user, userId, token;
 
-    let user, userId, token;
+  if (handle) {
+    [userId, token] = authToken.split("::");
+    user = await User.findById(userId);
+  }
 
-    if(handle) {
-        [userId, token] = authToken.split("::");
-        user = await User.findById(userId);
-    }
+  if (handle && !user) {
+    setGuest();
+    handle = false;
+  }
 
-    if(handle && !user) {
-        setGuest();
-        handle = false;
-    }
+  if (handle && user.token !== token) {
+    setGuest();
+    handle = false;
+  }
 
-    if(handle && user.token !== token) {
-        setGuest();
-        handle = false;
-    }
+  if (handle) {
+    ctx.user = user;
+  }
 
-    if(handle) {
-        ctx.user = user;
-    }
-
-    await next();
-
+  await next();
 };
