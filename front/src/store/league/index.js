@@ -19,7 +19,7 @@ export const mutations = {
 
   selectLeague (state, leagueName) {
     return alert("ONLY ENGLISH LEAGUE AVAILABLE NOW!");
-    
+
     if (state.selectedLeagues.includes(leagueName)) {
       state.selectedLeagues = state.selectedLeagues.filter(league => league != leagueName);
     }

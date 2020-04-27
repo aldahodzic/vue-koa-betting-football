@@ -60,7 +60,12 @@ export default {
     }),
     async loadMatches () {
       this.loading = "processing";
-      await this._loadMatches();
+      try {
+        await this._loadMatches();
+      }
+      catch (e) {
+        console.error(e);
+      }
       this.loading = "end";
     },
     toggleSelectorItemMode () {
