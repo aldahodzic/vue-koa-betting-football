@@ -1,6 +1,7 @@
 import _ from "lodash";
 import Moment from "dayjs";
-import Axios from "@/plugins/axios";
+
+import * as api from "@/api/bet";
 
 export const state = {
   bets: {
@@ -185,7 +186,7 @@ export const actions = {
     if (getters.load.status === "loading") return;
 
     dispatch("startLoadResults");
-    const { data } = await Axios.get(`/bets/results/${created}`);
+    const { data } = await api.getResults(created);
     dispatch("endLoadResults", data);
   },
   startLoadResults ({ commit }) {
@@ -212,7 +213,7 @@ export const actions = {
 
   async confirmBetSlip ({ commit, getters }, index) {
     const betSlip = getters.bets.waiting[index];
-    const { data, status } = await Axios.post("/bets/confirm", betSlip);
+    const { data, status } = await api.confirmBetSlip(betSlip);
     if (!status) return alert(data);
     commit("deleteBetSlip", { index, force: true });
     commit("changeLoad", { field: "permission", value: false });
