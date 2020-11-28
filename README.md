@@ -1,13 +1,13 @@
-# Fakebet v2.0
-> Site with fake bets on football
+# Fakebet
+> Site with fake football bets
 
 Demo: [link](https://fakebet.herokuapp.com)  
 Description: [link](https://fakebet.herokuapp.com/about)
 
-## Using
-**Front:** Vue: vuex, router, test, i18n, axios  
-**Back:** Node, Koa  
-**Database:** MongoDB
+## Tech stack
+**Front:** vue, vuex, vue-router, jest, i18n, axios  
+**Back:** node, koa  
+**Database:** mongoDB
 
 ## Commands
 
@@ -16,7 +16,6 @@ Description: [link](https://fakebet.herokuapp.com/about)
 ##### Front-end
 
 ```sh
-# for vue, need @vue/cli and @vue/cli-service-global -g
 $ cd front && npm install
 $ npm run vue
 ```
@@ -24,7 +23,6 @@ $ npm run vue
 ##### Back-end
 
 ```sh
-# for node, need nodemon -g
 $ cd server && npm install
 $ npm run node
 ```
@@ -32,17 +30,13 @@ $ npm run node
 ### Production
 
 ```sh
-# need @vue/cli and @vue/cli-service-global -g
-$ cd front && npm install
-$ cd server && npm install
-$ npm run vue-production
-$ npm run node-production
+$ cd front && npm install && npm run vue-production
+$ cd server && npm install && npm run node-production
 ```
 
 ### Test
 
 ```sh
-# need jest
 $ npm run test # watch files,
 $ npm run test-a # all tests once
 ```
