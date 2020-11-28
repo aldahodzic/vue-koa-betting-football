@@ -1,5 +1,6 @@
 import Moment from "dayjs";
-import Axios from "@/plugins/axios";
+
+import * as api from "@/api/match";
 
 export const state = {
   matches: JSON.parse(localStorage.getItem("matches")) || [],
@@ -44,7 +45,7 @@ export const actions = {
   async loadMatches ({ commit, rootGetters }) {
     const selectedLeagues = rootGetters["league/selectedLeagues"];
     commit("cleanMatches", selectedLeagues);
-    const { data } = await Axios.post("/matches", { leagues: selectedLeagues });
+    const { data } = await api.downloadOrParseMatches(selectedLeagues);
     commit("pushMatches", data);
   },
 
