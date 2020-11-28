@@ -55,7 +55,7 @@ export const createWrapper = (component, _options = {}) => {
   });
 
   const mockMethods = {};
-  methods.forEach(methodName => mockMethods[methodName] = jest.fn());
+  methods.forEach(methodName => { mockMethods[methodName] = jest.fn(); });
   wrapper.setMethods(mockMethods);
 
   // special method to call hooks manually
@@ -142,13 +142,13 @@ function mergeObjectsDeep (...objects) {
       const value = object[field];
 
       // if data in renderable mode push to result immediately
-      const descriptor = giveClass(value) == "object" && Object.getOwnPropertyDescriptor(value, "toString");
+      const descriptor = giveClass(value) === "object" && Object.getOwnPropertyDescriptor(value, "toString");
       if (descriptor) {
         flattenObject[`${path}.${field}`] = value;
         continue;
       }
 
-      if (giveClass(value) !== "object" || (_.isPlainObject(value) && _.size(value) == 0)) {
+      if (giveClass(value) !== "object" || (_.isPlainObject(value) && _.size(value) === 0)) {
         flattenObject[`${path}.${field}`] = value;
       }
       else setPlainPath(value, `${path}.${field}`);

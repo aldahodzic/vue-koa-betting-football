@@ -32,7 +32,7 @@ export default {
     }),
     show () {
       return {
-        sumResultOption: this.selector.filter != "all",
+        sumResultOption: this.selector.filter !== "all",
       };
     },
   },
@@ -41,11 +41,11 @@ export default {
       _changeSelector: "bet/changeSelector",
     }),
     changeSelector (field, value) {
-      if (field == "direction") value = -this.selector.direction;
+      if (field === "direction") value = -this.selector.direction;
       this._changeSelector({ field, value });
     },
     changeBetSlipInfoVisibility (visibility) {
-      this.$root.$emit("changeBetSlipInfoVisibility", visibility);
+      this.$root.$emit("change-bet-slip-info-visibility", visibility);
     },
   },
 };

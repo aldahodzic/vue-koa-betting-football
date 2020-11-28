@@ -10,7 +10,7 @@ export const getters = {
   },
 
   selectedLeagues (state) {
-    return state.selectedLeagues.length == 0 ? state.leagueList : state.selectedLeagues;
+    return state.selectedLeagues.length === 0 ? state.leagueList : state.selectedLeagues;
   },
 
 };
@@ -20,8 +20,9 @@ export const mutations = {
   selectLeague (state, leagueName) {
     return alert("ONLY ENGLISH LEAGUE AVAILABLE NOW!");
 
+    // eslint-disable-next-line no-unreachable
     if (state.selectedLeagues.includes(leagueName)) {
-      state.selectedLeagues = state.selectedLeagues.filter(league => league != leagueName);
+      state.selectedLeagues = state.selectedLeagues.filter(league => league !== leagueName);
     }
     else {
       state.selectedLeagues.push(leagueName);

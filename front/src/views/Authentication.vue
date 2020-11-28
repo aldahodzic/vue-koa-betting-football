@@ -80,7 +80,7 @@ export default {
       return false;
     },
     currentMode () {
-      return this.authTypes.find(type => type.className == "active").mode;
+      return this.authTypes.find(type => type.className === "active").mode;
     },
     buttonValue () {
       return this.currentMode === "authorization" ? "SignIn" : "SignUp";
@@ -108,7 +108,9 @@ export default {
       if (this.user.auth) this.$router.replace("matches");
     },
     changeMode (mode) {
-      this.authTypes.forEach(type => type.className = type.mode == mode ? "active" : "");
+      this.authTypes.forEach(type => {
+        type.className = type.mode === mode ? "active" : "";
+      });
     },
     onNewInputValue (field, value) {
       field.value = value;

@@ -25,9 +25,9 @@ export default {
     AppBetSlipInfoLine,
   },
   props: {
-    bets: Array,
-    betSlipIndex: Number,
-    lineMode: String,
+    bets: { type: Array, required: true },
+    betSlipIndex: { type: Number, required: true },
+    lineMode: { type: String, required: true },
   },
 };
 </script>

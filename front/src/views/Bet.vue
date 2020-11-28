@@ -50,30 +50,30 @@ export default {
       load: "bet/load",
     }),
     show () {
-      const resultMode = this.selector.type == "results" && this.load.ready;
-      const waitingMode = this.selector.type == "waiting";
+      const resultMode = this.selector.type === "results" && this.load.ready;
+      const waitingMode = this.selector.type === "waiting";
 
       return {
         noneBets: this.emptyBets && (waitingMode || resultMode),
         bets: !this.emptyBets && (waitingMode || resultMode),
         loadPrevious: resultMode && this.load.previous,
-        loading: this.selector.type == "results" && this.load.status == "loading",
+        loading: this.selector.type === "results" && this.load.status === "loading",
         selector: resultMode,
       };
     },
     betSlipComponent () {
-      return this.selector.type == "waiting" ? "app-waiting-bet-slip" : "app-result-bet-slip";
+      return this.selector.type === "waiting" ? "app-waiting-bet-slip" : "app-result-bet-slip";
     },
     bets () {
-      return this.selector.type == "waiting" ? this.waitingBets : this.resultBets;
+      return this.selector.type === "waiting" ? this.waitingBets : this.resultBets;
     },
     emptyBets () {
-      return this.bets.length == 0;
+      return this.bets.length === 0;
     },
     // eslint-disable-next-line
     emptyBetsText () {
-      const resultBets = this.selector.type == "results" && this.selector.filter == "all";
-      const waitingBets = this.selector.type == "waiting";
+      const resultBets = this.selector.type === "results" && this.selector.filter === "all";
+      const waitingBets = this.selector.type === "waiting";
 
       if (this.emptyBets && (resultBets || waitingBets)) return "not.made.bets";
       else if (this.emptyBets) return `not.have.bets.${this.selector.filter}`;

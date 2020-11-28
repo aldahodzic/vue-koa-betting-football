@@ -13,9 +13,9 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "AppMatchSelectorItem",
   props: {
-    type: String,
-    coefficients: Array,
-    matchKey: String,
+    type: { type: String, required: true },
+    coefficients: { type: Array, required: true },
+    matchKey: { type: String, required: true },
   },
   computed: {
     ...mapGetters({
@@ -24,14 +24,14 @@ export default {
     }),
     classes () {
       return {
-        h: this.type == "1",
-        d: this.type == "0",
-        g: this.type == "2",
+        h: this.type === "1",
+        d: this.type === "0",
+        g: this.type === "2",
       };
     },
     selected () {
-      const item = this.bets.current.find(({ key }) => key == this.matchKey);
-      return item && item.type == this.type;
+      const item = this.bets.current.find(({ key }) => key === this.matchKey);
+      return item && item.type === this.type;
     },
     selectedClass () {
       return this.selected ? "selected" : "";
@@ -50,7 +50,7 @@ export default {
       return coefficients.join("<hr>");
     },
     button () {
-      if (this.selectorItemMode == "bet") {
+      if (this.selectorItemMode === "bet") {
         return {
           title: this.bestBookie.name,
           text: this.bestBookie.coefficientTmpl,
@@ -68,7 +68,7 @@ export default {
       _changeCurrentBetSlip: "bet/changeCurrentBetSlip",
     }),
     async makeBet () {
-      if (this.selectorItemMode != "bet") return;
+      if (this.selectorItemMode !== "bet") return;
       await this._changeCurrentBetSlip({
         key: this.matchKey,
         bookie: this.bestBookie,

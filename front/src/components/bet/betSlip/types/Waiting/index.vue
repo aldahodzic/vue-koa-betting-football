@@ -25,11 +25,11 @@ export default {
     AppBetSlipInfo,
   },
   props: {
-    rate: Number,
-    totalCoefficient: Number,
-    totalSum: Number,
-    bets: Array,
-    betSlipIndex: Number,
+    rate: { type: Number, required: true },
+    totalCoefficient: { type: Number, required: true },
+    totalSum: { type: Number, required: true },
+    bets: { type: Array, required: true },
+    betSlipIndex: { type: Number, required: true },
   },
   computed: {
     totalCoefficientTmpl () {

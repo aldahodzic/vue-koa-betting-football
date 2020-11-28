@@ -38,7 +38,7 @@ export default {
       load: "bet/load",
     }),
     buttonLoadResultsClass () {
-      return this.load.status == "loading" ? "disabled" : "";
+      return this.load.status === "loading" ? "disabled" : "";
     },
   },
   methods: {
@@ -47,7 +47,9 @@ export default {
       _changeSelector: "bet/changeSelector",
     }),
     changeMenu (selectedItem) {
-      this.menu.forEach(item => item.classes = item.type == selectedItem.type ? "selected" : "");
+      this.menu.forEach(item => {
+        item.classes = item.type === selectedItem.type ? "selected" : "";
+      });
       this._changeSelector({
         field: "type",
         value: selectedItem.type,

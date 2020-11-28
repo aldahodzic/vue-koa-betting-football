@@ -32,23 +32,23 @@ export default {
     show () {
       return {
         info: this.emptyCurrentBets && !this.emptyMatches,
-        selector: this.loading == "end" || this.loading == "wait" || !this.emptyMatches,
+        selector: this.loading === "end" || this.loading === "wait" || !this.emptyMatches,
         loading: {
-          active: this.loading == "processing",
-          passive: this.loading != "processing",
+          active: this.loading === "processing",
+          passive: this.loading !== "processing",
         },
         confirm: !this.emptyCurrentBets,
       };
     },
     emptyCurrentBets () {
-      return this.bets.current.length == 0;
+      return this.bets.current.length === 0;
     },
     emptyMatches () {
-      return this.matches.length == 0;
+      return this.matches.length === 0;
     },
     textAction () {
       const action = this.emptyMatches ? "load" : "update";
-      const count = this.selectedLeagues.length == this.leagues.length ? "leagues_all" : "leagues_selected";
+      const count = this.selectedLeagues.length === this.leagues.length ? "leagues_all" : "leagues_selected";
       return `phrases.${action}.${count}`;
     },
   },
@@ -69,7 +69,7 @@ export default {
       this.loading = "end";
     },
     toggleSelectorItemMode () {
-      this.buttonInfoText = this.buttonInfoText == "show.info.bets" ? "hide.info.bets" : "show.info.bets";
+      this.buttonInfoText = this.buttonInfoText === "show.info.bets" ? "hide.info.bets" : "show.info.bets";
       this._toggleSelectorItemMode();
     },
     sendToWaitingBets () {

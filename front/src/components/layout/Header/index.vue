@@ -26,8 +26,8 @@ export default {
     }),
     show () {
       return {
-        authorized: this.user.auth == true,
-        unauthorized: this.user.auth == false,
+        authorized: this.user.auth === true,
+        unauthorized: this.user.auth === false,
       };
     },
   },

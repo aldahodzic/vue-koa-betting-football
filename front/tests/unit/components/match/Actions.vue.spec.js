@@ -160,7 +160,7 @@ describe("match/Actions.vue", () => {
     describe("textAction", () => {
       const makeIt = ({ matches, selectedLeagues, leagues, result }) => {
         // eslint-disable-next-line no-useless-escape
-        it(`textAction == ${result.split(/[\._]/).slice(1).join(" -> ")}`, () => {
+        it(`textAction === ${result.split(/[\._]/).slice(1).join(" -> ")}`, () => {
           mountWrapper({
             computed: {
               matches: new Array(matches),

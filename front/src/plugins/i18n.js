@@ -21,7 +21,7 @@ function setI18nLanguage (language) {
 }
 
 function setMessages (language) {
-  if (i18n.locale == language) return;
+  if (i18n.locale === language) return;
 
   const messages = localStorage.getItem(`i18n::messages[${language}]`);
   if (messages) {
@@ -30,9 +30,9 @@ function setMessages (language) {
     return;
   }
 
-    import("@/locales/" + language).then(messages => {
-      i18n.setLocaleMessage(language, messages.default);
-      localStorage.setItem(`i18n::messages[${language}]`, JSON.stringify(messages.default));
-      setI18nLanguage(language);
-    });
+  import("@/locales/" + language).then(messages => {
+    i18n.setLocaleMessage(language, messages.default);
+    localStorage.setItem(`i18n::messages[${language}]`, JSON.stringify(messages.default));
+    setI18nLanguage(language);
+  });
 }

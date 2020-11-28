@@ -120,7 +120,7 @@ describe("bet/ResultBetSlip.vue", () => {
         },
       });
 
-      wrapper.vm.$root.$emit("changeBetSlipInfoVisibility", "visibility status");
+      wrapper.vm.$root.$emit("change-bet-slip-info-visibility", "visibility status");
 
       expect(wrapper.vm.showInfo).toBe("visibility status");
     });

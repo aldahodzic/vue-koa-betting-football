@@ -1,27 +1,27 @@
 const Axios = {
 
   get (url) {
-    if (url == "/bets/results/last") {
+    if (url === "/bets/results/last") {
       return send(true, "result bets");
     }
   },
 
   post (url, data) {
-    if (url == "/auth/authorizedUser") {
+    if (url === "/auth/authorizedUser") {
       return send(true, "user token");
     }
 
-    if (url == "/auth/unauthorizedUser") {
+    if (url === "/auth/unauthorizedUser") {
       return send(false, "guest");
     }
 
-    if (url == "/matches") {
+    if (url === "/matches") {
       return send(true, "new matches");
     }
 
-    if (url == "/bets/confirm") {
-      if (data == "must fail") return send(false, "error");
-      if (data == "must success") return send(true, "confirmed");
+    if (url === "/bets/confirm") {
+      if (data === "must fail") return send(false, "error");
+      if (data === "must success") return send(true, "confirmed");
     }
   },
 

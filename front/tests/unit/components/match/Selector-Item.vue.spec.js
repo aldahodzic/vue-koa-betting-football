@@ -53,7 +53,7 @@ describe("match/Selector-Item.vue", () => {
           mountWrapper({ props: { type } });
 
           for (const _className in wrapper.vm.classes) {
-            if (_className == className) expect(wrapper.vm.classes[_className]).toBeTruthy();
+            if (_className === className) expect(wrapper.vm.classes[_className]).toBeTruthy();
             else expect(wrapper.vm.classes[_className]).toBeFalsy();
           }
         });

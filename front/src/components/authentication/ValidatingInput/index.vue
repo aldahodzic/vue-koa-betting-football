@@ -16,11 +16,11 @@ label
 export default {
   name: "AppValidatingInput",
   props: {
-    title: String,
-    value: String,
-    pattern: RegExp,
-    failMessage: String,
-    mode: String,
+    title: { type: String, required: true },
+    value: { type: String, required: true },
+    pattern: { type: RegExp, required: true },
+    failMessage: { type: String, required: true },
+    mode: { type: String, required: true },
   },
   data () {
     return {
@@ -42,7 +42,7 @@ export default {
   computed: {
     show () {
       return {
-        icon: this.activated == true,
+        icon: this.activated === true,
       };
     },
     valid () {

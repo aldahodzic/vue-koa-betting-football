@@ -15,23 +15,23 @@ import { mapActions } from "vuex";
 export default {
   name: "AppBetSlipInfoLine",
   props: {
-    lineMode: String,
-    dateTmpl: String,
-    league: String,
-    home: String,
-    guest: String,
-    type: String,
-    bookie: Object,
-    betIndex: Number,
-    betSlipIndex: Number,
-    score: String,
-    matchResult: String,
+    lineMode: { type: String, required: true },
+    dateTmpl: { type: String, required: true },
+    league: { type: String, required: true },
+    home: { type: String, required: true },
+    guest: { type: String, required: true },
+    type: { type: String, required: true },
+    bookie: { type: Object, required: true },
+    betIndex: { type: Number, required: true },
+    betSlipIndex: { type: Number, required: true },
+    score: { type: String, required: true },
+    matchResult: { type: String, default: "" },
   },
   computed: {
     show () {
       return {
-        waiting: this.lineMode == "waiting",
-        results: this.lineMode == "result",
+        waiting: this.lineMode === "waiting",
+        results: this.lineMode === "result",
       };
     },
     coefficientTmpl () {
@@ -42,7 +42,7 @@ export default {
     },
     betClass () {
       if (!this.matchResult) return "";
-      return this.matchResult == this.type ? "bet-match-won" : "bet-match-lose";
+      return this.matchResult === this.type ? "bet-match-won" : "bet-match-lose";
     },
   },
   methods: {

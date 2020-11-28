@@ -101,7 +101,7 @@ export default {
       return matches;
     },
     emptySelectedMatches () {
-      return this.matchesFromSelectedLeagues.length == 0;
+      return this.matchesFromSelectedLeagues.length === 0;
     },
   },
   methods: {

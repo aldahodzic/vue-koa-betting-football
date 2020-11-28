@@ -281,8 +281,8 @@ describe("views/Authentication.vue", () => {
 
       wrapper.vm.changeMode("mode 2");
 
-      expect(wrapper.vm.authTypes.find(({ mode }) => mode == "mode 1").className).toBe("");
-      expect(wrapper.vm.authTypes.find(({ mode }) => mode == "mode 2").className).toBe("active");
+      expect(wrapper.vm.authTypes.find(({ mode }) => mode === "mode 1").className).toBe("");
+      expect(wrapper.vm.authTypes.find(({ mode }) => mode === "mode 2").className).toBe("active");
     });
 
     it("onNewInputValue", () => {

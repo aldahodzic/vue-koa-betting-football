@@ -22,14 +22,14 @@ export default {
     AppBetSlipInfo,
   },
   props: {
-    rate: Number,
-    totalCoefficient: Number,
-    totalSum: Number,
-    bets: Array,
-    betSlipIndex: Number,
-    createdDate: String,
-    outcome: String,
-    outcomeSum: Number,
+    rate: { type: Number, required: true },
+    totalCoefficient: { type: Number, required: true },
+    totalSum: { type: Number, required: true },
+    bets: { type: Array, required: true },
+    betSlipIndex: { type: Number, required: true },
+    createdDate: { type: String, required: true },
+    outcome: { type: String, required: true },
+    outcomeSum: { type: Number, required: true },
   },
   data: () => ({
     showInfo: false,
@@ -42,11 +42,10 @@ export default {
       return this.totalSum.toFixed(2);
     },
     betSlipResultText () {
-      switch (this.outcome) {
-      case "waiting": return "sum.potential";
-      case "win": return "Profit";
-      case "lose": return "sum.lost";
-      }
+      if (this.outcome === "waiting") return "sum.potential";
+      if (this.outcome === "win") return "Profit";
+      if (this.outcome === "lose") return "sum.lost";
+      return "";
     },
     betSlipResultSum () {
       return this.outcomeSum.toFixed(2);

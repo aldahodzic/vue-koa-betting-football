@@ -41,13 +41,13 @@ export const getters = {
 
   filteredResultBets (state) {
     let bets = state.bets.results;
-    if (state.selector.filter != "all") bets = bets.filter(betSlip => betSlip.outcome == state.selector.filter);
+    if (state.selector.filter !== "all") bets = bets.filter(betSlip => betSlip.outcome === state.selector.filter);
     return bets;
   },
 
   filteredAndSortedResultBets (state, getters) {
     let sortedBets = _.sortBy(getters.filteredResultBets, state.selector.sort);
-    if (state.selector.direction == -1) sortedBets = sortedBets.reverse();
+    if (state.selector.direction === -1) sortedBets = sortedBets.reverse();
     return sortedBets;
   },
 
@@ -58,7 +58,7 @@ export const getters = {
   load (state) {
     return {
       ...state.load,
-      ready: state.load.status == "wait" || state.load.status == "loaded",
+      ready: state.load.status === "wait" || state.load.status === "loaded",
     };
   },
 };
@@ -76,7 +76,7 @@ export const mutations = {
     }
 
     if (selectedBet.type === type) {
-      const index = state.bets.current.findIndex(bet => bet.type == type && bet.key == key);
+      const index = state.bets.current.findIndex(bet => bet.type === type && bet.key === key);
       state.bets.current.splice(index, 1);
     }
   },
@@ -104,7 +104,7 @@ export const mutations = {
       };
 
       _betSlip.bets.forEach(bet => {
-        if (!bet.score || bet.score == "none") {
+        if (!bet.score || bet.score === "none") {
           bet.matchResult = null;
           return;
         }
@@ -112,20 +112,20 @@ export const mutations = {
         const [home, guest] = bet.score.split(" : ");
         let result;
         if (home > guest) result = "1";
-        if (home == guest) result = "0";
+        if (home === guest) result = "0";
         if (home < guest) result = "2";
         bet.matchResult = result;
       });
 
       const someMatchWaiting = _betSlip.bets.some(bet => bet.matchResult === null);
-      const allMatchPredictionCorrect = _betSlip.bets.every(bet => bet.matchResult == bet.type);
+      const allMatchPredictionCorrect = _betSlip.bets.every(bet => bet.matchResult === bet.type);
 
       if (someMatchWaiting) _betSlip.outcome = "waiting";
       else if (allMatchPredictionCorrect) _betSlip.outcome = "win";
       else _betSlip.outcome = "lose";
 
-      if (_betSlip.outcome == "waiting") _betSlip.outcomeSum = betSlip.rate * totalCoefficient;
-      else if (_betSlip.outcome == "win") _betSlip.outcomeSum = (betSlip.rate * totalCoefficient) - betSlip.rate;
+      if (_betSlip.outcome === "waiting") _betSlip.outcomeSum = betSlip.rate * totalCoefficient;
+      else if (_betSlip.outcome === "win") _betSlip.outcomeSum = (betSlip.rate * totalCoefficient) - betSlip.rate;
       else _betSlip.outcomeSum = betSlip.rate;
 
       return _betSlip;
@@ -146,7 +146,7 @@ export const mutations = {
   },
 
   changeSelector (state, { field, value }) {
-    if (field == "filter" && value == "all" && state.selector.sort == "outcomeSum") {
+    if (field === "filter" && value === "all" && state.selector.sort === "outcomeSum") {
       state.selector.sort = "createdAt";
     }
     state.selector[field] = value;
@@ -182,7 +182,7 @@ export const actions = {
     if (!force) {
       if (!getters.load.permission) return;
     }
-    if (getters.load.status == "loading") return;
+    if (getters.load.status === "loading") return;
 
     dispatch("startLoadResults");
     const { data } = await Axios.get(`/bets/results/${created}`);
