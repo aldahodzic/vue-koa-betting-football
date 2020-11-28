@@ -1,5 +1,6 @@
 import Cookies from "@/plugins/cookies";
-import Axios from "@/plugins/axios";
+
+import * as api from "@/api/user";
 
 export const state = {
   user: {
@@ -34,14 +35,18 @@ export const mutations = {
 export const actions = {
 
   async userAuthAction ({ commit }, { url, userData }) {
-    const { data, status } = await Axios.post(`/auth/${url}`, userData);
+    let response;
+    if (url === "authorization") response = await api.authorizeUser(userData);
+    if (url === "registration") response = await api.registerUser(userData);
+
+    const { data, status } = response;
     if (!status) alert(data);
     commit("setUserAuthStatus", status);
     commit("setUserLogout", false);
   },
 
   async userLogout ({ commit }) {
-    const { data, status } = await Axios.delete("/auth/logout");
+    const { data, status } = await api.logoutUser();
     if (!status) alert(data);
     commit("setUserAuthStatus", false);
     commit("setUserLogout", true);
