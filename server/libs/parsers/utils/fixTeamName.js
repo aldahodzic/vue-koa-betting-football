@@ -118,6 +118,7 @@ module.exports = _name => {
   if (name === "Sheff Utd") return "Sheffield United";
   if (name === "Sheffield Utd") return "Sheffield United";
   if (name === "Norwich City") return "Norwich";
+  if (name === "Leeds United") return "Leeds";
 
   if (name === "Atlético Madrid") return "Atletico Madrid";
   if (name === "Leganés") return "Leganes";
