@@ -100,7 +100,7 @@ const urls = {
       league: "ChampionsLeague",
     },
     {
-      url: "https://www.leonbets.net/events/Soccer/1970324836975359-England-Premier-League",
+      url: "https://en.leonbets.com/events/Soccer/1970324836975359-England-Premier-League",
       league: "England",
     },
     {
