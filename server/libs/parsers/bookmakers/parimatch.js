@@ -28,9 +28,7 @@ exports.create = async (URL, leagueName) => {
   const $ = createDOM(html);
   logger.log("created virtual dom of page");
 
-  const table = $("form[name='f1']");
-  const tBodies = table.find("tbody[class*='row']");
-
+  const tBodies = $("tbody[class*='row']");
   tBodies.each((i, _element) => {
     try {
       const element = $(_element);

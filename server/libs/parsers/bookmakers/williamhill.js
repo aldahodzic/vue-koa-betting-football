@@ -62,9 +62,12 @@ exports.create = async (URL, leagueName) => {
         const divs = $(element).find(".sp-o-market__buttons button");
         const coefficientTypes = ["1", "0", "2"];
         divs.each((i, div) => {
+          let coefficient = 1;
           const text = $(div).text().trim();
-          const [home, guest] = text.split("/");
-          const coefficient = (home / guest) + 1;
+          if (text !== "EVS") {
+            const [home, guest] = text.split("/");
+            coefficient = (home / guest) + 1;
+          }
 
           if (!isNaN(coefficient)) {
             match.coefficients[coefficientTypes[i]] = [{
