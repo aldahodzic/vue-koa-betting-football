@@ -24,8 +24,8 @@ export default {
     bookie: { type: Object, required: true },
     betIndex: { type: Number, required: true },
     betSlipIndex: { type: Number, required: true },
-    score: { type: String, required: true },
-    matchResult: { type: String, default: "" },
+    score: { type: [String, undefined], default: undefined },
+    matchResult: { type: [String, null], default: null },
   },
   computed: {
     show () {
