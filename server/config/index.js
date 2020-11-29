@@ -1,8 +1,8 @@
 module.exports = {
   port: process.env.PORT || 3000,
   env: {
-    production: process.env.NODE_ENV == "production" || false,
-    development: process.env.NODE_ENV == "development" || false,
+    production: process.env.NODE_ENV === "production" || false,
+    development: process.env.NODE_ENV === "development" || false,
   },
   mongo: {
     connection: {

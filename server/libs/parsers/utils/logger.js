@@ -20,7 +20,7 @@ class Logger {
   log (taskName) {
     if (config.env.production) return;
 
-    if (this.cnt == 1) {
+    if (this.cnt === 1) {
       console.log("------------------------");
       console.log(`${this.globalTask} started`);
     }

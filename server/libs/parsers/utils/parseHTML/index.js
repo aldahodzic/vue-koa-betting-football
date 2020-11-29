@@ -11,10 +11,10 @@ const moment = require("moment");
 module.exports = async (url, strategy, { league, bookmaker, dataSelector = "body", waitSelector }) => {
   let html;
 
-  if (strategy == "static") {
+  if (strategy === "static") {
     html = await staticParser(url);
   }
-  if (strategy == "dynamic") {
+  if (strategy === "dynamic") {
     html = await dynamicParser(url, { dataSelector, waitSelector });
   }
 
