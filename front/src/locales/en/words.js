@@ -117,6 +117,11 @@ export default {
   total: {
     coefficient: "Total coefficient",
   },
+  generate: {
+    data: {
+      action: "Generate data",
+    },
+  },
 
   // structured phrases with not
   not: {

@@ -1,6 +1,11 @@
 <template lang="pug">
 main
-    p#none-matches(v-if="show.emptyMatches") {{$t('not.found.matches')}}
+    div#none-matches(v-if="show.emptyMatches")
+      span {{$t('not.found.matches')}}
+      div
+        button(@click="generateData") {{$t('generate.data.action')}}
+        span(:title="$t('site.generate')") ?
+
     template(v-if="show.selector")
         p.row.head
             span(
@@ -29,8 +34,12 @@ main
 
 <script>
 import _ from "lodash";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 import AppMatchSelectorItem from "./Item";
+
+import { activateGenerationMode } from "@/api/generate";
+
 export default {
   name: "AppMatchSelector",
   components: {
@@ -105,6 +114,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      _loadMatches: "match/loadMatches",
+    }),
+
+    generateData () {
+      activateGenerationMode();
+      this._loadMatches();
+    },
+
     sortMatches (button) {
       this.sort.type = button.name;
       this.sort.direction = button.direction;
@@ -127,6 +145,34 @@ main {
         text-align: center;
         font-size: 20px;
         margin: 10px;
+
+        div {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            padding-top: 5px;
+            margin: 15px auto 0 auto;
+            height: 30px;
+            width: 300px;
+            border-top: 1px solid #555555;
+
+            button {
+                background: #e7e7e7;
+                border: none;
+                padding: 0 10px;
+                cursor: pointer;
+            }
+
+            span {
+                text-decoration: none;
+                background: #0066ff;
+                color: white;
+                padding: 0 10px;
+                display: flex;
+                align-items: center;
+                cursor: default;
+            }
+        }
     }
 
     .row {

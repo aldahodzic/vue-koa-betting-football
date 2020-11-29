@@ -1,6 +1,7 @@
 import Moment from "dayjs";
 
 import * as api from "@/api/match";
+import { config as generateConfig } from "@/api/generate";
 
 export const state = {
   matches: JSON.parse(localStorage.getItem("matches")) || [],
@@ -35,7 +36,9 @@ export const mutations = {
       dateTmpl: Moment(match.date).format("DD.MM"),
     }));
 
-    localStorage.setItem("matches", JSON.stringify(state.matches));
+    if (!generateConfig.isActivated) {
+      localStorage.setItem("matches", JSON.stringify(state.matches));
+    }
   },
 
 };

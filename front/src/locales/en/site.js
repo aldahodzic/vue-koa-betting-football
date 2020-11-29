@@ -27,4 +27,5 @@ export default {
     ],
   },
   openSource: "This site is an open source project. You can see the code on ",
+  generate: "This feature intended to fill the site with fake information, due to lack of real. It could be useful when my parsers don't able to grab information from real bookmakers, but you want to see how the site works.",
 };

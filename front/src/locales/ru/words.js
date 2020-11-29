@@ -117,6 +117,11 @@ export default {
   total: {
     coefficient: "Общий коэффициент",
   },
+  generate: {
+    data: {
+      action: "Сгенерировать данные",
+    },
+  },
 
   // structured phrases with not
   not: {
