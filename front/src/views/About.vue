@@ -19,11 +19,11 @@ div#about
     div
         p: b {{$t('site.notDo')}}.
     div
-        p: b {{$t('Functional')}}
-        p {{$t('site.functional')}}
+        p: b {{$t('Functionality')}}
+        p {{$t('site.functionality')}}
     div
         p: b {{$t('site.howMakeBet.question')}}
-        ol: li(v-for="index of 7") {{$t('site.howMakeBet.answer['+(index-1)+']')}}
+        ol: li(v-for="index of 8") {{$t('site.howMakeBet.answer['+(index-1)+']')}}
     div
         span {{$t('site.openSource')}}
         a(href="https://github.com/levchak0910/fakebet") github

@@ -9,7 +9,7 @@ div#bet-menu
     @click="getLastBets",
     :class="buttonLoadResultsClass",
     :title="$t('check.bets.latest')",
-    ) ⌕
+    ) ↻
 
 </template>
 
@@ -94,7 +94,6 @@ export default {
             font-size: 25px;
             color: white;
             font-weight: bold;
-            transform: rotateY(180deg);
 
             &.disabled {
                 background: #3d3d3d;

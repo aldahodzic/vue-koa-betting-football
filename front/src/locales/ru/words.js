@@ -41,7 +41,7 @@ export default {
   Score: "Счет",
   Profit: "Прибыль",
   Data: "Данные",
-  Functional: "Функционал",
+  Functionality: "Функционал",
 
   // lower case
   login: "логин",
