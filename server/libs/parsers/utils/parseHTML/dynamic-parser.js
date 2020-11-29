@@ -7,15 +7,17 @@ const UserAgentPlugin = require("puppeteer-extra-plugin-anonymize-ua");
 puppeteer.use(StealthPlugin());
 puppeteer.use(UserAgentPlugin({ makeWindows: true }));
 
+const browserPromise = puppeteer.launch({
+  headless: config.env.production,
+  args: [
+    "--no-sandbox",
+    "--lang=uk-UA,uk;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6",
+    "--disable-webgl",
+  ],
+});
+
 module.exports = async (url, { dataSelector, waitSelector }) => {
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: [
-      "--no-sandbox",
-      "--lang=uk-UA,uk;q=0.9,ru;q=0.8,en-US;q=0.7,en;q=0.6",
-      "--disable-webgl",
-    ],
-  });
+  const browser = await browserPromise;
 
   const page = await browser.newPage();
 
@@ -37,7 +39,7 @@ module.exports = async (url, { dataSelector, waitSelector }) => {
 
   const html = await page.evaluate(s => document.querySelector(s).outerHTML, dataSelector);
 
-  await browser.close();
+  await page.close();
 
   return html;
 };

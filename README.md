@@ -1,8 +1,4 @@
-# Fakebet
-> Site with fake football bets
-
-Demo: [link](https://fakebet.herokuapp.com)  
-Description: [link](https://fakebet.herokuapp.com/about)
+# Football betting site demo
 
 ## Tech stack
 **Front:** vue, vuex, vue-router, jest, i18n, axios  
@@ -40,6 +36,3 @@ $ cd server && npm install && npm run node-production
 $ npm run test # watch files,
 $ npm run test-a # all tests once
 ```
-
-## License
-This software is free to use under the MIT license.
