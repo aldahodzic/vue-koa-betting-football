@@ -6,7 +6,7 @@ module.exports = {
   },
   mongo: {
     connection: {
-      uri: "mongodb://someuser:someuserpassword@ds121889.mlab.com:21889/fakebet",
+      uri: "mongodb://someuser:someuserpassword@ds121889.mlab.com:21889/fakebet?retryWrites=false",
       keepAlive: 1,
     },
   },
