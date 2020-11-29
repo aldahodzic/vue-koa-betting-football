@@ -1,6 +1,7 @@
 const config = require("config");
 
 const needle = require("needle");
+const axios = require("axios");
 
 module.exports = url => {
   return new Promise((resolve, reject) => {
@@ -13,7 +14,13 @@ module.exports = url => {
         reject(err);
       }
       else {
-        resolve(res.body);
+        if (res.body.length !== 0) resolve(res.body);
+        else {
+          axios
+            .get(url)
+            .then(r => resolve(r.data))
+            .catch(reject);
+        }
       }
     });
   });
